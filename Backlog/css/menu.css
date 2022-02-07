@@ -34,7 +34,12 @@
 
 .tamanhoGrafica {
     height: 500px;
-    width: 1400px;
+    width: 1500px;
+}
+
+.tamanhoGrafica2 {
+    height: 500px;
+    width: 750px;
 }
 
 .form-control-select {
