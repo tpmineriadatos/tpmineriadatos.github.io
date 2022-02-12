@@ -115,3 +115,9 @@
 .red:hover {
     color: black;
 }
+
+.tituloGris {
+    color: #555759;
+    font-weight: bold;
+    font-size: 15px;
+}
