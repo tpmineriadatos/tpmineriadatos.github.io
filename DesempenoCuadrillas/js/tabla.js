@@ -377,44 +377,44 @@ function imprimeTabla(datos, combo) {
             { text: "Porcentaje Obj: 0%", columngroup: "nrein", dataField: "porcreincidencias", width: 100, cellsAlign: "right", align: "center", cellclassname: cellclass, cellsformat: "p2" },
             { text: "Obj: >=1 Pond: 5%", columngroup: "vtatec", dataField: "ventatecnico", width: 110, cellsAlign: "right", align: "center", cellclassname: cellclass },
             { text: "Calificación", dataField: "calificacion", width: 100, cellsAlign: "right", align: "center", cellsformat: "p2", cellclassname: cellclass,
-                createwidget: function (row, column, value, htmlElement) {
+                // createwidget: function (row, column, value, htmlElement) {
 
-                    var datarecord = "";
+                //     var datarecord = "";
 
-                    if (value <= 70) {
-                        datarecord = "roja";
-                    } else if (value < 90) {
-                        datarecord = "amarilla";
-                    } else{
-                        datarecord = "verde";
-                    }
+                //     if (value <= 70) {
+                //         datarecord = "roja";
+                //     } else if (value < 90) {
+                //         datarecord = "amarilla";
+                //     } else{
+                //         datarecord = "verde";
+                //     }
 
-                    var imgurl = "img/" + datarecord + ".png";
-                    var img = '<img style="margin-top: 8px;" height="25" width="25" src="' + imgurl + '"/>';
-                    var button = $("<div style='border:none;'>" + img
-                                    + "<div class='btnTexto'>" + value + "</div></div>");
-                    $(htmlElement).append(button);
-                    button.jqxButton({ template: "success", height: '100%', width: '100%' });
-                    // button.click(function (event) {
-                    //     var clickedButton = button.find(".buttonValue")[0].innerHTML;
-                    //     alert(clickedButton);
-                    // });
-                },
-                initwidget: function (row, column, value, htmlElement) {
+                //     var imgurl = "img/" + datarecord + ".png";
+                //     var img = '<img style="margin-top: 8px;" height="25" width="25" src="' + imgurl + '"/>';
+                //     var button = $("<div style='border:none;'>" + img
+                //                     + "<div class='btnTexto'>" + value + "</div></div>");
+                //     $(htmlElement).append(button);
+                //     button.jqxButton({ template: "success", height: '100%', width: '100%' });
+                //     // button.click(function (event) {
+                //     //     var clickedButton = button.find(".buttonValue")[0].innerHTML;
+                //     //     alert(clickedButton);
+                //     // });
+                // },
+                // initwidget: function (row, column, value, htmlElement) {
 
-                    var datarecord = "";
+                //     var datarecord = "";
 
-                    if (value <= 70) {
-                        datarecord = "roja";
-                    } else if (value < 90) {
-                        datarecord = "amarilla";
-                    } else {
-                        datarecord = "verde";
-                    }
-                    var imgurl = "img/" + datarecord + ".png";
-                    $(htmlElement).find('.btnTexto')[0].innerHTML = parseFloat(value).toFixed(2);
-                    $(htmlElement).find('img')[0].src = imgurl;
-                }
+                //     if (value <= 70) {
+                //         datarecord = "roja";
+                //     } else if (value < 90) {
+                //         datarecord = "amarilla";
+                //     } else {
+                //         datarecord = "verde";
+                //     }
+                //     var imgurl = "img/" + datarecord + ".png";
+                //     $(htmlElement).find('.btnTexto')[0].innerHTML = parseFloat(value).toFixed(2);
+                //     $(htmlElement).find('img')[0].src = imgurl;
+                // }
             }
         ],
         columngroups: [
