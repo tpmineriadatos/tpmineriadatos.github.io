@@ -100,6 +100,9 @@ function llenadoInfo() {
         if (parseFloat(element[13]) != 0) {
 
             let fecha = element[8];
+            let nreincidencias = parseFloat(element[10]);
+            let nordenes = parseFloat(element[15]);
+            let porcreincidencias = 0;
 
             if (fecha.length == 8) {
                 
@@ -115,6 +118,11 @@ function llenadoInfo() {
             } else {
                 antiguedad = "-";
             }
+
+            if (nordenes > 0) {
+                porcreincidencias = (nreincidencias / nordenes) * 100;
+                porcreincidencias = porcreincidencias.toFixed(2);
+            }
             
             row["direccion"] = element[0];
             row["region"] = element[1];
@@ -124,10 +132,11 @@ function llenadoInfo() {
             row["nombresupervisor"] = element[5];
             row["ninstalador"] = element[6];
             row["nombreinstalador"] = element[7];
+            row["empresa"] = element[14];
             row["antiguedad"] = antiguedad;
             row["productividad"] = element[9];
             row["numreincidencias"] = element[10];
-            row["porcreincidencias"] = element[10];
+            row["porcreincidencias"] = porcreincidencias;
             row["diastrabajados"] = element[11];
             row["ventatecnico"] = element[12];
             row["calificacion"] = parseFloat(element[13]) * 100;
@@ -165,6 +174,7 @@ function mostrarTablaCompleta() {
         row["nombresupervisor"] = element.nombresupervisor;
         row["ninstalador"] = element.ninstalador;
         row["nombreinstalador"] = element.nombreinstalador;
+        row["empresa"] = element.empresa;
         row["antiguedad"] = element.antiguedad;
         row["productividad"] = element.productividad;
         row["numreincidencias"] = element.numreincidencias;
@@ -209,6 +219,7 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["nombresupervisor"] = element.nombresupervisor;
                 row["ninstalador"] = element.ninstalador;
                 row["nombreinstalador"] = element.nombreinstalador;
+                row["empresa"] = element.empresa;
                 row["antiguedad"] = element.antiguedad;
                 row["productividad"] = element.productividad;
                 row["numreincidencias"] = element.numreincidencias;
@@ -241,6 +252,7 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["nombresupervisor"] = element.nombresupervisor;
                 row["ninstalador"] = element.ninstalador;
                 row["nombreinstalador"] = element.nombreinstalador;
+                row["empresa"] = element.empresa;
                 row["antiguedad"] = element.antiguedad;
                 row["productividad"] = element.productividad;
                 row["numreincidencias"] = element.numreincidencias;
@@ -273,6 +285,7 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["nombresupervisor"] = element.nombresupervisor;
                 row["ninstalador"] = element.ninstalador;
                 row["nombreinstalador"] = element.nombreinstalador;
+                row["empresa"] = element.empresa;
                 row["antiguedad"] = element.antiguedad;
                 row["productividad"] = element.productividad;
                 row["numreincidencias"] = element.numreincidencias;
@@ -313,6 +326,7 @@ function imprimeTabla(datos, combo) {
                 { name: "nombresupervisor", type: "string" },
                 { name: "ninstalador", type: "string" },
                 { name: "nombreinstalador", type: "string" },
+                { name: "empresa", type: "string" },
                 { name: "antiguedad", type: "string" },
                 { name: "diastrabajados", type: "number" },
                 { name: "productividad", type: "number" },
@@ -370,52 +384,14 @@ function imprimeTabla(datos, combo) {
             { text: "Supervisor", dataField: "nombresupervisor", width: 200, align: "center", cellclassname: cellclass },
             { text: "#Empleado Instalador", dataField: "ninstalador", width: 160, align: "center", cellclassname: cellclass },
             { text: "Instalador", dataField: "nombreinstalador", width: 200, align: "center", cellclassname: cellclass },
+            { text: "Empresa", dataField: "empresa", width: 200, align: "center", cellclassname: cellclass },
             { text: "Antigüedad", dataField: "antiguedad", width: 100, cellsAlign: "right", align: "center", cellclassname: cellclass },
             { text: "Obj: >=6 Pond: 20%", columngroup: "dias", dataField: "diastrabajados", width: 120, cellsAlign: "right", align: "center", cellclassname: cellclass },
             { text: "Obj: >=3.5 Pond: 35%", columngroup: "produc", dataField: "productividad", width: 100, cellsAlign: "right", align: "center", cellclassname: cellclass },
-            { text: "Cantidad", columngroup: "nrein", dataField: "numreincidencias", width: 100, cellsAlign: "right", align: "center", cellclassname: cellclass },
+            { text: "Total", columngroup: "nrein", dataField: "numreincidencias", width: 100, cellsAlign: "right", align: "center", cellclassname: cellclass },
             { text: "Porcentaje Obj: 0%", columngroup: "nrein", dataField: "porcreincidencias", width: 100, cellsAlign: "right", align: "center", cellclassname: cellclass, cellsformat: "p2" },
             { text: "Obj: >=1 Pond: 5%", columngroup: "vtatec", dataField: "ventatecnico", width: 110, cellsAlign: "right", align: "center", cellclassname: cellclass },
-            { text: "Calificación", dataField: "calificacion", width: 100, cellsAlign: "right", align: "center", cellsformat: "p2", cellclassname: cellclass,
-                // createwidget: function (row, column, value, htmlElement) {
-
-                //     var datarecord = "";
-
-                //     if (value <= 70) {
-                //         datarecord = "roja";
-                //     } else if (value < 90) {
-                //         datarecord = "amarilla";
-                //     } else{
-                //         datarecord = "verde";
-                //     }
-
-                //     var imgurl = "img/" + datarecord + ".png";
-                //     var img = '<img style="margin-top: 8px;" height="25" width="25" src="' + imgurl + '"/>';
-                //     var button = $("<div style='border:none;'>" + img
-                //                     + "<div class='btnTexto'>" + value + "</div></div>");
-                //     $(htmlElement).append(button);
-                //     button.jqxButton({ template: "success", height: '100%', width: '100%' });
-                //     // button.click(function (event) {
-                //     //     var clickedButton = button.find(".buttonValue")[0].innerHTML;
-                //     //     alert(clickedButton);
-                //     // });
-                // },
-                // initwidget: function (row, column, value, htmlElement) {
-
-                //     var datarecord = "";
-
-                //     if (value <= 70) {
-                //         datarecord = "roja";
-                //     } else if (value < 90) {
-                //         datarecord = "amarilla";
-                //     } else {
-                //         datarecord = "verde";
-                //     }
-                //     var imgurl = "img/" + datarecord + ".png";
-                //     $(htmlElement).find('.btnTexto')[0].innerHTML = parseFloat(value).toFixed(2);
-                //     $(htmlElement).find('img')[0].src = imgurl;
-                // }
-            }
+            { text: "Calificación", dataField: "calificacion", width: 100, cellsAlign: "right", align: "center", cellsformat: "p2", cellclassname: cellclass }
         ],
         columngroups: [
             { text: "Días Trabajados", align: "center", name: "dias" },
@@ -426,7 +402,6 @@ function imprimeTabla(datos, combo) {
         ready: function () { // Solo se ejecuta la primera vez que se carga la tabla
             // $("#contenidoTabla").jqxGrid('sortby', 'calificacion', "asc");
             $("#contenidoTabla").jqxGrid("sortby", "semana", "desc");
-            // $("#contenidoTabla").jqxGrid("hidecolumn", "direccion");
             $("#contenidoTabla").jqxGrid("autoresizecolumns");
         },
 
@@ -444,7 +419,7 @@ function imprimeTabla(datos, combo) {
      * Control de las columnas de acuerdo al filtro aplicado
      */
     $("#contenidoTabla").jqxGrid("beginupdate");
-    // $("#contenidoTabla").jqxGrid("autoresizecolumns");
+    $("#contenidoTabla").jqxGrid("autoresizecolumns");
 
     if (combo == "nacional") {
 
@@ -473,6 +448,7 @@ function imprimeTabla(datos, combo) {
     }
 
     // $("#contenidoTabla").jqxGrid("sortby", "calificacion", "asc");
+    $("#contenidoTabla").jqxGrid("sortby", "semana", "desc");
     $("#contenidoTabla").jqxGrid("endupdate");
 
 }
