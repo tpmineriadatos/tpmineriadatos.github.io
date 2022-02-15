@@ -11,16 +11,7 @@ var aux;
 
 $(document).ready(function () {
 
-    let actSemana = "";
-    var currentdate = new Date();
-    var oneJan = new Date(currentdate.getFullYear(), 0, 1);
-    var numberOfDays = Math.floor((currentdate - oneJan) / (24 * 60 * 60 * 1000));
-    var result = Math.ceil((currentdate.getDay() + 1 + numberOfDays) / 7);
-    result -= 3;
-    actSemana = "Última actualización: Semana " + ("0" + result).slice(-2) +"&nbsp;&nbsp;&nbsp;";
-
-    $("#ultActualizacion").html(actSemana);
-    document.getElementById("productividad").style.backgroundColor = "rgb(25, 86, 255)";
+    document.getElementById("productividad").style.backgroundColor = "rgb(31, 77, 155)";
 
     $("#desPlaza").hide();
     $("#desDistrito").hide();
@@ -192,6 +183,13 @@ function mostrarTablaCompleta() {
     });
 
     // aux = datosImprimir;
+
+    let actSemana = "Última actualización: Semana "
+                    + ("0" + datosImprimir[datosImprimir.length - 1].semana).slice(-2)
+                    + "&nbsp;&nbsp;&nbsp;";
+    
+    $("#ultActualizacion").empty().html(actSemana);
+
     imprimeTabla(datosImprimir, "nacional");
 
 }
@@ -362,7 +360,7 @@ function imprimeTabla(datos, combo) {
         autorowheight: true,
         width: "100%", // Ocupa toda la pantalla: "100%"
         // height: 720,
-        theme: "energyblue",
+        theme: "ui-smoothness",
         // pageSize: 20,
         pageable: true, // Lo separa por hojas
         pagerButtonsCount: 5, // Número de hojas a elegir

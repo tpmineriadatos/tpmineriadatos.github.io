@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title id="Description">Tabla Supervisores</title>
+    <title id="Description">Desempeño Cuadrillas PI</title>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="css/c3/c3.min.css">
     <link rel="stylesheet" href="css/menu.css">
     <link rel="stylesheet" href="jqwidgets/styles/jqx.base.css" type="text/css" />
-    <link rel="stylesheet" href="jqwidgets/styles/jqx.energyblue.css" type="text/css" />
+    <link rel="stylesheet" href="jqwidgets/styles/jqx.ui-smoothness.css" type="text/css" />
 
     <script src="js/c3/d3-5.8.2.min.js" charset="utf-8"></script>
     <script src="js/c3/c3.min.js"></script>
@@ -41,30 +41,32 @@
 
 </head>
 
-<body class='default'>
+<body>
 
-    <div class="row">
-        <div class="menuPrincipal">
-            <div>
-                <img src="img/tp_residencial.png" alt="totalplay_residencial" style="height: 70px;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid menuPrincipal">
+
+            <a class="navbar-brand" href="#">
+                <img src="img/LOGO_TP_Residencial.jpg" class="logo" style="height: 70px;" />
+            </a>
+
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">
+                            <div class="nombreMenu" id="productividad">
+                                <strong class="textoMenu">Desempeño Cuadrillas PI</strong>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <img src="img/CONECTA_MAS.png" alt="conecta_mas" style="height: 70px;">
+                </form>
             </div>
-            <!-- <div class="nombreMenu" id="backlog">
-                <strong class="textoMenu">Backlog</strong>
-            </div>
-            <div class="nombreMenu" id="incumplimiento">
-                <strong class="textoMenu">Incumplimiento</strong>
-            </div> -->
-            <div class="nombreMenu" id="productividad">
-                <strong class="textoMenu">Desempeño Cuadrillas PI</strong>
-            </div>
-            <!-- <div class="nombreMenu" id="top">
-                <strong class="textoMenu">Top del día</strong>
-            </div>
-            <div class="nombreMenu" id="mas72hrs">
-                <strong class="textoMenu">Más de 72 hrs</strong>
-            </div> -->
+
         </div>
-    </div>
+    </nav>
     
     <br>
     
@@ -127,45 +129,19 @@
 
         </div>
     </div>
-
-    <div class="row" style="display: none;">
-    
-        <div id="desDireccion" class="col-md-4 col-sm-12">
-            <div class="row">
-                <div class="col-md-2 col-sm-12 text-center">
-                    <label id="labelZona" for="opcDireccion">&nbsp;&nbsp;&nbsp;Dirección</label>
-                </div>
-                <div class="col-md-10 col-sm-12">
-                    <form>
-                        <select name="opcDireccion" id="opcDireccion" class="form-control-select" style="width: 300px; margin-right: 20px;">
-                            <option selected>NACIONAL</option>
-                            <option>CENTRO-SUR</option>
-                            <option>NORTE-NORESTE</option>
-                            <option>OCCIDENTE-BAJIO</option>
-                        </select>
-                    </form>
-                </div>
-            </div>
-        </div>
-    
-        <div id="desPlaza" class="col-md-4 col-sm-12">
-            <div class="row">
-                <div class="col-md-2 col-sm-12 text-center">
-                    <label for="opcPlaza">&nbsp;Región</label>
-                </div>
-                <div class="col-md-10 col-sm-12">
-                    <form>
-                        <select name="opcPlaza" id="opcPlaza" class="form-control-select" style="width: 300px; margin-right: 20px;">
-                        </select>
-                    </form>
-                </div>
-            </div>
-        </div>
-    
-    </div>
     
     <hr>
-    
+
+    <div class="row" style="display: none;">
+        <div class="col-12 justify-content-end d-flex">
+            <button type="button" id="btnMostrar" class="btn btn-primary">Mostrar</button>
+            &nbsp;&nbsp;
+            <button type="button" id="btnOcultar" class="btn btn-secondary">Ocultar</button>
+        </div>
+    </div>
+
+    <br>
+
     <div class="col-lg-12 col-md-12 col-sm-6">
         <div id="tabla" class="row">
             <div class="col-md-12 col-sm-6" style="text-align: center;">
