@@ -273,20 +273,6 @@ $(document).ready(function () {
 
                 llenaListasPlaza(valor);
 
-                // if (valor == "CENTRO-SUR") {
-                //     for (let i = 0; i < listaCentro.length; i++) {
-                //         $("#opcPlaza").append($("<option>", { value: listaCentro[i], text: listaCentro[i] }));
-                //     }
-                // } else if (valor == "NORTE-NORESTE") {
-                //     for (let i = 0; i < listaNorte.length; i++) {
-                //         $("#opcPlaza").append($("<option>", { value: listaNorte[i], text: listaNorte[i] }));
-                //     }
-                // } else if (valor == "OCCIDENTE-BAJIO") {
-                //     for (let i = 0; i < listaOccidente.length; i++) {
-                //         $("#opcPlaza").append($("<option>", { value: listaOccidente[i], text: listaOccidente[i] }));
-                //     }
-                // }
-
             }
 
         } else if(selecIncumplimiento == 1) {
@@ -304,19 +290,7 @@ $(document).ready(function () {
                 $("#opcPlaza").empty();
                 $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
 
-                if (valor == "CENTRO-SUR") {
-                    for (let i = 0; i < listaCentro.length; i++) {
-                        $("#opcPlaza").append($("<option>", { value: listaCentro[i], text: listaCentro[i] }));
-                    }
-                } else if (valor == "NORTE-NORESTE") {
-                    for (let i = 0; i < listaNorte.length; i++) {
-                        $("#opcPlaza").append($("<option>", { value: listaNorte[i], text: listaNorte[i] }));
-                    }
-                } else if (valor == "OCCIDENTE-BAJIO") {
-                    for (let i = 0; i < listaOccidente.length; i++) {
-                        $("#opcPlaza").append($("<option>", { value: listaOccidente[i], text: listaOccidente[i] }));
-                    }
-                }
+                llenaListasPlaza(valor);
 
                 $("#desPlaza").show();
                 $("#desDistrito").hide();
@@ -900,36 +874,6 @@ function listasComboPlaza(direccionSelec) {
         }
 
     }
-
-    // for (let i = 1; i < renglones2.length; i++) {
-
-    //     const element = renglones2[i].split(",");
-
-    //     if (element[0] == "NORTE-NORESTE") {
-
-    //         if ((listaNorte.length == 0) || (element[1] != datoRepetido)) {
-    //             datoRepetido = element[1];
-    //             listaNorte.push(element[1]);
-    //         }
-
-    //     }
-
-    // }
-
-    // for (let i = 1; i < renglones2.length; i++) {
-
-    //     const element = renglones2[i].split(",");
-
-    //     if (element[0] == "OCCIDENTE-BAJIO") {
-
-    //         if ((listaOccidente.length == 0) || (element[1] != datoRepetido)) {
-    //             datoRepetido = element[1];
-    //             listaOccidente.push(element[1]);
-    //         }
-
-    //     }
-
-    // }
 
 }
 

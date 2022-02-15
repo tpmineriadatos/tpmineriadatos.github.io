@@ -6,6 +6,8 @@ var datosCompleto = [],
     listaRegion = [],
     listaDistritosProd = [];
 
+var btnAplicado = 1;
+
 var aux;
 
 
@@ -56,6 +58,62 @@ $(document).ready(function () {
     $("#opcDistrito").on("change", function (event) {
         valor = $("#opcDistrito option:selected").val();
         mostrarTablaFiltro(valor, "distrito");
+    });
+
+    $("body").on("click", "#btnMostrar", function(event) {
+
+        if (btnAplicado == 1) {
+    
+            $("#contenidoTabla").jqxGrid("beginupdate");
+
+            $("#contenidoTabla").jqxGrid("autoresizecolumns");
+            
+            $("#contenidoTabla").jqxGrid("hidecolumn", "numreincidencias");
+            $("#contenidoTabla").jqxGrid("hidecolumn", "porcreincidencias");
+            $("#contenidoTabla").jqxGrid("hidecolumn", "ventatecnico");
+            $("#contenidoTabla").jqxGrid("hidecolumn", "calificacion");
+
+            $("#contenidoTabla").jqxGrid("showcolumn", "addon");
+            $("#contenidoTabla").jqxGrid("showcolumn", "cddInstalaciones");
+            $("#contenidoTabla").jqxGrid("showcolumn", "empresarialHS");
+            $("#contenidoTabla").jqxGrid("showcolumn", "soporteProactiva");
+            $("#contenidoTabla").jqxGrid("showcolumn", "recolecciones");
+            
+            $("#contenidoTabla").jqxGrid("sortby", "semana", "desc");
+
+            $("#contenidoTabla").jqxGrid("endupdate");
+
+            $("#btnMostrar").html("Ocultar Detalle Productividad");
+
+            btnAplicado = 0;
+
+        } else {
+
+            $("#contenidoTabla").jqxGrid("beginupdate");
+
+            $("#contenidoTabla").jqxGrid("autoresizecolumns");
+
+            $("#contenidoTabla").jqxGrid("showcolumn", "numreincidencias");
+            $("#contenidoTabla").jqxGrid("showcolumn", "porcreincidencias");
+            $("#contenidoTabla").jqxGrid("showcolumn", "ventatecnico");
+            $("#contenidoTabla").jqxGrid("showcolumn", "calificacion");
+
+            $("#contenidoTabla").jqxGrid("hidecolumn", "addon");
+            $("#contenidoTabla").jqxGrid("hidecolumn", "cddInstalaciones");
+            $("#contenidoTabla").jqxGrid("hidecolumn", "empresarialHS");
+            $("#contenidoTabla").jqxGrid("hidecolumn", "soporteProactiva");
+            $("#contenidoTabla").jqxGrid("hidecolumn", "recolecciones");
+
+            $("#contenidoTabla").jqxGrid("sortby", "semana", "desc");
+
+            $("#contenidoTabla").jqxGrid("endupdate");
+
+            $("#btnMostrar").html("Mostrar Detalle Productividad");
+
+            btnAplicado = 1;
+
+        }
+
     });
 
 });
@@ -131,6 +189,12 @@ function llenadoInfo() {
             row["diastrabajados"] = element[11];
             row["ventatecnico"] = element[12];
             row["calificacion"] = parseFloat(element[13]) * 100;
+
+            row["addon"] = element[16];
+            row["cddInstalaciones"] = element[17];
+            row["empresarialHS"] = element[18];
+            row["soporteProactiva"] = element[19];
+            row["recolecciones"] = element[20];
     
             datosCompleto.push(row);
 
@@ -140,7 +204,7 @@ function llenadoInfo() {
 
     }
 
-    // aux = datosCompleto;
+    aux = datosCompleto;
     console.log("cantidadCeros=", cantidadCeros);
 
     mostrarTablaCompleta();
@@ -173,6 +237,12 @@ function mostrarTablaCompleta() {
         row["diastrabajados"] = element.diastrabajados;
         row["ventatecnico"] = element.ventatecnico;
         row["calificacion"] = element.calificacion;
+
+        row["addon"] = element.addon;
+        row["cddInstalaciones"] = element.cddInstalaciones;
+        row["empresarialHS"] = element.empresarialHS;
+        row["soporteProactiva"] = element.soporteProactiva;
+        row["recolecciones"] = element.recolecciones;
 
         datosImprimir.push(row);
 
@@ -226,6 +296,12 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["ventatecnico"] = element.ventatecnico;
                 row["calificacion"] = element.calificacion;
 
+                row["addon"] = element.addon;
+                row["cddInstalaciones"] = element.cddInstalaciones;
+                row["empresarialHS"] = element.empresarialHS;
+                row["soporteProactiva"] = element.soporteProactiva;
+                row["recolecciones"] = element.recolecciones;
+
                 datosImprimir.push(row);
 
             }
@@ -259,6 +335,12 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["ventatecnico"] = element.ventatecnico;
                 row["calificacion"] = element.calificacion;
 
+                row["addon"] = element.addon;
+                row["cddInstalaciones"] = element.cddInstalaciones;
+                row["empresarialHS"] = element.empresarialHS;
+                row["soporteProactiva"] = element.soporteProactiva;
+                row["recolecciones"] = element.recolecciones;
+
                 datosImprimir.push(row);
 
             }
@@ -291,6 +373,12 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["diastrabajados"] = element.diastrabajados;
                 row["ventatecnico"] = element.ventatecnico;
                 row["calificacion"] = element.calificacion;
+
+                row["addon"] = element.addon;
+                row["cddInstalaciones"] = element.cddInstalaciones;
+                row["empresarialHS"] = element.empresarialHS;
+                row["soporteProactiva"] = element.soporteProactiva;
+                row["recolecciones"] = element.recolecciones;
 
                 datosImprimir.push(row);
 
@@ -332,6 +420,11 @@ function imprimeTabla(datos, combo) {
                 { name: "porcreincidencias", type: "number" },
                 { name: "ventatecnico", type: "number" },
                 { name: "calificacion", type: "number" },
+                { name: "addon", type: "number" },
+                { name: "cddInstalaciones", type: "number" },
+                { name: "empresarialHS", type: "number" },
+                { name: "soporteProactiva", type: "number" },
+                { name: "recolecciones", type: "number" }
 
             ]//,
         // sortcolumn: 'calificacion',
@@ -345,10 +438,10 @@ function imprimeTabla(datos, combo) {
 
         if (quantity <= 70) {
             return "red";
-        } else if (quantity < 90) {
-            return "yellow";
-        } else
-            return "green";
+        }// else if (quantity < 90) {
+        //     return "yellow";
+        // } else
+        //     return "green";
 
     };
 
@@ -389,7 +482,12 @@ function imprimeTabla(datos, combo) {
             { text: "Total", columngroup: "nrein", dataField: "numreincidencias", width: 100, cellsAlign: "right", align: "center", cellclassname: cellclass },
             { text: "Porcentaje Obj: 0%", columngroup: "nrein", dataField: "porcreincidencias", width: 100, cellsAlign: "right", align: "center", cellclassname: cellclass, cellsformat: "p2" },
             { text: "Obj: >=1 Pond: 5%", columngroup: "vtatec", dataField: "ventatecnico", width: 110, cellsAlign: "right", align: "center", cellclassname: cellclass },
-            { text: "Calificación", dataField: "calificacion", width: 100, cellsAlign: "right", align: "center", cellsformat: "p2", cellclassname: cellclass }
+            { text: "Calificación", dataField: "calificacion", width: 100, cellsAlign: "right", align: "center", cellsformat: "p2", cellclassname: cellclass },
+            { text: "ADDON", dataField: "addon", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass },
+            { text: "Instalaciones + CDD", dataField: "cddInstalaciones", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass },
+            { text: "Empresarial + Hogar Seguro", dataField: "empresarialHS", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass },
+            { text: "Soportes + Órdenes Proactivas", dataField: "soporteProactiva", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass },
+            { text: "Recolecciones", dataField: "recolecciones", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass }
         ],
         columngroups: [
             { text: "Días Trabajados", align: "center", name: "dias" },
@@ -401,6 +499,13 @@ function imprimeTabla(datos, combo) {
             // $("#contenidoTabla").jqxGrid('sortby', 'calificacion', "asc");
             $("#contenidoTabla").jqxGrid("sortby", "semana", "desc");
             $("#contenidoTabla").jqxGrid("autoresizecolumns");
+
+            $("#contenidoTabla").jqxGrid("hidecolumn", "addon");
+            $("#contenidoTabla").jqxGrid("hidecolumn", "cddInstalaciones");
+            $("#contenidoTabla").jqxGrid("hidecolumn", "empresarialHS");
+            $("#contenidoTabla").jqxGrid("hidecolumn", "soporteProactiva");
+            $("#contenidoTabla").jqxGrid("hidecolumn", "recolecciones");
+
         },
 
     });
@@ -442,6 +547,21 @@ function imprimeTabla(datos, combo) {
         $("#contenidoTabla").jqxGrid("hidecolumn", "direccion");
         $("#contenidoTabla").jqxGrid("hidecolumn", "region");
         $("#contenidoTabla").jqxGrid("hidecolumn", "distrito");
+
+    }
+
+    if (btnAplicado == 1) {
+        
+        $("#contenidoTabla").jqxGrid("showcolumn", "numreincidencias");
+        $("#contenidoTabla").jqxGrid("showcolumn", "porcreincidencias");
+        $("#contenidoTabla").jqxGrid("showcolumn", "ventatecnico");
+        $("#contenidoTabla").jqxGrid("showcolumn", "calificacion");
+        
+        $("#contenidoTabla").jqxGrid("hidecolumn", "addon");
+        $("#contenidoTabla").jqxGrid("hidecolumn", "cddInstalaciones");
+        $("#contenidoTabla").jqxGrid("hidecolumn", "empresarialHS");
+        $("#contenidoTabla").jqxGrid("hidecolumn", "soporteProactiva");
+        $("#contenidoTabla").jqxGrid("hidecolumn", "recolecciones");
 
     }
 
