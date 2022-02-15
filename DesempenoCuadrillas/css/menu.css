@@ -1,5 +1,5 @@
 .menuPrincipal {
-    background-color: rgb(25, 136, 255);
+    background-color: rgb(63, 124, 191);
     display: flex;
     height: 70px;
 }
@@ -84,32 +84,32 @@
 
 .green {
     color: black\9;
-    background-color: #B0BF44;
+    background-color: #D5E5B4;
 }
 
 .yellow {
     color: black\9;
-    background-color: yellow\9;
+    background-color: #FBEAB6;
 }
 
 .red {
-    color: white;
-    background-color: #e2595c;
+    color: black\9;
+    background-color: #F7B9BA;
 }
 
 .green:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .green:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
     color: black;
-    background-color: #689142;
+    background-color: #D5E5B4;
 }
 
 .yellow:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .yellow:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
     color: black;
-    background-color: #EFD67A;
+    background-color: #FBEAB6;
 }
 
 .red:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .red:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
-    color: white;
-    background-color: #e2595c;
+    color: black;
+    background-color: #F7B9BA;
 }
 
 .red:hover {
