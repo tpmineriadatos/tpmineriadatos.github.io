@@ -204,8 +204,15 @@ function llenadoInfo() {
 
     }
 
-    aux = datosCompleto;
+    // aux = datosCompleto;
     console.log("cantidadCeros=", cantidadCeros);
+
+    //Trabajar en esta parte
+    let actSemana = "Última actualización: Semana "
+                    + ("0" + datosCompleto[datosCompleto.length - 1].semana).slice(-2)
+                    + "&nbsp;&nbsp;&nbsp;";
+
+    $("#ultActualizacion").empty().html(actSemana);
 
     mostrarTablaCompleta();
 
@@ -253,12 +260,6 @@ function mostrarTablaCompleta() {
     });
 
     // aux = datosImprimir;
-
-    let actSemana = "Última actualización: Semana "
-                    + ("0" + datosImprimir[datosImprimir.length - 1].semana).slice(-2)
-                    + "&nbsp;&nbsp;&nbsp;";
-    
-    $("#ultActualizacion").empty().html(actSemana);
 
     imprimeTabla(datosImprimir, "nacional");
 
