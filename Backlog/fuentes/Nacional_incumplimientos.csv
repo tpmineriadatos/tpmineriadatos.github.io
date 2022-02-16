@@ -1,4 +1,4 @@
-fecha_apertura,Cliente Reagenda,Confirmación de visita,Incumplimiento fuera de tiempo,Splitter,% Incumplimiento sobre total agendado
+fecha_apertura,Cliente Reagenda,CONFIRMACION DE VISITA,INCUMPLIMIENTO FUERA DE TIEMPO,Splitter,% incump. sobre total agendado
 2021-08-16,167,1408,699,70,14
 2021-08-17,179,1508,726,80,14
 2021-08-18,190,1611,855,85,15
@@ -171,3 +171,14 @@ fecha_apertura,Cliente Reagenda,Confirmación de visita,Incumplimiento fuera de 
 2022-02-01,153,1076,431,50,9
 2022-02-02,149,1139,479,43,10
 2022-02-03,151,1003,369,47,9
+2022-02-04,132,937,348,47,8
+2022-02-05,104,789,302,38,7
+2022-02-06,69,579,220,34,6
+2022-02-07,122,720,318,52,7
+2022-02-08,90,742,327,47,7
+2022-02-09,154,869,295,35,7
+2022-02-10,135,921,322,43,9
+2022-02-11,146,881,300,32,8
+2022-02-12,156,913,294,33,7
+2022-02-13,101,587,243,26,7
+2022-02-14,115,771,266,39,7

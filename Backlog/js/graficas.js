@@ -1,5 +1,6 @@
 var selecBacklog = 1,
     selecIncumplimiento = 0,
+    selecProductividad = 0; // Agregarlo y considerarlo
     selecTop = 0,
     selec72hrs = 0;
 
@@ -10,6 +11,13 @@ var Fecha_Descarga = [],
     Instalaciones = [],
     Recolecciones = [];
 
+var Fecha_Descarga2 = [],
+    CDD2 = [],
+    ADDON2 = [],
+    Soportes2 = [],
+    Instalaciones2 = [],
+    Recolecciones2 = [];
+
 var fecha_apertura = [],
     incumplimientoAgenda = [],
     splitter = [],
@@ -18,48 +26,32 @@ var fecha_apertura = [],
     confirmacionVisita = [];
 
 var renglones = [],
-    titulos = [];
+    titulos = [],
+    renglones2 = [],
+    titulos2 = [],
+    renglones3 = [],
+    titulos3 = [];
 
 var listaBacklog = ["NACIONAL", "CENTRO-SUR", "NORTE-NORESTE", "OCCIDENTE-BAJIO"],
-    listaPlaza = ["CIUDAD DE MEXICO", "GUADALAJARA", "CIUDAD JUAREZ", "MONTERREY", "SAN LUIS POTOSI",
-                    "TIJUANA", "TOLUCA", "TAMPICO", "PUEBLA", "LEON", "CANCUN", "QUERETARO", "MERIDA",
-                    "CUERNAVACA", "VERACRUZ", "CHIHUAHUA", "SALTILLO", "AGUASCALIENTES", "TUXTLA",
-                    "PACHUCA", "CULIACAN", "CELAYA", "MEXICALI", "IRAPUATO", "XALAPA", "TORREON",
-                    "MAZATLAN", "HERMOSILLO", "GUANAJUATO", "TEPIC", "COATZA / MINA", "PUERTO VALLARTA",
-                    "VILLAHERMOSA", "CORDOBA / ORIZABA", "MORELIA", "COLIMA / MANZANILLO", "REYNOSA",
-                    "POZA RICA", "CIUDAD OBREGON / NAVOJOA", "ACAPULCO"],
-    listaDistrito = ["JUAREZ NORTE", "SAN LUIS POTOSI PONIENTE", "JUAREZ SUR", "TAMPICO",
-                    "SAN LUIS POTOSI ORIENTE", "GDL LAZARO CARDENAS", "GDL LOPEZ MATEOS", "GDL LA PRIMAVERA",
-                    "CENTRO HISTORICO", "TULTITLAN", "GDL COLOMOS", "TULTEPEC", "NUEVA CONDESA",
-                    "MTY SANTA LUCIA", "MTY SENDERO DIVISORIO", "SANTA FE", "TIJ FRONTERA",
-                    "MTY CARRETERA NACIONAL", "ARAGON", "TIJ TECATE", "GUADALUPE TEPEYAC",
-                    "MTY CERRO DE LA SILLA", "CANCUN", "TLALPAN", "QUERETARO", "TOL LERMA SAN MATEO", "DELTA",
-                    "MTY MITRAS", "XOCHIMILCO", "TIJ PLAYAS", "COACALCO", "TIJ RIO", "NICOLAS ROMERO",
-                    "GDL ESTADIO", "VERACRUZ", "PEDREGAL", "TOL SAN CARLOS", "TECAMAC", "CHALCO",
-                    "MTY SIERRA MADRE", "LAS AGUILAS", "SALTILLO", "NEZA 2", "POLANCO", "GDL EL TAPATIO",
-                    "IZTAPALAPA", "MTY AEROPUERTO", "AGUASCALIENTES", "PUE LORETO", "AZCAPOTZALCO",
-                    "MERIDA NORTE", "ECATEPEC", "GDL BARRANCA", "TUXTLA", "PACHUCA", "AEROPUERTO", "TEXCOCO",
-                    "PORTALES", "HUEHUETOCA", "PUE LA NORIA", "CHIHUAHUA DEL RELIZ", "CERRO GORDO", "NEZA 1",
-                    "CELAYA", "SATELITE", "CUERNAVACA BUGAMBILIAS", "CONSTITUCION", "LOS REYES", "MERIDA SUR",
-                    "CUERNAVACA DE CORTEZ", "MEXICALI", "GDL CHAPULTEPEC", "IRAPUATO", "MTY GARCIA", "XALAPA",
-                    "PUE ANGELOPOLIS", "TOL METEPEC", "TLALNEPANTLA", "MAZATLAN", "CULIACAN", "HERMOSILLO",
-                    "GUANAJUATO", "CHIHUAHUA CUMBRES", "TEPIC", "COATZA / MINA", "OJO DE AGUA", "PUERTO VALLARTA",
-                    "VILLAHERMOSA", "CORDOBA / ORIZABA", "NAUCALPAN", "LA LAGUNA GOMEZ", "LOS MOCHIS", "MORELIA",
-                    "COLIMA / MANZANILLO", "LA LAGUNA TORREON", "REYNOSA", "POZA RICA", "CIUDAD OBREGON / NAVOJOA",
-                    "ACAPULCO"];
+    listaPlazas = [];
 
 var aux;
 
 
 $(document).ready(function () {
 
-    // var meses = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+    let valor = "";
 
     // Primera ejecución
-    document.getElementById("backlog").style.backgroundColor = "rgb(25, 86, 255)";
-    document.getElementById("incumplimiento").style.backgroundColor = "rgb(25, 136, 255)";
-    document.getElementById("top").style.backgroundColor = "rgb(25, 136, 255)";
-    document.getElementById("mas72hrs").style.backgroundColor = "rgb(25, 136, 255)";
+    document.getElementById("backlog").style.backgroundColor = "rgb(31, 77, 155)";
+    document.getElementById("incumplimiento").style.backgroundColor = "rgb(63, 124, 191)";
+    document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
+    document.getElementById("mas72hrs").style.backgroundColor = "rgb(63, 124, 191)";
+    $("#imgConecta").hide();
+
+    selecBacklog = 1;
+
+    // llenaListasPlaza();
 
     $("#desPlaza").hide();
     $("#desDistrito").hide();
@@ -67,11 +59,12 @@ $(document).ready(function () {
 
     // Seleccionar menú Backlog
     $("#backlog").click(function() {
-        
-        console.log("Click Backlog");
 
         if (selecTop == 1) {
-            $("#graficas").empty().append("<div class='col-md-12 col-sm-12'><div id='grafica1' class='tamanhoGrafica' style='text-align: center;'></div></div>");
+            $("#desDireccion").show();
+            $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
+                                            + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
+                                            + "</div></div>");
         }
 
         // Coloca bandera de locación
@@ -80,33 +73,63 @@ $(document).ready(function () {
         selecTop = 0;
         selec72hrs = 0;
 
-        document.getElementById("backlog").style.backgroundColor = "rgb(25, 86, 255)";
-        document.getElementById("incumplimiento").style.backgroundColor = "rgb(25, 136, 255)";
-        document.getElementById("top").style.backgroundColor = "rgb(25, 136, 255)";
-        document.getElementById("mas72hrs").style.backgroundColor = "rgb(25, 136, 255)";
+        document.getElementById("backlog").style.backgroundColor = "rgb(31, 77, 155)";
+        document.getElementById("incumplimiento").style.backgroundColor = "rgb(63, 124, 191)";
+        document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
+        document.getElementById("mas72hrs").style.backgroundColor = "rgb(63, 124, 191)";
+        $("#imgConecta").hide();
 
-        $("#opcDireccion").empty();
-        $("#opcDireccion").append("<option selected>NACIONAL</option>");
+        if ($("#desDistrito").is(":visible")) {
 
-        for (let i = 1; i < listaBacklog.length; i++) {
-            $("#opcDireccion").append($("<option>", { value: listaBacklog[i], text: listaBacklog[i] }));
+            valor = $("#opcDistrito option:selected").val();
+
+            if (valor != "Seleccionar") {
+                lecturaCSV("fuentes/Backlog_Distritos.csv", valor);
+            } else {
+                valor = $("#opcPlaza option:selected").val();
+                lecturaCSV("fuentes/Backlog_Plazas.csv", valor);
+            }
+
+        } else if ($("#desPlaza").is(":visible")) {
+
+            valor = $("#opcPlaza option:selected").val();
+
+            if (valor != "Seleccionar") {
+                lecturaCSV("fuentes/Backlog_Plazas.csv", valor);
+            } else {
+
+                valor = $("#opcDireccion option:selected").val();
+
+                if (valor == "NACIONAL") {
+                    dibujaGrafica("fuentes/Backlog_Nacional.csv", "#grafica1", "Fecha_Descarga");
+                } else {
+                    lecturaCSV("fuentes/Backlog_Direcciones.csv", valor);
+                }
+
+            }
+
+        } else {
+
+            valor = $("#opcDireccion option:selected").val();
+
+            if (valor == "NACIONAL") {
+                dibujaGrafica("fuentes/Backlog_Nacional.csv", "#grafica1", "Fecha_Descarga");
+            } else {
+                lecturaCSV("fuentes/Backlog_Direcciones.csv", valor);
+            }
+
         }
-
-        $("#desDireccion").show();
-        $("#desPlaza").hide();
-        $("#desDistrito").hide();
-
-        dibujaGrafica("fuentes/Backlog_Nacional.csv", "#grafica1", "Fecha_Descarga");
 
     });
 
     // Seleccionar menú Incumplimiento
     $("#incumplimiento").click(function () {
 
-        console.log("Click Incumplimiento");
-
         if (selecTop == 1) {
-            $("#graficas").empty().append("<div class='col-md-12 col-sm-12'><div id='grafica1' class='tamanhoGrafica' style='text-align: center;'></div></div>");
+            $("#desDireccion").show();
+            $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
+                                            + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
+                                            + "</div></div>");
         }
 
         // Coloca bandera de locación
@@ -115,30 +138,57 @@ $(document).ready(function () {
         selecTop = 0;
         selec72hrs = 0;
 
-        document.getElementById("backlog").style.backgroundColor = "rgb(25, 136, 255)";
-        document.getElementById("incumplimiento").style.backgroundColor = "rgb(25, 86, 255)";
-        document.getElementById("top").style.backgroundColor = "rgb(25, 136, 255)";
-        document.getElementById("mas72hrs").style.backgroundColor = "rgb(25, 136, 255)";
+        document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
+        document.getElementById("incumplimiento").style.backgroundColor = "rgb(31, 77, 155)";
+        document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
+        document.getElementById("mas72hrs").style.backgroundColor = "rgb(63, 124, 191)";
+        $("#imgConecta").hide();
 
-        $("#opcDireccion").empty();
-        $("#opcDireccion").append("<option selected>NACIONAL</option>");
+        if ($("#desDistrito").is(":visible")) {
 
-        for (let i = 1; i < listaBacklog.length; i++) {
-            $("#opcDireccion").append($("<option>", { value: listaBacklog[i], text: listaBacklog[i] }));
+            valor = $("#opcDistrito option:selected").val();
+
+            if (valor != "Seleccionar") {
+                lecturaCSV("fuentes/Distritos_incumplimientos.csv", valor);
+            } else {
+                valor = $("#opcPlaza option:selected").val();
+                lecturaCSV("fuentes/Plaza_incumplimientos.csv", valor);
+            }
+
+        } else if ($("#desPlaza").is(":visible")) {
+
+            valor = $("#opcPlaza option:selected").val();
+
+            if (valor != "Seleccionar") {
+                lecturaCSV("fuentes/Plaza_incumplimientos.csv", valor);
+            } else {
+
+                valor = $("#opcDireccion option:selected").val();
+
+                if (valor == "NACIONAL") {
+                    lecturaCSV("fuentes/Nacional_incumplimientos.csv", "NACIONAL");
+                } else {
+                    $("#grafica1").html("");
+                }
+
+            }
+
+        } else {
+
+            valor = $("#opcDireccion option:selected").val();
+
+            if (valor == "NACIONAL") {
+                lecturaCSV("fuentes/Nacional_incumplimientos.csv", "NACIONAL");
+            } else {
+                $("#grafica1").html("");
+            }
+
         }
-
-        $("#desDireccion").show();
-        $("#desPlaza").hide();
-        $("#desDistrito").hide();
-
-        lecturaCSV("fuentes/Nacional_incumplimientos.csv", "NACIONAL");
 
     });
 
     // Seleccionar menú Top del día
     $("#top").click(function () {
-
-        console.log("Click Top del día");
 
         $("#graficas").empty().append("<div class='col-md-6 col-sm-12' style='text-align: center;'><strong>"
                                         + "<label for='grafica1'>Top 10 BackLog - Plazas</label></strong><hr>"
@@ -153,10 +203,11 @@ $(document).ready(function () {
         selecTop = 1;
         selec72hrs = 0;
 
-        document.getElementById("backlog").style.backgroundColor = "rgb(25, 136, 255)";
-        document.getElementById("incumplimiento").style.backgroundColor = "rgb(25, 136, 255)";
-        document.getElementById("top").style.backgroundColor = "rgb(25, 86, 255)";
-        document.getElementById("mas72hrs").style.backgroundColor = "rgb(25, 136, 255)";
+        document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
+        document.getElementById("incumplimiento").style.backgroundColor = "rgb(63, 124, 191)";
+        document.getElementById("top").style.backgroundColor = "rgb(31, 77, 155)";
+        document.getElementById("mas72hrs").style.backgroundColor = "rgb(63, 124, 191)";
+        $("#imgConecta").hide();
 
         $("#desDireccion").hide();
         $("#desPlaza").hide();
@@ -170,10 +221,11 @@ $(document).ready(function () {
     // Seleccionar menú Más de 72 hrs
     $("#mas72hrs").click(function () {
 
-        console.log("Click Más de 72 hrs");
-
         if (selecTop == 1) {
-            $("#graficas").empty().append("<div class='col-md-12 col-sm-12'><div id='grafica1' class='tamanhoGrafica' style='text-align: center;'></div></div>");
+            $("#desDireccion").show();
+            $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
+                                            + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
+                                            + "</div></div>");
         }
 
         // Coloca bandera de locación
@@ -182,30 +234,29 @@ $(document).ready(function () {
         selecTop = 0;
         selec72hrs = 1;
 
-        document.getElementById("backlog").style.backgroundColor = "rgb(25, 136, 255)";
-        document.getElementById("incumplimiento").style.backgroundColor = "rgb(25, 136, 255)";
-        document.getElementById("top").style.backgroundColor = "rgb(25, 136, 255)";
-        document.getElementById("mas72hrs").style.backgroundColor = "rgb(25, 86, 255)";
+        document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
+        document.getElementById("incumplimiento").style.backgroundColor = "rgb(63, 124, 191)";
+        document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
+        document.getElementById("mas72hrs").style.backgroundColor = "rgb(31, 77, 155)";
+        $("#imgConecta").hide();
 
-        $("#opcDireccion").empty();
-        $("#opcDireccion").append("<option selected>NACIONAL</option>");
-
-        for (let i = 1; i < listaBacklog.length; i++) {
-            $("#opcDireccion").append($("<option>", { value: listaBacklog[i], text: listaBacklog[i] }));
-        }
-
-        $("#desDireccion").show();
         $("#desPlaza").hide();
         $("#desDistrito").hide();
 
-        dibujaGrafica("fuentes/Backlog_72hrs_Nacional.csv", "#grafica1", "Fecha");
+        valor = $("#opcDireccion option:selected").val();
+
+        if (valor == "NACIONAL") {
+            dibujaGrafica("fuentes/Backlog_72hrs_Nacional.csv", "#grafica1", "Fecha");
+        } else {
+            lecturaCSV("fuentes/Backlog_72hs_Direcciones.csv", valor);
+        }
 
     });
 
     // Select de zonas
     $("#opcDireccion").on("change", function(event) {
 
-        let valor = $("#opcDireccion option:selected").val();
+        valor = $("#opcDireccion option:selected").val();
 
         if (selecBacklog == 1) {
             
@@ -218,20 +269,18 @@ $(document).ready(function () {
                 dibujaGrafica("fuentes/Backlog_Nacional.csv", "#grafica1", "Fecha_Descarga");
     
             } else {
-
-                $("#opcPlaza").empty();
-                $("#opcPlaza").append("<option disable selected>Seleccionar</option>");
-
-                for (let i = 1; i < listaPlaza.length; i++) {
-                    $("#opcPlaza").append($("<option>", { value: listaPlaza[i], text: listaPlaza[i] }));
-                }
-
+                
                 $("#desPlaza").show();
                 $("#desDistrito").hide();
-
+                
                 $("#grafica1").html("");
                 lecturaCSV("fuentes/Backlog_Direcciones.csv", valor);
-    
+                
+                $("#opcPlaza").empty();
+                $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
+
+                llenaListasPlaza(valor);
+
             }
 
         } else if(selecIncumplimiento == 1) {
@@ -247,16 +296,29 @@ $(document).ready(function () {
             } else {
 
                 $("#opcPlaza").empty();
-                $("#opcPlaza").append("<option disable selected>Seleccionar</option>");
+                $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
 
-                for (let i = 1; i < listaPlaza.length; i++) {
-                    $("#opcPlaza").append($("<option>", { value: listaPlaza[i], text: listaPlaza[i] }));
-                }
+                llenaListasPlaza(valor);
 
                 $("#desPlaza").show();
                 $("#desDistrito").hide();
                 $("#grafica1").html("");
 
+            }
+
+        } else if (selecTop == 1) {
+
+            $("#desPlaza").hide();
+            $("#desDistrito").hide();
+
+            $("#grafica1").html("");
+            $("#grafica2").html("");
+
+            if (valor == "NACIONAL") {
+                lecturaCSV("fuentes/TopPlaza.csv", "PLAZAS");
+                lecturaCSV("fuentes/TopDistrito.csv", "DISTRITOS");
+            } else {
+                alert("Falta trabajar esta parte");
             }
 
         } else if (selec72hrs == 1) {
@@ -277,29 +339,27 @@ $(document).ready(function () {
 
     $("#opcPlaza").on("change", function (event) {
 
-        let valor = $("#opcPlaza option:selected").val();
-
-        $("#opcDistrito").empty();
-        $("#opcDistrito").append("<option disable selected>Seleccionar</option>");
-
-        for (let i = 1; i < listaDistrito.length; i++) {
-            $("#opcDistrito").append($("<option>", { value: listaDistrito[i], text: listaDistrito[i] }));
-        }
-
+        valor = $("#opcPlaza option:selected").val();
+        
         $("#desDistrito").show();
         $("#grafica1").html("");
-
+        
         if (selecBacklog == 1) {
             lecturaCSV("fuentes/Backlog_Plazas.csv", valor);
         } else if (selecIncumplimiento == 1) {
             lecturaCSV("fuentes/Plaza_incumplimientos.csv", valor);
         }
+        
+        $("#opcDistrito").empty();
+        $("#opcDistrito").append("<option disabled selected>Seleccionar</option>");
+        
+        llenaListasDIstrito(valor);
 
     });
 
     $("#opcDistrito").on("change", function (event) {
 
-        let valor = $("#opcDistrito option:selected").val();
+        valor = $("#opcDistrito option:selected").val();
 
         $("#grafica1").html("");
 
@@ -487,11 +547,11 @@ function dibujaGraficaBarra(idGrafica) {
             ],
             order: null,
             colors: {
-                confirmacionVisita: "#06336B",
-                incumplimientoFueraTiempo: "#F59809",
-                clienteReagenda: "#108326",
-                splitter: "#C70039",
-                incumplimientoAgenda: "#06336B"
+                confirmacionVisita: "#1E78B6",
+                incumplimientoFueraTiempo: "#FF7E10",
+                clienteReagenda: "#43933E",
+                splitter: "#C72C30",
+                incumplimientoAgenda: "#3D3B3B"
             },
             names: {
                 confirmacionVisita: "Confirmación de visita",
@@ -520,7 +580,10 @@ function dibujaGraficaBarra(idGrafica) {
                 height: 80
             },
             y2: {
-                show: true
+                show: true,
+                tick: {
+                    format: d3.format(",.0%")
+                }
             }
         },
         zoom: {
@@ -536,7 +599,7 @@ function dibujaGraficaBarra(idGrafica) {
 }
 
 
-function dibujaGraficaBarraTop(idGrafica) {
+function dibujaGraficaBarraTop(idGrafica, Fecha_Descarga, Instalaciones, ADDON, Soportes, CDD, Recolecciones) {
 
     var chart = c3.generate({
         bindto: idGrafica,
@@ -597,8 +660,6 @@ function dibujaGraficaBarraTop(idGrafica) {
 
 
 function lecturaCSV(documento, direccion) {
-    
-    console.log(documento);
 
     $.ajax({
         type: "GET",
@@ -617,12 +678,16 @@ function lecturaCSV(documento, direccion) {
 function datosDIreccionSeleccionada(direccionSeleccionada) {
 
     // Limpian los arreglos lineales
-    Fecha_Descarga.length = 0;
-    CDD.length = 0;
-    ADDON.length = 0;
-    Soportes.length = 0;
-    Instalaciones.length = 0;
-    Recolecciones.length = 0;
+    if (direccionSeleccionada != "DISTRITOS") {
+
+        Fecha_Descarga.length = 0;
+        CDD.length = 0;
+        ADDON.length = 0;
+        Soportes.length = 0;
+        Instalaciones.length = 0;
+        Recolecciones.length = 0;
+
+    }
 
     // Limpian los arreglos incumplimiento
     fecha_apertura.length = 0;
@@ -670,7 +735,7 @@ function datosDIreccionSeleccionada(direccionSeleccionada) {
                 fecha_apertura.push(element[0]);
                 confirmacionVisita.push(parseFloat(element[2]));
                 incumplimientoFueraTiempo.push(parseFloat(element[3]));
-                incumplimientoAgenda.push(parseFloat(element[5]));
+                incumplimientoAgenda.push(parseFloat(element[5])/100);
                 splitter.push(parseFloat(element[4]));
                 clienteReagenda.push(parseFloat(element[1]));
     
@@ -687,7 +752,7 @@ function datosDIreccionSeleccionada(direccionSeleccionada) {
                     fecha_apertura.push(element[1]);
                     confirmacionVisita.push(parseFloat(element[3]));
                     incumplimientoFueraTiempo.push(parseFloat(element[4]));
-                    incumplimientoAgenda.push(parseFloat(element[6]));
+                    incumplimientoAgenda.push(parseFloat(element[6])/100);
                     splitter.push(parseFloat(element[5]));
                     clienteReagenda.push(parseFloat(element[2]));
 
@@ -700,30 +765,60 @@ function datosDIreccionSeleccionada(direccionSeleccionada) {
         dibujaGraficaBarra("#grafica1");
 
     } else if (selecTop == 1) {
-
-        CDD.push("CDD");
-        ADDON.push("ADDON");
-        Soportes.push("Soportes");
-        Instalaciones.push("Instalaciones");
-        Recolecciones.push("Recolecciones");
         
-        for (let i = 1; i < renglones.length; i++) {
-
-            const element = renglones[i].split(",");
-
-            Fecha_Descarga.push(element[0]);
-            CDD.push(parseFloat(element[3]));
-            ADDON.push(parseFloat(element[2]));
-            Soportes.push(parseFloat(element[4]));
-            Instalaciones.push(parseFloat(element[1]));
-            Recolecciones.push(parseFloat(element[5]));
-
-        }
-
         if (direccionSeleccionada == "PLAZAS") {
-            dibujaGraficaBarraTop("#grafica1");
+
+            CDD.push("CDD");
+            ADDON.push("ADDON");
+            Soportes.push("Soportes");
+            Instalaciones.push("Instalaciones");
+            Recolecciones.push("Recolecciones");
+            
+            for (let i = 1; i < renglones.length; i++) {
+    
+                const element = renglones[i].split(",");
+    
+                Fecha_Descarga.push(element[0]);
+                CDD.push(parseFloat(element[3]));
+                ADDON.push(parseFloat(element[2]));
+                Soportes.push(parseFloat(element[4]));
+                Instalaciones.push(parseFloat(element[1]));
+                Recolecciones.push(parseFloat(element[5]));
+    
+            }
+
+            dibujaGraficaBarraTop("#grafica1", Fecha_Descarga, Instalaciones, ADDON, Soportes, CDD, Recolecciones);
+
         } else {
-            dibujaGraficaBarraTop("#grafica2");
+
+            Fecha_Descarga2.length = 0;
+            CDD2.length = 0;
+            ADDON2.length = 0;
+            Soportes2.length = 0;
+            Instalaciones2.length = 0;
+            Recolecciones2.length = 0;
+
+            CDD2.push("CDD");
+            ADDON2.push("ADDON");
+            Soportes2.push("Soportes");
+            Instalaciones2.push("Instalaciones");
+            Recolecciones2.push("Recolecciones");
+
+            for (let i = 1; i < renglones.length; i++) {
+
+                const element = renglones[i].split(",");
+
+                Fecha_Descarga2.push(element[0]);
+                CDD2.push(parseFloat(element[3]));
+                ADDON2.push(parseFloat(element[2]));
+                Soportes2.push(parseFloat(element[4]));
+                Instalaciones2.push(parseFloat(element[1]));
+                Recolecciones2.push(parseFloat(element[5]));
+
+            }
+
+            dibujaGraficaBarraTop("#grafica2", Fecha_Descarga2, Instalaciones2, ADDON2, Soportes2, CDD2, Recolecciones2);
+
         }
 
     } else if (selec72hrs == 1) {
@@ -744,6 +839,78 @@ function datosDIreccionSeleccionada(direccionSeleccionada) {
         }
 
         dibujaGraficaJSON72hrs("#grafica1", "Fecha");
+
+    }
+
+}
+
+
+function llenaListasPlaza(direccionSelec) {
+     
+    $.ajax({
+        type: "GET",
+        url: "fuentes/Direccion.csv",
+        dataType: "text",
+        success: function (data) {
+            renglones2 = data.split(/\r\n|\n/);
+            titulos2 = renglones2[0].split(",");
+            listasComboPlaza(direccionSelec);
+        }
+    });
+
+}
+
+
+function listasComboPlaza(direccionSelec) {
+    
+    let datoRepetido = "";
+
+    listaPlazas.length = 0;
+
+    for (let i = 1; i < renglones2.length; i++) {
+
+        const element = renglones2[i].split(",");
+
+        if (element[0] == direccionSelec) {
+
+            if ((listaPlazas.length == 0) || (element[1] != datoRepetido)) {
+                datoRepetido = element[1];
+                listaPlazas.push(element[1]);
+                $("#opcPlaza").append($("<option>", { value: element[1], text: element[1] }));
+            }
+
+        }
+
+    }
+
+}
+
+
+function llenaListasDIstrito(plazaSeleccionada) {
+
+    $.ajax({
+        type: "GET",
+        url: "fuentes/Direccion.csv",
+        dataType: "text",
+        success: function (data) {
+            renglones3 = data.split(/\r\n|\n/);
+            titulos3 = renglones2[0].split(",");
+            listasComboDistrito(plazaSeleccionada);
+        }
+    });
+
+}
+
+
+function listasComboDistrito(plazaSeleccionada) {
+
+    for (let i = 1; i < renglones3.length; i++) {
+
+        const element = renglones3[i].split(",");
+
+        if (element[1] == plazaSeleccionada) {
+            $("#opcDistrito").append($("<option>", { value: element[2], text: element[2] }));
+        }
 
     }
 

@@ -21,26 +21,58 @@
 
 <body>
 
-    <div class="row">
-        <div class="menuPrincipal">
-            <div>
-                <img src="img/tp_residencial.png" alt="totalplay_residencial" style="height: 70px;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid menuPrincipal">
+    
+            <a class="navbar-brand" href="#">
+                <img src="img/LOGO_TP_Residencial.jpg" class="logo" style="height: 70px;" />
+            </a>
+    
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">
+                            <div class="nombreMenu" id="backlog">
+                                <strong class="textoMenu">Backlog</strong>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">
+                            <div class="nombreMenu" id="incumplimiento">
+                                <strong class="textoMenu">Incumplimiento</strong>
+                            </div>
+                        </a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">
+                            <div class="nombreMenu" id="productividad">
+                                <strong class="textoMenu">Productividad</strong>
+                            </div>
+                        </a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">
+                            <div class="nombreMenu" id="top">
+                                <strong class="textoMenu">Top del día</strong>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">
+                            <div class="nombreMenu" id="mas72hrs">
+                                <strong class="textoMenu">Más de 72 hrs</strong>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <img src="img/CONECTA_MAS.png" alt="conecta_mas" style="height: 70px;" id="imgConecta">
+                </form>
             </div>
-            <div class="nombreMenu" id="backlog">
-                <strong class="textoMenu">Backlog</strong>
-            </div>
-            <div class="nombreMenu" id="incumplimiento">
-                <strong class="textoMenu">Incumplimiento</strong>
-            </div>
-            <div class="nombreMenu" id="top">
-                <strong class="textoMenu">Top del día</strong>
-            </div>
-            <div class="nombreMenu" id="mas72hrs">
-                <strong class="textoMenu">Más de 72 hrs</strong>
-            </div>
-            <!-- <img src="img/tp_triangulo.png" style="height: 100px; text-align: right;"> -->
+    
         </div>
-    </div>
+    </nav>
 
     <br>
 
@@ -86,10 +118,7 @@
                 </div>
                 <div class="col-md-10 col-sm-12">
                     <form>
-                        <select name="opcDistrito" id="opcDistrito" class="form-control-select"
-                            style="width: 300px; margin-right: 20px;">
-                            <option selected>BACKLOG</option>
-                            <option>INCUMPLIMIENTO</option>
+                        <select name="opcDistrito" id="opcDistrito" class="form-control-select" style="width: 300px; margin-right: 20px;">
                         </select>
                     </form>
                 </div>
