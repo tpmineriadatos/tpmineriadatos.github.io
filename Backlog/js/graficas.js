@@ -43,7 +43,7 @@ $(document).ready(function () {
     let valor = "";
 
     // Primera ejecución
-    document.getElementById("productividad").style.backgroundColor = "rgb(63, 124, 191)";
+    // document.getElementById("productividad").style.backgroundColor = "rgb(63, 124, 191)";
     document.getElementById("backlog").style.backgroundColor = "rgb(31, 77, 155)";
     document.getElementById("incumplimiento").style.backgroundColor = "rgb(63, 124, 191)";
     document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
