@@ -43,15 +43,14 @@ $(document).ready(function () {
     let valor = "";
 
     // Primera ejecución
+    document.getElementById("productividad").style.backgroundColor = "rgb(63, 124, 191)";
     document.getElementById("backlog").style.backgroundColor = "rgb(31, 77, 155)";
     document.getElementById("incumplimiento").style.backgroundColor = "rgb(63, 124, 191)";
     document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
     document.getElementById("mas72hrs").style.backgroundColor = "rgb(63, 124, 191)";
-    $("#imgConecta").hide();
+    // $("#imgConecta").hide();
 
     selecBacklog = 1;
-
-    // llenaListasPlaza();
 
     $("#desPlaza").hide();
     $("#desDistrito").hide();
@@ -65,7 +64,39 @@ $(document).ready(function () {
             $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
                                             + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
                                             + "</div></div>");
-        }
+        } else if (selec72hrs == 1) {
+            
+            valor = $("#opcDireccion option:selected").val();
+
+            if (valor != "NACIONAL") {
+
+                $("#desPlaza").show();
+                $("#desDistrito").hide();
+
+                $("#opcPlaza").empty();
+                $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
+
+                llenaListasPlaza(valor);
+
+            }
+
+        }// else if (selecTop == 1) {
+
+        //     valor = $("#opcDireccion option:selected").val();
+
+        //     if (valor != "NACIONAL") {
+
+        //         $("#desPlaza").show();
+        //         $("#desDistrito").hide();
+
+        //         $("#opcPlaza").empty();
+        //         $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
+
+        //         llenaListasPlaza(valor);
+
+        //     }
+
+        // }
 
         // Coloca bandera de locación
         selecBacklog = 1;
@@ -130,7 +161,39 @@ $(document).ready(function () {
             $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
                                             + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
                                             + "</div></div>");
-        }
+        } else if (selec72hrs == 1) {
+
+            valor = $("#opcDireccion option:selected").val();
+
+            if (valor != "NACIONAL") {
+
+                $("#desPlaza").show();
+                $("#desDistrito").hide();
+
+                $("#opcPlaza").empty();
+                $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
+
+                llenaListasPlaza(valor);
+
+            }
+
+        }// else if (selecTop == 1) {
+
+        //     valor = $("#opcDireccion option:selected").val();
+
+        //     if (valor != "NACIONAL") {
+
+        //         $("#desPlaza").show();
+        //         $("#desDistrito").hide();
+
+        //         $("#opcPlaza").empty();
+        //         $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
+
+        //         llenaListasPlaza(valor);
+
+        //     }
+
+        // }
 
         // Coloca bandera de locación
         selecBacklog = 0;
@@ -588,6 +651,63 @@ function dibujaGraficaBarra(idGrafica) {
         },
         zoom: {
             enabled: true
+        },
+        tooltip: {
+            contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
+
+                function key_for_sum(arr) {
+                    
+                    let valor = (arr.id == "incumplimientoAgenda") ? 0 : arr.value;
+                    return valor; //value is the key
+
+                }
+
+                function sum(prev, next) {
+                    return prev + next;
+                }
+
+                var totals_object = {};
+                totals_object.x = d[0]['x'];
+                totals_object.value = d.map(key_for_sum).reduce(sum);// sum func
+                totals_object.name = 'Total';//total will be shown in tooltip
+                totals_object.index = d[0]['index'];
+                totals_object.id = 'total';//c3 will use this
+                d.push(totals_object);
+
+                var $$ = this,
+                    config = $$.config,
+                    titleFormat = config.tooltip_format_title || defaultTitleFormat,
+                    nameFormat = config.tooltip_format_name || function (name) {
+                        return name;
+                    },
+                    valueFormat = config.tooltip_format_value || defaultValueFormat,
+                    text, i, title, value, name, bgcolor;
+
+                for (i = 0; i < d.length; i++) {
+
+                    if (!(d[i] && (d[i].value || d[i].value === 0))) {
+                        continue;
+                    }
+
+                    if (!text) {
+                        title = titleFormat ? titleFormat(d[i].x) : d[i].x;
+                        text = "<table class='" + $$.CLASS.tooltip + "'>" + (title || title === 0 ? "<tr><th colspan='2'>" + title + "</th></tr>" : "");
+                    }
+
+                    name = nameFormat(d[i].name);
+                    value = valueFormat(d[i].value, d[i].ratio, d[i].id, d[i].index);
+                    bgcolor = $$.levelColor ? $$.levelColor(d[i].value) : color(d[i].id);
+                    text += "<tr class='" + $$.CLASS.tooltipName + "-" + d[i].id + "'>";
+                    text += "<td class='name'><span style='background-color:" + bgcolor + "'></span>" + name + "</td>";
+                    text += "<td class='value'>" + value + "</td>";
+                    text += "</tr>";
+                    
+                }
+
+                return text + "</table>";
+
+            }
+
         }
 
     });
@@ -612,6 +732,13 @@ function dibujaGraficaBarraTop(idGrafica, Fecha_Descarga, Instalaciones, ADDON, 
                 Recolecciones
             ],
             type: "bar",
+            labels: {
+                format: {
+                    Recolecciones: function (v, id, i, j) {
+                        return (Instalaciones[i + 1] + ADDON[i + 1] + Soportes[i + 1] + CDD[i + 1] + Recolecciones[i + 1]);
+                    },
+                }
+            },
             groups: [
                 ["Instalaciones", "ADDON", "Soportes", "CDD", "Recolecciones"]
             ],
