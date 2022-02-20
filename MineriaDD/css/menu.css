@@ -1,0 +1,123 @@
+.menuPrincipal {
+    background-color: rgb(63, 124, 191);
+    display: flex;
+    height: 70px;
+}
+
+.nombreBacklog {
+    color: whitesmoke;
+    margin-left: 15px;
+    margin-right: 20px;
+    margin-top: 7px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 30px;
+    height: 100%;
+}
+
+.nombreMenu {
+    text-align: center;
+    color: whitesmoke;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 70px;
+    width: 150px;
+    display: inline-grid;
+    cursor: pointer;
+}
+
+/* .nombreMenu:hover {
+    background-color: rgb(25, 86, 255)
+} */
+
+.textoMenu {
+    margin-top: 20px;
+}
+
+.tamanhoGrafica {
+    height: 500px;
+    width: 1500px;
+}
+
+.tamanhoGrafica2 {
+    height: 500px;
+    width: 750px;
+}
+
+.form-control-select {
+    width: 100%;
+    height: calc(1.60rem + 2px);
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    width: 300px;
+    margin-right: 20px;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+    .form-control-select {
+        transition: none;
+    }
+}
+
+.form-control-select::-ms-expand {
+    background-color: transparent;
+    border: 0;
+}
+
+.form-control-select:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #041d49;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(4, 29, 73, 0.25);
+}
+
+/* #grafica1 .c3-line-CDD {
+  stroke-width: 5px;
+} */
+
+/* // ----------------------------------------------------------- */
+
+.green {
+    color: black\9;
+    background-color: #D5E5B4;
+}
+
+.yellow {
+    color: black\9;
+    background-color: #FBEAB6;
+}
+
+.red {
+    color: black\9;
+    background-color: #F7B9BA;
+}
+
+.green:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .green:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
+    color: black;
+    background-color: #D5E5B4;
+}
+
+.yellow:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .yellow:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
+    color: black;
+    background-color: #FBEAB6;
+}
+
+.red:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .red:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
+    color: black;
+    background-color: #F7B9BA;
+}
+
+.red:hover {
+    color: black;
+}
+
+.tituloGris {
+    color: #555759;
+    font-weight: bold;
+    font-size: 15px;
+}
