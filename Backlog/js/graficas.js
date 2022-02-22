@@ -1489,8 +1489,7 @@ function dibujaGraficaBarraTop(idGrafica, Fecha_Descarga, Instalaciones, ADDON, 
 }
 
 
-function dibujaGraficaBarraTopIncum(idGrafica, fecha_apertura, confirmacionVisita,
-incumplimientoFueraTiempo, clienteReagenda, splitter) {
+function dibujaGraficaBarraTopIncum(idGrafica, fecha_apertura, confirmacionVisita, incumplimientoFueraTiempo, clienteReagenda, splitter) {
 
     var chart = c3.generate({
         bindto: idGrafica,
@@ -1599,24 +1598,25 @@ function lecturaCSV(documento, direccion) {
 function datosDIreccionSeleccionada(direccionSeleccionada) {
 
     // Limpian los arreglos lineales
-    if ((direccionSeleccionada != "DISTRITOS") && (direccionSeleccionada != "TOPD")) {
+    Fecha_Descarga.length = 0;
+    CDD.length = 0;
+    ADDON.length = 0;
+    Soportes.length = 0;
+    Instalaciones.length = 0;
+    Recolecciones.length = 0;
 
-        Fecha_Descarga.length = 0;
-        CDD.length = 0;
-        ADDON.length = 0;
-        Soportes.length = 0;
-        Instalaciones.length = 0;
-        Recolecciones.length = 0;
-
-    }
 
     // Limpian los arreglos incumplimiento
-    fecha_apertura.length = 0;
-    incumplimientoAgenda.length = 0;
-    splitter.length = 0;
-    clienteReagenda.length = 0;
-    incumplimientoFueraTiempo.length = 0;
-    confirmacionVisita.length = 0;
+    if (selecTop != 1) {
+        
+        fecha_apertura.length = 0;
+        incumplimientoAgenda.length = 0;
+        splitter.length = 0;
+        clienteReagenda.length = 0;
+        incumplimientoFueraTiempo.length = 0;
+        confirmacionVisita.length = 0;
+
+    }
 
     if (selecBacklog == 1) {
         
@@ -1691,6 +1691,13 @@ function datosDIreccionSeleccionada(direccionSeleccionada) {
         
         if (direccionSeleccionada == "PLAZAS") {
 
+            fecha_apertura.length = 0;
+            incumplimientoAgenda.length = 0;
+            splitter.length = 0;
+            clienteReagenda.length = 0;
+            incumplimientoFueraTiempo.length = 0;
+            confirmacionVisita.length = 0;
+
             confirmacionVisita.push("confirmacionVisita");
             incumplimientoFueraTiempo.push("incumplimientoFueraTiempo");
             incumplimientoAgenda.push("incumplimientoAgenda");
@@ -1747,6 +1754,13 @@ function datosDIreccionSeleccionada(direccionSeleccionada) {
             dibujaGraficaBarraTop("#grafica1", Fecha_Descarga2, Instalaciones2, ADDON2, Soportes2, CDD2, Recolecciones2);
 
         } else if (direccionSeleccionada == "TOPP") {
+
+            fecha_apertura.length = 0;
+            incumplimientoAgenda.length = 0;
+            splitter.length = 0;
+            clienteReagenda.length = 0;
+            incumplimientoFueraTiempo.length = 0;
+            confirmacionVisita.length = 0;
 
             confirmacionVisita.push("confirmacionVisita");
             incumplimientoFueraTiempo.push("incumplimientoFueraTiempo");
