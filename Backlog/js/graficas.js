@@ -1,6 +1,6 @@
-var selecBacklog = 0,
+var selecBacklog = 1,
     selecIncumplimiento = 0,
-    selecProductividad = 1; // Agregarlo y considerarlo
+    selecProductividad = 0; // Agregarlo y considerarlo
     selecTop = 0,
     selec72hrs = 0;
 
