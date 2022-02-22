@@ -49,7 +49,7 @@ var btnAplicado = 1,
     semanaAct = "";
 
 
-var aux;
+var aux, aux2;
 
 
 $(document).ready(function () {
@@ -73,6 +73,7 @@ $(document).ready(function () {
     $("#desDistrito").hide();
 
     obtieneDatos();
+    obtieneFechas("fuentes/Backlog_Nacional.csv");
     // dibujaGrafica("fuentes/Backlog_Nacional.csv", "#grafica1", "Fecha_Descarga");
 
     // Seleccionar menú Desempeño
@@ -130,18 +131,18 @@ $(document).ready(function () {
     });
 
     // Seleccionar menú Backlog
-    $("#backlog").click(function() {
+    $("#backlog").click(function () {
 
         $("#desDireccion").show();
 
         if (selecIncumplimiento != 1) {
-            
+
             if (selecTop == 1) {
                 $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
-                                                + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
-                                                + "</div></div>");
+                    + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
+                    + "</div></div>");
             } else if (selecProductividad == 1) {
-    
+
                 $("#divGrafica").show();
                 $("#divBtnDetalle").hide();
                 $("#divTabla").hide();
@@ -151,7 +152,7 @@ $(document).ready(function () {
                 $("#desPlaza").hide();
                 $("#desDistrito").hide();
                 $("#kpiTodos").hide();
-                
+
             }
 
             valor = $("#opcDireccion option:selected").val();
@@ -342,11 +343,14 @@ $(document).ready(function () {
         }
 
         $("#graficas").empty().append("<div class='col-md-6 col-sm-12' style='text-align: center;'><strong>"
-                                        + "<label for='grafica1'>Top 10 BackLog - Plazas</label></strong><hr>"
+                                        + "<label id='lblgrafica1' for='grafica1'>Top 10 BackLog - Plazas</label></strong><hr>"
                                         + "<div id='grafica1' class='tamanhoGrafica2'></div></div>"
                                         + "<div class='col-md-6 col-sm-12' style='text-align: center;'><strong>"
-                                        + "<label for='grafica2'>Top 20 Backlog - Distritos</label></strong><hr>"
+                                        + "<label id='lblgrafica2' for='grafica2'>Top 20 Backlog - Distritos</label></strong><hr>"
                                         + "<div id='grafica2' class='tamanhoGrafica2'></div></div>");
+
+        $("#lblgrafica1").html("Top 20 Distritos - Backlog<br>Actualización: " + convierteFecha(fechaHoy));
+        $("#lblgrafica2").html("Top 20 Distritos - Incumplimiento<br>Actualización: " + convierteFecha(fechaAyer));
 
         // Coloca bandera de locación
         selecProductividad = 0;
@@ -368,11 +372,12 @@ $(document).ready(function () {
         valor = $("#opcDireccion option:selected").val();
 
         if (valor == "NACIONAL") {
-            lecturaCSV("fuentes/TopPlaza.csv", "PLAZAS");
             lecturaCSV("fuentes/TopDistrito.csv", "DISTRITOS");
+            lecturaCSV("fuentes/TopIncumplimientos.csv", "PLAZAS");
         } else {
-            lecturaCSV("fuentes/TopDirPlazas.csv", "TOPP");
+            $("#lblgrafica2").html("Top 15 Distritos - Incumplimiento<br>Actualización: " + convierteFecha(fechaAyer));
             lecturaCSV("fuentes/TopDirDistritos.csv", "TOPD");
+            lecturaCSV("fuentes/TopIncumplimientos.csv", "TOPP");
         }
 
     });
@@ -382,8 +387,8 @@ $(document).ready(function () {
 
         if (selecTop == 1) {
             $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
-                                            + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
-                                            + "</div></div>");
+                + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
+                + "</div></div>");
         } else if (selecProductividad == 1) {
 
             $("#divGrafica").show();
@@ -437,14 +442,14 @@ $(document).ready(function () {
     });
 
     // Select de zonas
-    $("#opcDireccion").on("change", function(event) {
+    $("#opcDireccion").on("change", function (event) {
 
         valor = $("#opcDireccion option:selected").val();
 
         $("#lblOpcPlaza").html("Plaza");
 
         if (selecBacklog == 1) {
-            
+
             if (valor == "NACIONAL") {
 
                 $("#desPlaza").hide();
@@ -452,15 +457,15 @@ $(document).ready(function () {
 
                 $("#grafica1").html("");
                 dibujaGrafica("fuentes/Backlog_Nacional.csv", "#grafica1", "Fecha_Descarga");
-    
+
             } else {
-                
+
                 $("#desPlaza").show();
                 $("#desDistrito").hide();
-                
+
                 $("#grafica1").html("");
                 lecturaCSV("fuentes/Backlog_Direcciones.csv", valor);
-                
+
                 $("#opcPlaza").empty();
                 $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
 
@@ -468,7 +473,7 @@ $(document).ready(function () {
 
             }
 
-        } else if(selecIncumplimiento == 1) {
+        } else if (selecIncumplimiento == 1) {
 
             if (valor == "NACIONAL") {
 
@@ -500,11 +505,14 @@ $(document).ready(function () {
             $("#grafica2").html("");
 
             if (valor == "NACIONAL") {
-                lecturaCSV("fuentes/TopPlaza.csv", "PLAZAS");
+                $("#lblgrafica2").html("Top 20 Distritos - Incumplimiento<br>Actualización: " + convierteFecha(fechaAyer));
                 lecturaCSV("fuentes/TopDistrito.csv", "DISTRITOS");
+                lecturaCSV("fuentes/TopIncumplimientos.csv", "PLAZAS");
             } else {
-                lecturaCSV("fuentes/TopDirPlazas.csv", "TOPP");
+                $("#lblgrafica2").html("Top 15 Distritos - Incumplimiento<br>Actualización: " + convierteFecha(fechaAyer));
                 lecturaCSV("fuentes/TopDirDistritos.csv", "TOPD");
+                lecturaCSV("fuentes/TopIncumplimientos.csv", "TOPP");
+
             }
 
         } else if (selec72hrs == 1) {
@@ -548,25 +556,25 @@ $(document).ready(function () {
     $("#opcPlaza").on("change", function (event) {
 
         valor = $("#opcPlaza option:selected").val();
-        
+
         $("#desDistrito").show();
         $("#grafica1").html("");
 
         if (selecProductividad != 1) {
-            
+
             if (selecBacklog == 1) {
                 lecturaCSV("fuentes/Backlog_Plazas.csv", valor);
             } else if (selecIncumplimiento == 1) {
                 lecturaCSV("fuentes/Plaza_incumplimientos.csv", valor);
             }
-            
+
             $("#opcDistrito").empty();
             $("#opcDistrito").append("<option disabled selected>Seleccionar</option>");
-            
+
             llenaListasDIstrito(valor);
 
         } else {
-            
+
             mostrarTablaFiltro(valor, "region");
 
             $("#opcDistrito").empty();
@@ -577,7 +585,7 @@ $(document).ready(function () {
             $("#kpiDistrito").html("");
 
         }
-        
+
 
     });
 
@@ -588,7 +596,7 @@ $(document).ready(function () {
         if (selecProductividad != 1) {
 
             $("#grafica1").html("");
-    
+
             if (selecBacklog == 1) {
                 lecturaCSV("fuentes/Backlog_Distritos.csv", valor);
             } else if (selecIncumplimiento == 1) {
@@ -1070,12 +1078,19 @@ function imprimeTabla(datos, combo) {
 
     });
 
-    // $("#contenidoTabla").on("filter", function(event) {
+    $("#contenidoTabla").on("filter", function (event) {
 
-    //     console.log(event);
-    //     aux = $("#contenidoTabla").jqxGrid('getfilterinformation');
+        console.log(event);
+        aux2 = event;
+        aux = $("#contenidoTabla").jqxGrid('getfilterinformation');
 
-    // });
+    });
+
+    $('#contenidoTabla').on('rowclick', function (event) {
+        // event.args.rowindex is a bound index.
+        aux2 = event;
+        alert("Se seleccionó el supervisor: " + event.args.row.bounddata.nombresupervisor);
+    });
 
 
     /**
@@ -1406,7 +1421,7 @@ function dibujaGraficaBarra(idGrafica) {
             contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
 
                 function key_for_sum(arr) {
-                    
+
                     let valor = (arr.id == "incumplimientoAgenda") ? 0 : arr.value;
                     return valor; //value is the key
 
@@ -1451,7 +1466,7 @@ function dibujaGraficaBarra(idGrafica) {
                     text += "<td class='name'><span style='background-color:" + bgcolor + "'></span>" + name + "</td>";
                     text += "<td class='value'>" + value + "</td>";
                     text += "</tr>";
-                    
+
                 }
 
                 return text + "</table>";
@@ -1536,6 +1551,96 @@ function dibujaGraficaBarraTop(idGrafica, Fecha_Descarga, Instalaciones, ADDON, 
 }
 
 
+function dibujaGraficaBarraTopIncum(idGrafica, fecha_apertura, confirmacionVisita, incumplimientoFueraTiempo, clienteReagenda, splitter) {
+
+    var chart = c3.generate({
+        bindto: idGrafica,
+        data: {
+            columns: [
+                confirmacionVisita,
+                incumplimientoFueraTiempo,
+                clienteReagenda,
+                splitter,
+                incumplimientoAgenda
+            ],
+            type: "bar",
+            types: {
+                incumplimientoAgenda: 'line',
+            },
+            axes: {
+                confirmacionVisita: "y",
+                incumplimientoFueraTiempo: "y",
+                clienteReagenda: "y",
+                splitter: "y",
+                incumplimientoAgenda: "y2",
+            },
+            // labels: {
+            //     format: {
+            //         incumplimientoAgenda: function (v, id, i, j) {
+            //             return ((incumplimientoAgenda[i + 1] * 100) + "%");
+            //         },
+            //     }
+            // },
+            groups: [
+                ["confirmacionVisita", "incumplimientoFueraTiempo", "clienteReagenda", "splitter"]
+            ],
+            order: null,
+            colors: {
+                confirmacionVisita: "#1E78B6",
+                incumplimientoFueraTiempo: "#FF7E10",
+                clienteReagenda: "#43933E",
+                splitter: "#C72C30",
+                incumplimientoAgenda: "#3D3B3B"
+            },
+            names: {
+                confirmacionVisita: "Confirmación de visita",
+                incumplimientoFueraTiempo: "Incumplimiento fuera de tiempo",
+                clienteReagenda: "Cliente reagenda",
+                splitter: "Splitter",
+                incumplimientoAgenda: "% Incumplimiento sobre total agendado"
+            }
+        },
+        bar: {
+            with: {
+                ratio: 0.5
+            }
+        },
+        axis: {
+            x: {
+                type: 'category',
+                categories: fecha_apertura,
+                tick: {
+                    rotate: -90,
+                    multiline: false
+                },
+                height: 80
+            },
+            y2: {
+                show: true,
+                tick: {
+                    format: d3.format(",.0%")
+                }
+            },
+            rotated: true
+        },
+        grid: {
+            y: {
+                show: true
+            }
+        },
+        zoom: {
+            enabled: true
+        }
+
+    });
+
+    setTimeout(function () {
+        chart.resize();
+    }, 300);
+
+}
+
+
 function lecturaCSV(documento, direccion) {
 
     $.ajax({
@@ -1555,44 +1660,45 @@ function lecturaCSV(documento, direccion) {
 function datosDIreccionSeleccionada(direccionSeleccionada) {
 
     // Limpian los arreglos lineales
-    if ((direccionSeleccionada != "DISTRITOS") && (direccionSeleccionada != "TOPD")) {
+    Fecha_Descarga.length = 0;
+    CDD.length = 0;
+    ADDON.length = 0;
+    Soportes.length = 0;
+    Instalaciones.length = 0;
+    Recolecciones.length = 0;
 
-        Fecha_Descarga.length = 0;
-        CDD.length = 0;
-        ADDON.length = 0;
-        Soportes.length = 0;
-        Instalaciones.length = 0;
-        Recolecciones.length = 0;
+
+    // Limpian los arreglos incumplimiento
+    if (selecTop != 1) {
+
+        fecha_apertura.length = 0;
+        incumplimientoAgenda.length = 0;
+        splitter.length = 0;
+        clienteReagenda.length = 0;
+        incumplimientoFueraTiempo.length = 0;
+        confirmacionVisita.length = 0;
 
     }
 
-    // Limpian los arreglos incumplimiento
-    fecha_apertura.length = 0;
-    incumplimientoAgenda.length = 0;
-    splitter.length = 0;
-    clienteReagenda.length = 0;
-    incumplimientoFueraTiempo.length = 0;
-    confirmacionVisita.length = 0;
-
     if (selecBacklog == 1) {
-        
+
         for (let i = 1; i < renglones.length; i++) {
-    
+
             const element = renglones[i].split(",");
-    
+
             if (element[0] == direccionSeleccionada) {
-    
+
                 Fecha_Descarga.push(element[1]);
                 CDD.push(parseFloat(element[2]));
                 ADDON.push(parseFloat(element[3]));
                 Soportes.push(parseFloat(element[4]));
                 Instalaciones.push(parseFloat(element[5]));
                 Recolecciones.push(parseFloat(element[6]));
-    
+
             }
-            
+
         }
-    
+
         dibujaGraficaJSON("#grafica1", "Fecha_Descarga");
 
     } else if (selecIncumplimiento == 1) {
@@ -1606,20 +1712,20 @@ function datosDIreccionSeleccionada(direccionSeleccionada) {
         if (direccionSeleccionada == "NACIONAL") {
 
             for (let i = 1; i < renglones.length; i++) {
-    
+
                 const element = renglones[i].split(",");
-    
+
                 fecha_apertura.push(element[0]);
                 confirmacionVisita.push(parseFloat(element[2]));
                 incumplimientoFueraTiempo.push(parseFloat(element[3]));
-                incumplimientoAgenda.push(parseFloat(element[5])/100);
+                incumplimientoAgenda.push(parseFloat(element[5]) / 100);
                 splitter.push(parseFloat(element[4]));
                 clienteReagenda.push(parseFloat(element[1]));
-    
+
             }
 
         } else {
-            
+
             for (let i = 1; i < renglones.length; i++) {
 
                 const element = renglones[i].split(",");
@@ -1629,44 +1735,55 @@ function datosDIreccionSeleccionada(direccionSeleccionada) {
                     fecha_apertura.push(element[1]);
                     confirmacionVisita.push(parseFloat(element[3]));
                     incumplimientoFueraTiempo.push(parseFloat(element[4]));
-                    incumplimientoAgenda.push(parseFloat(element[6])/100);
+                    incumplimientoAgenda.push(parseFloat(element[6]) / 100);
                     splitter.push(parseFloat(element[5]));
                     clienteReagenda.push(parseFloat(element[2]));
 
                 }
 
             }
-            
+
         }
-        
+
         dibujaGraficaBarra("#grafica1");
 
     } else if (selecTop == 1) {
 
         let valor = $("#opcDireccion option:selected").val();
-        
+
         if (direccionSeleccionada == "PLAZAS") {
 
-            CDD.push("CDD");
-            ADDON.push("ADDON");
-            Soportes.push("Soportes");
-            Instalaciones.push("Instalaciones");
-            Recolecciones.push("Recolecciones");
-            
+            fecha_apertura.length = 0;
+            incumplimientoAgenda.length = 0;
+            splitter.length = 0;
+            clienteReagenda.length = 0;
+            incumplimientoFueraTiempo.length = 0;
+            confirmacionVisita.length = 0;
+
+            confirmacionVisita.push("confirmacionVisita");
+            incumplimientoFueraTiempo.push("incumplimientoFueraTiempo");
+            incumplimientoAgenda.push("incumplimientoAgenda");
+            splitter.push("splitter");
+            clienteReagenda.push("clienteReagenda");
+
             for (let i = 1; i < renglones.length; i++) {
-    
+
                 const element = renglones[i].split(",");
-    
-                Fecha_Descarga.push(element[0]);
-                CDD.push(parseFloat(element[3]));
-                ADDON.push(parseFloat(element[2]));
-                Soportes.push(parseFloat(element[4]));
-                Instalaciones.push(parseFloat(element[1]));
-                Recolecciones.push(parseFloat(element[5]));
-    
+
+                if (element[0] == valor) {
+
+                    fecha_apertura.push(element[1]);
+                    confirmacionVisita.push(parseFloat(element[3]));
+                    incumplimientoFueraTiempo.push(parseFloat(element[4]));
+                    incumplimientoAgenda.push(parseFloat(element[6]) / 100);
+                    splitter.push(parseFloat(element[5]));
+                    clienteReagenda.push(parseFloat(element[2]));
+
+                }
+
             }
 
-            dibujaGraficaBarraTop("#grafica1", Fecha_Descarga, Instalaciones, ADDON, Soportes, CDD, Recolecciones);
+            dibujaGraficaBarraTopIncum("#grafica2", fecha_apertura, confirmacionVisita, incumplimientoFueraTiempo, clienteReagenda, splitter);
 
         } else if (direccionSeleccionada == "DISTRITOS") {
 
@@ -1696,36 +1813,41 @@ function datosDIreccionSeleccionada(direccionSeleccionada) {
 
             }
 
-            dibujaGraficaBarraTop("#grafica2", Fecha_Descarga2, Instalaciones2, ADDON2, Soportes2, CDD2, Recolecciones2);
+            dibujaGraficaBarraTop("#grafica1", Fecha_Descarga2, Instalaciones2, ADDON2, Soportes2, CDD2, Recolecciones2);
 
         } else if (direccionSeleccionada == "TOPP") {
 
-            console.log("valor top", valor);
+            fecha_apertura.length = 0;
+            incumplimientoAgenda.length = 0;
+            splitter.length = 0;
+            clienteReagenda.length = 0;
+            incumplimientoFueraTiempo.length = 0;
+            confirmacionVisita.length = 0;
 
-            CDD.push("CDD");
-            ADDON.push("ADDON");
-            Soportes.push("Soportes");
-            Instalaciones.push("Instalaciones");
-            Recolecciones.push("Recolecciones");
+            confirmacionVisita.push("confirmacionVisita");
+            incumplimientoFueraTiempo.push("incumplimientoFueraTiempo");
+            incumplimientoAgenda.push("incumplimientoAgenda");
+            splitter.push("splitter");
+            clienteReagenda.push("clienteReagenda");
 
             for (let i = 1; i < renglones.length; i++) {
 
                 const element = renglones[i].split(",");
 
                 if (element[0] == valor) {
-                    
-                    Fecha_Descarga.push(element[1]);
-                    CDD.push(parseFloat(element[4]));
-                    ADDON.push(parseFloat(element[3]));
-                    Soportes.push(parseFloat(element[5]));
-                    Instalaciones.push(parseFloat(element[2]));
-                    Recolecciones.push(parseFloat(element[6]));
+
+                    fecha_apertura.push(element[1]);
+                    confirmacionVisita.push(parseFloat(element[3]));
+                    incumplimientoFueraTiempo.push(parseFloat(element[4]));
+                    incumplimientoAgenda.push(parseFloat(element[6]) / 100);
+                    splitter.push(parseFloat(element[5]));
+                    clienteReagenda.push(parseFloat(element[2]));
 
                 }
 
             }
 
-            dibujaGraficaBarraTop("#grafica1", Fecha_Descarga, Instalaciones, ADDON, Soportes, CDD, Recolecciones);
+            dibujaGraficaBarraTopIncum("#grafica2", fecha_apertura, confirmacionVisita, incumplimientoFueraTiempo, clienteReagenda, splitter);
 
         } else if (direccionSeleccionada == "TOPD") {
 
@@ -1759,12 +1881,12 @@ function datosDIreccionSeleccionada(direccionSeleccionada) {
 
             }
 
-            dibujaGraficaBarraTop("#grafica2", Fecha_Descarga2, Instalaciones2, ADDON2, Soportes2, CDD2, Recolecciones2);
+            dibujaGraficaBarraTop("#grafica1", Fecha_Descarga2, Instalaciones2, ADDON2, Soportes2, CDD2, Recolecciones2);
 
         }
 
     } else if (selec72hrs == 1) {
-        
+
         for (let i = 1; i < renglones.length; i++) {
 
             const element = renglones[i].split(",");
@@ -1788,7 +1910,7 @@ function datosDIreccionSeleccionada(direccionSeleccionada) {
 
 
 function llenaListasPlaza(direccionSelec) {
-     
+
     $.ajax({
         type: "GET",
         url: "fuentes/Direccion.csv",
@@ -1804,7 +1926,7 @@ function llenaListasPlaza(direccionSelec) {
 
 
 function listasComboPlaza(direccionSelec) {
-    
+
     let datoRepetido = "";
 
     listaPlazas.length = 0;
@@ -1861,17 +1983,15 @@ function listasComboDistrito(plazaSeleccionada) {
 
 function kpiProductividad(datos, semana, nivel) {
 
-    console.log("nivel", nivel);
-
     let divKPI = "";
     let prodAcum = 0,
         diasAcum = 0,
         kpiProd = 0;
-    
+
     if (datos.length > 0) {
-        
+
         let lon = datos.length - 1;
-    
+
         for (let i = lon; i > 0; i--) {
 
             const element = datos[i];
@@ -1879,7 +1999,7 @@ function kpiProductividad(datos, semana, nivel) {
             if (element.semana == semana) {
 
                 let prod = 0;
-                
+
                 prod = element.addon * pesosRelativos.addon;
                 prod += element.cddInstalaciones * pesosRelativos.instCDD;
                 prod += element.empresarialHS * pesosRelativos.empHS;
@@ -1892,7 +2012,7 @@ function kpiProductividad(datos, semana, nivel) {
             } else {
                 break;
             }
-            
+
         }
 
         kpiProd = (prodAcum / diasAcum).toFixed(2);
@@ -1905,12 +2025,45 @@ function kpiProductividad(datos, semana, nivel) {
             divKPI = "#kpiDistrito";
         }
 
-        console.log("kpiProd", kpiProd);
-
         $(divKPI).html("&nbsp;&nbsp;&nbsp;Productividad " + nivel + " = <strong>" + kpiProd + "</strong>");
 
     } else {
         alert("Error al cargar información.");
     }
+
+}
+
+
+function obtieneFechas(documento) {
+
+    $.ajax({
+        type: "GET",
+        url: documento,
+        dataType: "text",
+        success: function (data) {
+
+            renglones4 = data.split(/\r\n|\n/);
+            titulos4 = renglones4[0].split(",");
+
+            let indiceHoy = renglones4.length - 1;
+            let indiceAyer = indiceHoy - 1;
+            let datosHoy = renglones4[indiceHoy].split(",");
+            let datosAyer = renglones4[indiceAyer].split(",");
+
+            fechaHoy = datosHoy[0];
+            fechaAyer = datosAyer[0];
+
+        }
+
+    });
+
+}
+
+
+function convierteFecha(fecha) {
+
+    let faux = fecha.split("-");
+    let fresult = faux.reverse().join("-");
+    return fresult;
 
 }
