@@ -1,6 +1,7 @@
 var selecBacklog = 0,
     selecIncumplimiento = 0,
-    selecProductividad = 1; // Agregarlo y considerarlo
+    selecProductividad = 1, // Agregarlo y considerarlo
+    selecReincidencias = 0,
     selecTop = 0,
     selec72hrs = 0;
 
@@ -58,14 +59,15 @@ $(document).ready(function () {
 
     // Primera ejecución
     document.getElementById("productividad").style.backgroundColor = "rgb(31, 77, 155)";
+    document.getElementById("reincidencias").style.backgroundColor = "rgb(63, 124, 191)";
     document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
     document.getElementById("incumplimiento").style.backgroundColor = "rgb(63, 124, 191)";
     document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
     document.getElementById("mas72hrs").style.backgroundColor = "rgb(63, 124, 191)";
 
     $("#divGrafica").hide();
-    $("#divBtnDetalle").show();
     $("#divTabla").show();
+    $("#tablaReincidencias").hide();
 
     // selecProductividad = 1;
 
@@ -86,21 +88,23 @@ $(document).ready(function () {
         }
 
         $("#divGrafica").hide();
-        $("#divBtnDetalle").show();
         $("#divTabla").show();
         $("#divAct").show();
         $("#imgConecta").show();
         $("#desDireccion").show();
         $("#kpiTodos").show();
+        $("#tablaReincidencias").hide();
 
         // Coloca bandera de locación
         selecProductividad = 1;
+        selecReincidencias = 0;
         selecBacklog = 0;
         selecIncumplimiento = 0;
         selecTop = 0;
         selec72hrs = 0;
 
         document.getElementById("productividad").style.backgroundColor = "rgb(31, 77, 155)";
+        document.getElementById("reincidencias").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("incumplimiento").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
@@ -141,10 +145,9 @@ $(document).ready(function () {
                 $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
                     + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
                     + "</div></div>");
-            } else if (selecProductividad == 1) {
+            } else if ((selecProductividad == 1) || (selecReincidencias == 1)) {
 
                 $("#divGrafica").show();
-                $("#divBtnDetalle").hide();
                 $("#divTabla").hide();
                 $("#divAct").hide();
                 $("#imgConecta").hide();
@@ -171,14 +174,18 @@ $(document).ready(function () {
 
         }
 
+        $("#tablaReincidencias").hide();
+
         // Coloca bandera de locación
         selecProductividad = 0;
+        selecReincidencias = 0;
         selecBacklog = 1;
         selecIncumplimiento = 0;
         selecTop = 0;
         selec72hrs = 0;
 
         document.getElementById("productividad").style.backgroundColor = "rgb(63, 124, 191)";
+        document.getElementById("reincidencias").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("backlog").style.backgroundColor = "rgb(31, 77, 155)";
         document.getElementById("incumplimiento").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
@@ -240,10 +247,9 @@ $(document).ready(function () {
                 $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
                     + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
                     + "</div></div>");
-            } else if (selecProductividad == 1) {
+            } else if ((selecProductividad == 1) || (selecReincidencias == 1)) {
 
                 $("#divGrafica").show();
-                $("#divBtnDetalle").hide();
                 $("#divTabla").hide();
                 $("#divAct").hide();
                 $("#imgConecta").hide();
@@ -270,14 +276,18 @@ $(document).ready(function () {
 
         }
 
+        $("#tablaReincidencias").hide();
+
         // Coloca bandera de locación
         selecProductividad = 0;
+        selecReincidencias = 0;
         selecBacklog = 0;
         selecIncumplimiento = 1;
         selecTop = 0;
         selec72hrs = 0;
 
         document.getElementById("productividad").style.backgroundColor = "rgb(63, 124, 191)";
+        document.getElementById("reincidencias").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("incumplimiento").style.backgroundColor = "rgb(31, 77, 155)";
         document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
@@ -329,10 +339,9 @@ $(document).ready(function () {
     // Seleccionar menú Top del día
     $("#top").click(function () {
 
-        if (selecProductividad == 1) {
+        if ((selecProductividad == 1) || (selecReincidencias == 1)) {
 
             $("#divGrafica").show();
-            $("#divBtnDetalle").hide();
             $("#divTabla").hide();
             $("#divAct").hide();
             $("#imgConecta").hide();
@@ -341,6 +350,8 @@ $(document).ready(function () {
             $("#kpiTodos").hide();
 
         }
+
+        $("#tablaReincidencias").hide();
 
         $("#graficas").empty().append("<div class='col-md-6 col-sm-12' style='text-align: center;'><strong>"
                                         + "<label id='lblgrafica1' for='grafica1'>Top 10 BackLog - Plazas</label></strong><hr>"
@@ -354,12 +365,14 @@ $(document).ready(function () {
 
         // Coloca bandera de locación
         selecProductividad = 0;
+        selecReincidencias = 0;
         selecBacklog = 0;
         selecIncumplimiento = 0;
         selecTop = 1;
         selec72hrs = 0;
 
         document.getElementById("productividad").style.backgroundColor = "rgb(63, 124, 191)";
+        document.getElementById("reincidencias").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("incumplimiento").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("top").style.backgroundColor = "rgb(31, 77, 155)";
@@ -389,10 +402,9 @@ $(document).ready(function () {
             $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
                 + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
                 + "</div></div>");
-        } else if (selecProductividad == 1) {
+        } else if ((selecProductividad == 1) || (selecReincidencias == 1)) {
 
             $("#divGrafica").show();
-            $("#divBtnDetalle").hide();
             $("#divTabla").hide();
             $("#divAct").hide();
             $("#imgConecta").hide();
@@ -414,14 +426,18 @@ $(document).ready(function () {
 
         }
 
+        $("#tablaReincidencias").hide();
+
         // Coloca bandera de locación
         selecProductividad = 0;
+        selecReincidencias = 0;
         selecBacklog = 0;
         selecIncumplimiento = 0;
         selecTop = 0;
         selec72hrs = 1;
 
         document.getElementById("productividad").style.backgroundColor = "rgb(63, 124, 191)";
+        document.getElementById("reincidencias").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("incumplimiento").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
@@ -608,64 +624,6 @@ $(document).ready(function () {
         }
 
     });
-
-    // $("body").on("click", "#btnMostrar", function (event) {
-
-    //     if (btnAplicado == 1) {
-
-    //         $("#contenidoTabla").jqxGrid("beginupdate");
-
-    //         $("#contenidoTabla").jqxGrid("autoresizecolumns");
-
-    //         $("#contenidoTabla").jqxGrid("hidecolumn", "numordenes");
-    //         $("#contenidoTabla").jqxGrid("hidecolumn", "numreincidencias");
-    //         $("#contenidoTabla").jqxGrid("hidecolumn", "porcreincidencias");
-    //         $("#contenidoTabla").jqxGrid("hidecolumn", "ventatecnico");
-    //         $("#contenidoTabla").jqxGrid("hidecolumn", "calificacion");
-
-    //         $("#contenidoTabla").jqxGrid("showcolumn", "addon");
-    //         $("#contenidoTabla").jqxGrid("showcolumn", "cddInstalaciones");
-    //         $("#contenidoTabla").jqxGrid("showcolumn", "empresarialHS");
-    //         $("#contenidoTabla").jqxGrid("showcolumn", "soporteProactiva");
-    //         $("#contenidoTabla").jqxGrid("showcolumn", "recolecciones");
-
-    //         $("#contenidoTabla").jqxGrid("sortby", "semana", "desc");
-
-    //         $("#contenidoTabla").jqxGrid("endupdate");
-
-    //         $("#btnMostrar").html("Ocultar Detalle Productividad");
-
-    //         btnAplicado = 0;
-
-    //     } else {
-
-    //         $("#contenidoTabla").jqxGrid("beginupdate");
-
-    //         $("#contenidoTabla").jqxGrid("autoresizecolumns");
-
-    //         $("#contenidoTabla").jqxGrid("showcolumn", "numordenes");
-    //         $("#contenidoTabla").jqxGrid("showcolumn", "numreincidencias");
-    //         $("#contenidoTabla").jqxGrid("showcolumn", "porcreincidencias");
-    //         $("#contenidoTabla").jqxGrid("showcolumn", "ventatecnico");
-    //         $("#contenidoTabla").jqxGrid("showcolumn", "calificacion");
-
-    //         $("#contenidoTabla").jqxGrid("hidecolumn", "addon");
-    //         $("#contenidoTabla").jqxGrid("hidecolumn", "cddInstalaciones");
-    //         $("#contenidoTabla").jqxGrid("hidecolumn", "empresarialHS");
-    //         $("#contenidoTabla").jqxGrid("hidecolumn", "soporteProactiva");
-    //         $("#contenidoTabla").jqxGrid("hidecolumn", "recolecciones");
-
-    //         $("#contenidoTabla").jqxGrid("sortby", "semana", "desc");
-
-    //         $("#contenidoTabla").jqxGrid("endupdate");
-
-    //         $("#btnMostrar").html("Mostrar Detalle Productividad");
-
-    //         btnAplicado = 1;
-
-    //     }
-
-    // });
 
 });
 
