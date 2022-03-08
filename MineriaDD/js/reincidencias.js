@@ -136,7 +136,8 @@ function segmentacion() {
 
     tablaGeneralAct.length = 0;
     distritosTemp.length = 0;
-    
+    listaDistTecnicos.length = 0;
+
     for (let i = 0; i < renglonesR.length; i++) {
         const element = renglonesR[i].split(",");
         tablaGeneralAct.push(element);
