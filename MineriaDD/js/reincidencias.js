@@ -40,7 +40,7 @@ $(document).ready(function() {
         $("#divBtnDetalle").hide();
         $("#divTabla").hide();
         $("#divAct").hide();
-        $("#lblOpcPlaza").hide();
+        // $("#lblOpcPlaza").hide();
         $("#desDireccion").hide();
         $("#desPlaza").hide();
         $("#desDistrito").hide();
@@ -90,6 +90,8 @@ function lecturaTG(documento) {
 
 function lecturaTGAnterior(documento, k) {
 
+    let tablaGeneralAnt = [];
+
     $.ajax({
 
         type: "GET",
@@ -97,7 +99,7 @@ function lecturaTGAnterior(documento, k) {
         dataType: "text",
         success: function (data) {
 
-            let tablaGeneralAnt = [];
+            console.log(data);
 
             renglonesR = data.split(/\r\n|\n/);
             renglonesR = renglonesR.filter((e, i) => i > 0);
@@ -107,7 +109,11 @@ function lecturaTGAnterior(documento, k) {
                 tablaGeneralAnt.push(element);
             }
 
-            datosAnteriores[k] = tablaGeneralAnt;
+            datosAnteriores[k] = [];
+            datosAnteriores[k].push(tablaGeneralAnt);
+
+            console.log(k);
+            console.log(datosAnteriores[k]);
 
         }
 
@@ -231,6 +237,8 @@ function pintaTabla() {
     /**
      * Llenado del número de semanas
      */
+    console.log(datosAnteriores);
+
     semanas[0] = ("0" + tablaGeneralAct[0][13]).slice(-2);
     semanas[1] = ("0" + datosAnteriores[0][0][13]).slice(-2);
     semanas[2] = ("0" + datosAnteriores[1][0][13]).slice(-2);

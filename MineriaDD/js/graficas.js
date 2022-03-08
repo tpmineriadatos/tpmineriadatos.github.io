@@ -93,6 +93,7 @@ $(document).ready(function () {
         $("#imgConecta").show();
         $("#desDireccion").show();
         $("#kpiTodos").show();
+        $("#desPlaza").hide();
         $("#tablaReincidencias").hide();
 
         // Coloca bandera de locación
@@ -121,6 +122,7 @@ $(document).ready(function () {
             mostrarTablaFiltro(valor, "direccion");
 
             $("#desDistrito").hide();
+            $("#desPlaza").show();
             $("#lblOpcPlaza").html("Región");
             $("#opcPlaza").empty();
             $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
