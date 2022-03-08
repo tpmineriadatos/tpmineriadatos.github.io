@@ -1,4 +1,5 @@
 var renglonesR = [],
+    renglonesR2 = [],
     tablaGeneralAct = [],
     tablaFinal = [[]],
     distritos = [],
@@ -18,12 +19,6 @@ var fuenteSemAnt = ["fuentes/ReincSem_Actual_M2.csv",
 
 
 $(document).ready(function() {
-    
-    for (let i = 0; i < fuenteSemAnt.length; i++) {
-        lecturaTGAnterior(fuenteSemAnt[i], i);
-    }
-
-    lecturaTG("fuentes/ReincSem_Actual.csv");
 
     /**
      * Selecciona la opción de Reincidencias
@@ -40,7 +35,6 @@ $(document).ready(function() {
         $("#divBtnDetalle").hide();
         $("#divTabla").hide();
         $("#divAct").hide();
-        // $("#lblOpcPlaza").hide();
         $("#desDireccion").hide();
         $("#desPlaza").hide();
         $("#desDistrito").hide();
@@ -64,6 +58,8 @@ $(document).ready(function() {
         selecTop = 0;
         selec72hrs = 0;
 
+        lecturaTG("fuentes/ReincSem_Actual.csv");
+
     });
 
 });
@@ -80,7 +76,11 @@ function lecturaTG(documento) {
             renglonesR = data.split(/\r\n|\n/);
             renglonesR = renglonesR.filter((e, i) => i > 0);
             segmentacion();
-            pintaTabla();
+
+            for (let i = 0; i < fuenteSemAnt.length; i++) {
+                lecturaTGAnterior(fuenteSemAnt[i], i);
+            }
+            
         }
 
     });
@@ -90,8 +90,6 @@ function lecturaTG(documento) {
 
 function lecturaTGAnterior(documento, k) {
 
-    let tablaGeneralAnt = [];
-
     $.ajax({
 
         type: "GET",
@@ -99,21 +97,22 @@ function lecturaTGAnterior(documento, k) {
         dataType: "text",
         success: function (data) {
 
-            console.log(data);
+            let tablaGeneralAnt = [];
 
-            renglonesR = data.split(/\r\n|\n/);
-            renglonesR = renglonesR.filter((e, i) => i > 0);
+            renglonesR2 = data.split(/\r\n|\n/);
+            renglonesR2 = renglonesR2.filter((e, i) => i > 0);
             
-            for (let i = 0; i < renglonesR.length; i++) {
-                const element = renglonesR[i].split(",");
+            for (let i = 0; i < renglonesR2.length; i++) {
+                const element = renglonesR2[i].split(",");
                 tablaGeneralAnt.push(element);
             }
 
             datosAnteriores[k] = [];
-            datosAnteriores[k].push(tablaGeneralAnt);
+            datosAnteriores[k] = tablaGeneralAnt;
 
-            console.log(k);
-            console.log(datosAnteriores[k]);
+            if (k == 3) {
+                pintaTabla();
+            }
 
         }
 
@@ -237,8 +236,6 @@ function pintaTabla() {
     /**
      * Llenado del número de semanas
      */
-    console.log(datosAnteriores);
-
     semanas[0] = ("0" + tablaGeneralAct[0][13]).slice(-2);
     semanas[1] = ("0" + datosAnteriores[0][0][13]).slice(-2);
     semanas[2] = ("0" + datosAnteriores[1][0][13]).slice(-2);
