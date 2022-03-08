@@ -33,7 +33,7 @@ var renglones = [],
     renglones3 = [],
     titulos3 = [];
 
-var listaBacklog = ["NACIONAL", "CENTRO-SUR", "NORTE-NORESTE", "OCCIDENTE-BAJIO"],
+var listaBacklog = ["NACIONAL", "CENTRO", "NORTE-NORESTE", "OCCIDENTE-BAJIO","ORIENTE-SUR"],
     listaPlazas = [];
 
 var renglonesTabla = [],
@@ -361,7 +361,7 @@ $(document).ready(function () {
                                         + "<div id='grafica2' class='tamanhoGrafica2'></div></div>");
 
         $("#lblgrafica1").html("Top 20 Distritos - Backlog<br>Actualización: " + convierteFecha(fechaHoy));
-        $("#lblgrafica2").html("Top 20 Distritos - Incumplimiento<br>Actualización: " + convierteFecha(fechaAyer));
+        $("#lblgrafica2").html("Top 20 Distritos - % Incumplimiento<br>Actualización: " + convierteFecha(fechaAyer));
 
         // Coloca bandera de locación
         selecProductividad = 0;
@@ -521,11 +521,11 @@ $(document).ready(function () {
             $("#grafica2").html("");
 
             if (valor == "NACIONAL") {
-                $("#lblgrafica2").html("Top 20 Distritos - Incumplimiento<br>Actualización: " + convierteFecha(fechaAyer));
+                $("#lblgrafica2").html("Top 20 Distritos - % Incumplimiento<br>Actualización: " + convierteFecha(fechaAyer));
                 lecturaCSV("fuentes/TopDistrito.csv", "DISTRITOS");
                 lecturaCSV("fuentes/TopIncumplimientos.csv", "PLAZAS");
             } else {
-                $("#lblgrafica2").html("Top 15 Distritos - Incumplimiento<br>Actualización: " + convierteFecha(fechaAyer));
+                $("#lblgrafica2").html("Top 15 Distritos - % Incumplimiento<br>Actualización: " + convierteFecha(fechaAyer));
                 lecturaCSV("fuentes/TopDirDistritos.csv", "TOPD");
                 lecturaCSV("fuentes/TopIncumplimientos.csv", "TOPP");
 
