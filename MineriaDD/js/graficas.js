@@ -627,6 +627,20 @@ $(document).ready(function () {
 
     });
 
+    $("#btnExcel").jqxButton();
+
+    $("#btnExcel").click(function () {
+        $("#contenidoTabla").jqxGrid("exportview", "xlsx", "DesempeñoCuadrillasPI");
+    });
+
+    $("#contenidoTabla").on("filter", function (event) {
+
+        console.log(event);
+        aux2 = event;
+        aux = $("#contenidoTabla").jqxGrid('getfilterinformation');
+
+    });
+
 });
 
 
@@ -1038,19 +1052,19 @@ function imprimeTabla(datos, combo) {
 
     });
 
-    $("#contenidoTabla").on("filter", function (event) {
+    // $("#contenidoTabla").on("filter", function (event) {
 
-        console.log(event);
-        aux2 = event;
-        aux = $("#contenidoTabla").jqxGrid('getfilterinformation');
+    //     console.log(event);
+    //     aux2 = event;
+    //     aux = $("#contenidoTabla").jqxGrid('getfilterinformation');
 
-    });
+    // });
 
-    $('#contenidoTabla').on('rowclick', function (event) {
-        // event.args.rowindex is a bound index.
-        aux2 = event;
-        alert("Se seleccionó el supervisor: " + event.args.row.bounddata.nombresupervisor);
-    });
+    // $('#contenidoTabla').on('rowclick', function (event) {
+    //     // event.args.rowindex is a bound index.
+    //     aux2 = event;
+    //     alert("Se seleccionó el supervisor: " + event.args.row.bounddata.nombresupervisor);
+    // });
 
 
     /**
@@ -1104,6 +1118,12 @@ function imprimeTabla(datos, combo) {
     // $("#contenidoTabla").jqxGrid("sortby", "calificacion", "asc");
     $("#contenidoTabla").jqxGrid("sortby", "semana", "desc");
     $("#contenidoTabla").jqxGrid("endupdate");
+
+    // $("#btnPDF").jqxButton();
+
+    // $("#btnPDF").click(function () {
+    //     $("#contenidoTabla").jqxGrid('exportdata', 'xlsx', 'jqxGrid');
+    // });
 
 }
 
