@@ -1004,7 +1004,7 @@ function imprimeTabla(datos, combo) {
         sortmode: "many",
         filterable: true,
         autoshowfiltericon: true,
-        pagesizeoptions: ['10', '20', '50', '100', '1000'],
+        pagesizeoptions: ['10', '20', '50', '100'],
         // altrows: true,
         // selectionmode: 'singlecell',
         columns: [
