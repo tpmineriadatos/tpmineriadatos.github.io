@@ -383,17 +383,20 @@ function pintaTabla() {
                         let descTipoOS = "";
                         let numOS = element[1],
                             tipoOS = parseInt(element[2]),
+                            tipoOS2 = element[2],
                             diasOS = parseFloat(element[5]).toFixed(1);
 
-                        if (tipoOS == 55) {
-                            descTipoOS = "Soporte";
-                        } else if (tipoOS == 48) {
-                            descTipoOS = "Instalación";
-                        } else if (tipoOS == 95) {
-                            descTipoOS = "Cambio de domicilio";
-                        } else {
-                            descTipoOS = "No Aplica";
-                        }
+                        // if (tipoOS == 55) {
+                        //     descTipoOS = "Soporte";
+                        // } else if (tipoOS == 48) {
+                        //     descTipoOS = "Instalación";
+                        // } else if (tipoOS == 95) {
+                        //     descTipoOS = "Cambio de domicilio";
+                        // } else {
+                        //     descTipoOS = "No Aplica";
+                        // }
+
+                        descTipoOS = tipoOS2;
 
                         cuerpoOS += "<tr><td align='center'>" + numOS + "</td>"
                                     + "<td>" + descTipoOS + "</td>"
@@ -416,17 +419,20 @@ function pintaTabla() {
                         let descTipoOS = "";
                         let numOS = element[1],
                             tipoOS = parseInt(element[2]),
+                            tipoOS2 = element[2],
                             diasOS = parseFloat(element[5]).toFixed(1);
 
-                        if (tipoOS == 55) {
-                            descTipoOS = "Soporte";
-                        } else if (tipoOS == 48) {
-                            descTipoOS = "Instalación";
-                        } else if (tipoOS == 95) {
-                            descTipoOS = "Cambio de domicilio";
-                        } else {
-                            descTipoOS = "No Aplica";
-                        }
+                        // if (tipoOS == 55) {
+                        //     descTipoOS = "Soporte";
+                        // } else if (tipoOS == 48) {
+                        //     descTipoOS = "Instalación";
+                        // } else if (tipoOS == 95) {
+                        //     descTipoOS = "Cambio de domicilio";
+                        // } else {
+                        //     descTipoOS = "No Aplica";
+                        // }
+
+                        descTipoOS = tipoOS2;
 
                         cuerpoOS += "<tr><td align='center'>" + numOS + "</td>"
                             + "<td>" + descTipoOS + "</td>"
