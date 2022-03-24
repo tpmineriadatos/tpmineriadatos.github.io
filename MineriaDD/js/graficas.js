@@ -721,6 +721,8 @@ function llenadoInfo() {
             row["empresarialHS"] = element[18];
             row["soporteProactiva"] = element[19];
             row["recolecciones"] = element[20];
+            
+            row["tarjetaamarilla"] = element[21];
 
             datosCompleto.push(row);
 
@@ -776,6 +778,8 @@ function mostrarTablaCompleta() {
         row["empresarialHS"] = element.empresarialHS;
         row["soporteProactiva"] = element.soporteProactiva;
         row["recolecciones"] = element.recolecciones;
+        
+        row["tarjetaamarilla"] = element.tarjetaamarilla;
 
         datosImprimir.push(row);
 
@@ -834,6 +838,8 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["soporteProactiva"] = element.soporteProactiva;
                 row["recolecciones"] = element.recolecciones;
 
+                row["tarjetaamarilla"] = element.tarjetaamarilla;
+
                 datosImprimir.push(row);
 
             }
@@ -876,6 +882,8 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["soporteProactiva"] = element.soporteProactiva;
                 row["recolecciones"] = element.recolecciones;
 
+                row["tarjetaamarilla"] = element.tarjetaamarilla;
+
                 datosImprimir.push(row);
 
             }
@@ -917,6 +925,8 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["empresarialHS"] = element.empresarialHS;
                 row["soporteProactiva"] = element.soporteProactiva;
                 row["recolecciones"] = element.recolecciones;
+
+                row["tarjetaamarilla"] = element.tarjetaamarilla;
 
                 datosImprimir.push(row);
 
@@ -965,7 +975,9 @@ function imprimeTabla(datos, combo) {
                 { name: "cddInstalaciones", type: "number" },
                 { name: "empresarialHS", type: "number" },
                 { name: "soporteProactiva", type: "number" },
-                { name: "recolecciones", type: "number" }
+                { name: "recolecciones", type: "number" },
+
+                { name: "tarjetaamarilla", type: "bool" }
 
             ]//,
         // sortcolumn: 'calificacion',
@@ -1018,6 +1030,7 @@ function imprimeTabla(datos, combo) {
             { text: "Instalador", dataField: "nombreinstalador", width: 200, align: "center", cellclassname: cellclass },
             { text: "Empresa", dataField: "empresa", width: 200, align: "center", cellclassname: cellclass },
             { text: "Antigüedad", dataField: "antiguedad", width: 100, cellsAlign: "right", align: "center", cellclassname: cellclass },
+            { text: "Tarjeta Amarilla", dataField: "tarjetaamarilla", columntype: 'checkbox', cellsAlign: "center", align: "center", cellclassname: cellclass },
             { text: "Obj: Igual a 6", columngroup: "dias", dataField: "diastrabajados", width: 120, cellsAlign: "right", align: "center", cellclassname: cellclass },
             { text: "Obj: Mayor a 3.5", columngroup: "produc", dataField: "productividad", width: 100, cellsAlign: "right", align: "center", cellclassname: cellclass },
             { text: "OT Terminadas", columngroup: "nrein", dataField: "numordenes", width: 100, cellsAlign: "right", align: "center", cellclassname: cellclass },
