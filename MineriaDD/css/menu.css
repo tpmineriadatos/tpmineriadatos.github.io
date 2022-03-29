@@ -88,8 +88,8 @@
 }
 
 .yellow {
-    color: black\9;
-    background-color: #FBEAB6;
+    color: white;
+    background-color: rgb(255, 204, 5);
 }
 
 .red {
@@ -103,8 +103,8 @@
 }
 
 .yellow:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .yellow:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
-    color: black;
-    background-color: #FBEAB6;
+    color: white;
+    background-color: rgb(255, 204, 5);
 }
 
 .red:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .red:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
@@ -115,6 +115,37 @@
 .red:hover {
     color: black;
 }
+
+.naranja {
+    color: white;
+    background-color: rgb(252, 134, 55);
+}
+
+.naranja:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .green:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
+    color: white;
+    background-color: rgb(252, 134, 55);
+}
+
+.morada {
+    color: white;
+    background-color: rgb(121, 55, 170);
+}
+
+.morada:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .green:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
+    color: white;
+    background-color: rgb(121, 55, 170);
+}
+
+.roja {
+    color: white;
+    background-color: rgb(255, 5, 5);
+}
+
+.roja:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .green:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
+    color: white;
+    background-color: rgb(255, 5, 5);
+}
+
 
 .tituloGris {
     color: #555759;

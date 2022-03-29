@@ -977,7 +977,7 @@ function imprimeTabla(datos, combo) {
                 { name: "soporteProactiva", type: "number" },
                 { name: "recolecciones", type: "number" },
 
-                { name: "tarjetaamarilla", type: "bool" }
+                { name: "tarjetaamarilla", type: "string" }
 
             ]//,
         // sortcolumn: 'calificacion',
@@ -995,6 +995,26 @@ function imprimeTabla(datos, combo) {
         //     return "yellow";
         // } else
         //     return "green";
+
+    };
+
+    var cellTarjeta = function (row, columnfield, value) {
+
+        var rowData = $("#contenidoTabla").jqxGrid('getrowdata', row);
+        var colorTarjeta = rowData.tarjetaamarilla;
+        var quantity = rowData.calificacion;
+
+        if (colorTarjeta == "Amarilla") {
+            return "yellow";
+        } else if (colorTarjeta == "Naranja") {
+            return "naranja";
+        } else if (colorTarjeta == "Morada") {
+            return "morada";
+        } else if (colorTarjeta == "Roja") {
+            return "roja";
+        } else if ((colorTarjeta == "-") && (quantity <= 70)) {
+            return "red";
+        }
 
     };
 
@@ -1030,7 +1050,9 @@ function imprimeTabla(datos, combo) {
             { text: "Instalador", dataField: "nombreinstalador", width: 200, align: "center", cellclassname: cellclass },
             { text: "Empresa", dataField: "empresa", width: 200, align: "center", cellclassname: cellclass },
             { text: "Antigüedad", dataField: "antiguedad", width: 100, cellsAlign: "right", align: "center", cellclassname: cellclass },
-            { text: "Tarjeta Amarilla", dataField: "tarjetaamarilla", columntype: 'checkbox', cellsAlign: "center", align: "center", cellclassname: cellclass },
+
+            { text: "Color Tarjeta", dataField: "tarjetaamarilla", cellsAlign: "center", align: "center", cellclassname: cellTarjeta },
+
             { text: "Obj: Igual a 6", columngroup: "dias", dataField: "diastrabajados", width: 120, cellsAlign: "right", align: "center", cellclassname: cellclass },
             { text: "Obj: Mayor a 3.5", columngroup: "produc", dataField: "productividad", width: 100, cellsAlign: "right", align: "center", cellclassname: cellclass },
             { text: "OT Terminadas", columngroup: "nrein", dataField: "numordenes", width: 100, cellsAlign: "right", align: "center", cellclassname: cellclass },
