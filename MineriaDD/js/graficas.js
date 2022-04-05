@@ -708,7 +708,7 @@ function llenadoInfo() {
             row["nombreinstalador"] = element[7];
             row["empresa"] = element[14];
             // row["antiguedad"] = antiguedad;
-            row["productividad"] = element[9];
+            row["productividad"] = parseFloat(element[9]).toFixed(1);
             row["numordenes"] = element[15];
             row["numreincidencias"] = element[10];
             row["porcreincidencias"] = porcreincidencias;
