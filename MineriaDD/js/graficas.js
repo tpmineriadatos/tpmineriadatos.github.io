@@ -668,30 +668,30 @@ function llenadoInfo() {
     for (let i = 1; i < renglonesTabla.length; i++) {
 
         const element = renglonesTabla[i].split(",");
-        let antiguedad = "";
+        // let antiguedad = "";
         var row = {};
 
         if (parseFloat(element[13]) != 0) {
 
-            let fecha = element[8];
+            // let fecha = element[8];
             let nreincidencias = parseFloat(element[10]);
             let nordenes = parseFloat(element[15]);
             let porcreincidencias = 0;
 
-            if (fecha.length == 8) {
+            // if (fecha.length == 10) {
 
-                let arr = fecha.split("/");
-                let fechaOrden = arr[1] + "/" + arr[0] + "/" + arr[2];
-                let fechaIni = new Date(fechaOrden),
-                    fechaFin = new Date();
-                let diferencia = fechaFin - fechaIni;
-                let difAnios = diferencia / (1000 * 60 * 60 * 24 * 365);
+            //     let arr = fecha.split("/");
+            //     let fechaOrden = arr[1] + "/" + arr[0] + "/" + arr[2];
+            //     let fechaIni = new Date(fechaOrden),
+            //         fechaFin = new Date();
+            //     let diferencia = fechaFin - fechaIni;
+            //     let difAnios = diferencia / (1000 * 60 * 60 * 24 * 365);
 
-                antiguedad = difAnios.toFixed(1) + " años";
+            //     antiguedad = difAnios.toFixed(1) + " años";
 
-            } else {
-                antiguedad = "-";
-            }
+            // } else {
+            //     antiguedad = "-";
+            // }
 
             if (nordenes > 0) {
                 porcreincidencias = (nreincidencias / nordenes) * 100;
@@ -707,7 +707,7 @@ function llenadoInfo() {
             row["ninstalador"] = element[6];
             row["nombreinstalador"] = element[7];
             row["empresa"] = element[14];
-            row["antiguedad"] = antiguedad;
+            // row["antiguedad"] = antiguedad;
             row["productividad"] = element[9];
             row["numordenes"] = element[15];
             row["numreincidencias"] = element[10];
@@ -723,6 +723,8 @@ function llenadoInfo() {
             row["recolecciones"] = element[20];
             
             row["tarjetaamarilla"] = element[21];
+            row["fechaultcurso"] = element[22];
+            row["curso"] = element[23].toUpperCase();
 
             datosCompleto.push(row);
 
@@ -764,7 +766,7 @@ function mostrarTablaCompleta() {
         row["ninstalador"] = element.ninstalador;
         row["nombreinstalador"] = element.nombreinstalador;
         row["empresa"] = element.empresa;
-        row["antiguedad"] = element.antiguedad;
+        // row["antiguedad"] = element.antiguedad;
         row["productividad"] = element.productividad;
         row["numordenes"] = element.numordenes;
         row["numreincidencias"] = element.numreincidencias;
@@ -780,6 +782,8 @@ function mostrarTablaCompleta() {
         row["recolecciones"] = element.recolecciones;
         
         row["tarjetaamarilla"] = element.tarjetaamarilla;
+        row["fechaultcurso"] = element.fechaultcurso;
+        row["curso"] = element.curso;
 
         datosImprimir.push(row);
 
@@ -823,7 +827,7 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["ninstalador"] = element.ninstalador;
                 row["nombreinstalador"] = element.nombreinstalador;
                 row["empresa"] = element.empresa;
-                row["antiguedad"] = element.antiguedad;
+                // row["antiguedad"] = element.antiguedad;
                 row["productividad"] = element.productividad;
                 row["numordenes"] = element.numordenes;
                 row["numreincidencias"] = element.numreincidencias;
@@ -839,6 +843,8 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["recolecciones"] = element.recolecciones;
 
                 row["tarjetaamarilla"] = element.tarjetaamarilla;
+                row["fechaultcurso"] = element.fechaultcurso;
+                row["curso"] = element.curso;
 
                 datosImprimir.push(row);
 
@@ -867,7 +873,7 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["ninstalador"] = element.ninstalador;
                 row["nombreinstalador"] = element.nombreinstalador;
                 row["empresa"] = element.empresa;
-                row["antiguedad"] = element.antiguedad;
+                // row["antiguedad"] = element.antiguedad;
                 row["productividad"] = element.productividad;
                 row["numordenes"] = element.numordenes;
                 row["numreincidencias"] = element.numreincidencias;
@@ -883,6 +889,8 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["recolecciones"] = element.recolecciones;
 
                 row["tarjetaamarilla"] = element.tarjetaamarilla;
+                row["fechaultcurso"] = element.fechaultcurso;
+                row["curso"] = element.curso;
 
                 datosImprimir.push(row);
 
@@ -911,7 +919,7 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["ninstalador"] = element.ninstalador;
                 row["nombreinstalador"] = element.nombreinstalador;
                 row["empresa"] = element.empresa;
-                row["antiguedad"] = element.antiguedad;
+                // row["antiguedad"] = element.antiguedad;
                 row["productividad"] = element.productividad;
                 row["numordenes"] = element.numordenes;
                 row["numreincidencias"] = element.numreincidencias;
@@ -927,6 +935,8 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["recolecciones"] = element.recolecciones;
 
                 row["tarjetaamarilla"] = element.tarjetaamarilla;
+                row["fechaultcurso"] = element.fechaultcurso;
+                row["curso"] = element.curso;
 
                 datosImprimir.push(row);
 
@@ -963,7 +973,7 @@ function imprimeTabla(datos, combo) {
                 { name: "ninstalador", type: "string" },
                 { name: "nombreinstalador", type: "string" },
                 { name: "empresa", type: "string" },
-                { name: "antiguedad", type: "string" },
+                // { name: "antiguedad", type: "string" },
                 { name: "diastrabajados", type: "number" },
                 { name: "productividad", type: "number" },
                 { name: "numordenes", type: "number" },
@@ -977,7 +987,9 @@ function imprimeTabla(datos, combo) {
                 { name: "soporteProactiva", type: "number" },
                 { name: "recolecciones", type: "number" },
 
-                { name: "tarjetaamarilla", type: "string" }
+                { name: "tarjetaamarilla", type: "string" },
+                { name: "fechaultcurso", type: "string" },
+                { name: "curso", type: "string" }
 
             ]//,
         // sortcolumn: 'calificacion',
@@ -1049,9 +1061,11 @@ function imprimeTabla(datos, combo) {
             { text: "#Empleado", dataField: "ninstalador", width: 160, align: "center", cellclassname: cellclass },
             { text: "Instalador", dataField: "nombreinstalador", width: 200, align: "center", cellclassname: cellclass },
             { text: "Empresa", dataField: "empresa", width: 200, align: "center", cellclassname: cellclass },
-            { text: "Antigüedad", dataField: "antiguedad", width: 100, cellsAlign: "right", align: "center", cellclassname: cellclass },
+            // { text: "Antigüedad", dataField: "antiguedad", width: 100, cellsAlign: "right", align: "center", cellclassname: cellclass },
 
             { text: "Color Tarjeta", dataField: "tarjetaamarilla", cellsAlign: "center", align: "center", cellclassname: cellTarjeta },
+            { text: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fecha&nbsp;&nbsp;&nbsp;&nbsp;", columngroup: "ultcurso", dataField: "fechaultcurso", cellsAlign: "center", align: "center", cellclassname: cellclass },
+            { text: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Descripción&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", columngroup: "ultcurso", dataField: "curso", cellsAlign: "center", align: "center", cellclassname: cellclass },
 
             { text: "Obj: Igual a 6", columngroup: "dias", dataField: "diastrabajados", width: 120, cellsAlign: "right", align: "center", cellclassname: cellclass },
             { text: "Obj: Mayor a 3.5", columngroup: "produc", dataField: "productividad", width: 100, cellsAlign: "right", align: "center", cellclassname: cellclass },
@@ -1067,6 +1081,7 @@ function imprimeTabla(datos, combo) {
             { text: "Recolecciones", dataField: "recolecciones", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass }
         ],
         columngroups: [
+            { text: "Último curso", align: "center", name: "ultcurso" },
             { text: "Asistencia: 20%", align: "center", name: "dias" },
             { text: "Productividad: 35%", align: "center", name: "produc" },
             { text: "% Reincidencias Pond: 40%", align: "center", name: "nrein" },
