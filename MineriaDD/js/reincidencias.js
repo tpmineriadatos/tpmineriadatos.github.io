@@ -42,6 +42,8 @@ $(document).ready(function() {
         document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("mas72hrs").style.backgroundColor = "rgb(63, 124, 191)";
 
+        lecturaTR("fuentes/TicketRepetido.csv");
+
     });
 
     $("#porTecnico").click(function () {
@@ -69,6 +71,7 @@ $(document).ready(function() {
         // Coloca bandera de locación
         selecProductividad = 0;
         selecReincidencias = 1;
+        selecTR = 0;
         selecBacklog = 0;
         selecIncumplimiento = 0;
         selecTop = 0;
@@ -86,12 +89,28 @@ $(document).ready(function() {
                                             + "</div></div>");
         }
 
+        if ((selecBacklog != 1) && (selecIncumplimiento != 1)) {
+            
+            valor = $("#opcDireccion option:selected").val();
+
+            if (valor != "NACIONAL") {
+
+                $("#desPlaza").show();
+                $("#desDistrito").hide();
+
+                $("#opcPlaza").empty();
+                $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
+
+                llenaListasPlaza(valor);
+
+            }
+
+        }
+
         $("#divGrafica").show();
         $("#divTabla").hide();
         $("#divAct").hide();
         $("#desDireccion").show();
-        $("#desPlaza").hide();
-        $("#desDistrito").hide();
         $("#kpiTodos").hide();
 
         $("#imgConecta").show();
@@ -99,17 +118,61 @@ $(document).ready(function() {
         $("#divReinTitulo").show();
 
         $("#tituloReincidencias").html("Ticket repetido");
-        $("#opcDireccion option:first").prop("selected", true);
+        $("#lblOpcPlaza").html("Plaza");
 
         // Coloca bandera de locación
         selecProductividad = 0;
         selecReincidencias = 1;
+        selecTR = 1;
         selecBacklog = 0;
         selecIncumplimiento = 0;
         selecTop = 0;
         selec72hrs = 0;
 
-        lecturaTR("fuentes/TicketRepetido.csv");
+        $("#grafica1").html("");
+
+        if ($("#desDistrito").is(":visible")) {
+
+            valor = $("#opcDistrito option:selected").val();
+
+            if (valor != "Seleccionar") {
+                pintaGraficaTRDis(valor);
+            } else {
+                valor = $("#opcPlaza option:selected").val();
+                pintaGraficaTRPlaza(valor);
+            }
+
+        } else if ($("#desPlaza").is(":visible")) {
+
+            valor = $("#opcPlaza option:selected").val();
+
+            if (valor != "Seleccionar") {
+                pintaGraficaTRPlaza(valor);
+            } else {
+
+                valor = $("#opcDireccion option:selected").val();
+
+                if (valor == "NACIONAL") {
+                    graficaBarraTR("#grafica1", datosYOrdenes, datosYTicketRep);
+                } else {
+                    pintaGraficaTRDir(valor);
+                }
+
+            }
+
+        } else {
+
+            valor = $("#opcDireccion option:selected").val();
+
+            if (valor == "NACIONAL") {
+                graficaBarraTR("#grafica1", datosYOrdenes, datosYTicketRep);
+            } else {
+                pintaGraficaTRDir(valor);
+            }
+
+        }
+
+        
 
     });
 
@@ -649,8 +712,8 @@ function llenaArreglosTR() {
 
     }
 
-    $("#grafica1").html("");
-    graficaBarraTR("#grafica1", datosYOrdenes, datosYTicketRep);
+    // $("#grafica1").html("");
+    // graficaBarraTR("#grafica1", datosYOrdenes, datosYTicketRep);
 
 }
 
@@ -684,7 +747,7 @@ function graficaBarraTR(idGrafica, datosNumOrdenes, datosTicketRepetido) {
                 porcTicketRepetido: "#FF7E10"
             },
             names: {
-                numOrdenes: "Soportes",
+                numOrdenes: "Soportes completos",
                 porcTicketRepetido: "% Ticket Repetido"
             }
         },
