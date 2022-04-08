@@ -68,6 +68,7 @@ $(document).ready(function () {
     $("#divGrafica").hide();
     $("#divTabla").show();
     $("#tablaReincidencias").hide();
+    $("#divReinTitulo").hide();
 
     // selecProductividad = 1;
 
@@ -95,6 +96,7 @@ $(document).ready(function () {
         $("#kpiTodos").show();
         $("#desPlaza").hide();
         $("#tablaReincidencias").hide();
+        $("#divReinTitulo").hide();
 
         // Coloca bandera de locación
         selecProductividad = 1;
@@ -145,8 +147,8 @@ $(document).ready(function () {
 
             if (selecTop == 1) {
                 $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
-                    + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
-                    + "</div></div>");
+                                                + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
+                                                + "</div></div>");
             } else if ((selecProductividad == 1) || (selecReincidencias == 1)) {
 
                 $("#divGrafica").show();
@@ -177,6 +179,7 @@ $(document).ready(function () {
         }
 
         $("#tablaReincidencias").hide();
+        $("#divReinTitulo").hide();
 
         // Coloca bandera de locación
         selecProductividad = 0;
@@ -279,6 +282,7 @@ $(document).ready(function () {
         }
 
         $("#tablaReincidencias").hide();
+        $("#divReinTitulo").hide();
 
         // Coloca bandera de locación
         selecProductividad = 0;
@@ -354,6 +358,7 @@ $(document).ready(function () {
         }
 
         $("#tablaReincidencias").hide();
+        $("#divReinTitulo").hide();
 
         $("#graficas").empty().append("<div class='col-md-6 col-sm-12' style='text-align: center;'><strong>"
                                         + "<label id='lblgrafica1' for='grafica1'>Top 10 BackLog - Plazas</label></strong><hr>"
@@ -429,6 +434,7 @@ $(document).ready(function () {
         }
 
         $("#tablaReincidencias").hide();
+        $("#divReinTitulo").hide();
 
         // Coloca bandera de locación
         selecProductividad = 0;
@@ -567,6 +573,31 @@ $(document).ready(function () {
             $("#kpiRegion").html("");
             $("#kpiDistrito").html("");
 
+        } else if (selecReincidencias == 1) {
+
+            if (valor == "NACIONAL") {
+
+                $("#desPlaza").hide();
+                $("#desDistrito").hide();
+
+                $("#grafica1").html("");
+                graficaBarraTR("#grafica1", datosYOrdenes, datosYTicketRep);
+
+            } else {
+
+                $("#opcPlaza").empty();
+                $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
+
+                llenaListasPlaza(valor);
+
+                $("#desPlaza").show();
+                $("#desDistrito").hide();
+                $("#grafica1").html("");
+
+                pintaGraficaTRDir(valor);
+
+            }
+
         }
 
     });
@@ -576,14 +607,17 @@ $(document).ready(function () {
         valor = $("#opcPlaza option:selected").val();
 
         $("#desDistrito").show();
-        $("#grafica1").html("");
-
+        
         if (selecProductividad != 1) {
+            
+            $("#grafica1").html("");
 
             if (selecBacklog == 1) {
                 lecturaCSV("fuentes/Backlog_Plazas.csv", valor);
             } else if (selecIncumplimiento == 1) {
                 lecturaCSV("fuentes/Plaza_incumplimientos.csv", valor);
+            } else if (selecReincidencias == 1) {
+                pintaGraficaTRPlaza(valor);
             }
 
             $("#opcDistrito").empty();
@@ -619,6 +653,8 @@ $(document).ready(function () {
                 lecturaCSV("fuentes/Backlog_Distritos.csv", valor);
             } else if (selecIncumplimiento == 1) {
                 lecturaCSV("fuentes/Distritos_incumplimientos.csv", valor);
+            } else if (selecReincidencias == 1) {
+                pintaGraficaTRDis(valor);
             }
 
         } else {
@@ -668,30 +704,13 @@ function llenadoInfo() {
     for (let i = 1; i < renglonesTabla.length; i++) {
 
         const element = renglonesTabla[i].split(",");
-        // let antiguedad = "";
         var row = {};
 
         if (parseFloat(element[13]) != 0) {
 
-            // let fecha = element[8];
             let nreincidencias = parseFloat(element[10]);
             let nordenes = parseFloat(element[15]);
             let porcreincidencias = 0;
-
-            // if (fecha.length == 10) {
-
-            //     let arr = fecha.split("/");
-            //     let fechaOrden = arr[1] + "/" + arr[0] + "/" + arr[2];
-            //     let fechaIni = new Date(fechaOrden),
-            //         fechaFin = new Date();
-            //     let diferencia = fechaFin - fechaIni;
-            //     let difAnios = diferencia / (1000 * 60 * 60 * 24 * 365);
-
-            //     antiguedad = difAnios.toFixed(1) + " años";
-
-            // } else {
-            //     antiguedad = "-";
-            // }
 
             if (nordenes > 0) {
                 porcreincidencias = (nreincidencias / nordenes) * 100;
@@ -707,7 +726,6 @@ function llenadoInfo() {
             row["ninstalador"] = element[6];
             row["nombreinstalador"] = element[7];
             row["empresa"] = element[14];
-            // row["antiguedad"] = antiguedad;
             row["productividad"] = parseFloat(element[9]).toFixed(1);
             row["numordenes"] = element[15];
             row["numreincidencias"] = element[10];
@@ -721,7 +739,7 @@ function llenadoInfo() {
             row["empresarialHS"] = element[18];
             row["soporteProactiva"] = element[19];
             row["recolecciones"] = element[20];
-            
+
             row["tarjetaamarilla"] = element[21];
             row["fechaultcurso"] = element[22];
             row["curso"] = element[23].toUpperCase();
@@ -766,7 +784,6 @@ function mostrarTablaCompleta() {
         row["ninstalador"] = element.ninstalador;
         row["nombreinstalador"] = element.nombreinstalador;
         row["empresa"] = element.empresa;
-        // row["antiguedad"] = element.antiguedad;
         row["productividad"] = element.productividad;
         row["numordenes"] = element.numordenes;
         row["numreincidencias"] = element.numreincidencias;
@@ -780,7 +797,7 @@ function mostrarTablaCompleta() {
         row["empresarialHS"] = element.empresarialHS;
         row["soporteProactiva"] = element.soporteProactiva;
         row["recolecciones"] = element.recolecciones;
-        
+
         row["tarjetaamarilla"] = element.tarjetaamarilla;
         row["fechaultcurso"] = element.fechaultcurso;
         row["curso"] = element.curso;
@@ -827,7 +844,6 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["ninstalador"] = element.ninstalador;
                 row["nombreinstalador"] = element.nombreinstalador;
                 row["empresa"] = element.empresa;
-                // row["antiguedad"] = element.antiguedad;
                 row["productividad"] = element.productividad;
                 row["numordenes"] = element.numordenes;
                 row["numreincidencias"] = element.numreincidencias;
@@ -873,7 +889,6 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["ninstalador"] = element.ninstalador;
                 row["nombreinstalador"] = element.nombreinstalador;
                 row["empresa"] = element.empresa;
-                // row["antiguedad"] = element.antiguedad;
                 row["productividad"] = element.productividad;
                 row["numordenes"] = element.numordenes;
                 row["numreincidencias"] = element.numreincidencias;
@@ -919,7 +934,6 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["ninstalador"] = element.ninstalador;
                 row["nombreinstalador"] = element.nombreinstalador;
                 row["empresa"] = element.empresa;
-                // row["antiguedad"] = element.antiguedad;
                 row["productividad"] = element.productividad;
                 row["numordenes"] = element.numordenes;
                 row["numreincidencias"] = element.numreincidencias;
@@ -973,7 +987,6 @@ function imprimeTabla(datos, combo) {
                 { name: "ninstalador", type: "string" },
                 { name: "nombreinstalador", type: "string" },
                 { name: "empresa", type: "string" },
-                // { name: "antiguedad", type: "string" },
                 { name: "diastrabajados", type: "number" },
                 { name: "productividad", type: "number" },
                 { name: "numordenes", type: "number" },
@@ -1061,7 +1074,6 @@ function imprimeTabla(datos, combo) {
             { text: "#Empleado", dataField: "ninstalador", width: 160, align: "center", cellclassname: cellclass },
             { text: "Instalador", dataField: "nombreinstalador", width: 200, align: "center", cellclassname: cellclass },
             { text: "Empresa", dataField: "empresa", width: 200, align: "center", cellclassname: cellclass },
-            // { text: "Antigüedad", dataField: "antiguedad", width: 100, cellsAlign: "right", align: "center", cellclassname: cellclass },
 
             { text: "Color Tarjeta", dataField: "tarjetaamarilla", cellsAlign: "center", align: "center", cellclassname: cellTarjeta },
             { text: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fecha&nbsp;&nbsp;&nbsp;&nbsp;", columngroup: "ultcurso", dataField: "fechaultcurso", cellsAlign: "center", align: "center", cellclassname: cellclass },
@@ -1180,8 +1192,6 @@ function imprimeTabla(datos, combo) {
 
 function listasComboRegion(direccionSelec) {
 
-    // let datoRepetido = "";
-
     listaRegion.length = 0;
 
     for (let i = 0; i < datosCompleto.length; i++) {
@@ -1206,8 +1216,6 @@ function listasComboRegion(direccionSelec) {
 
 
 function listasComboDistritoProd(regionSelec) {
-
-    // let datoRepetido = "";
 
     listaDistritosProd.length = 0;
 

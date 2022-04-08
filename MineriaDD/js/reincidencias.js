@@ -11,6 +11,15 @@ var renglonesR = [],
     datosAnteriores = [],
     semanas = [];
 
+var datosCompletosTR = [],
+    nacionalTR = [],
+    direccionTR = [],
+    plazaTR = [],
+    distritoTR = [],
+    ejeXSemanas = [],
+    datosYOrdenes = ["numOrdenes"],
+    datosYTicketRep = ["porcTicketRepetido"];
+
 var fuenteSemAnt = ["fuentes/ReincSem_Actual_M2.csv",
                     "fuentes/ReincSem_Actual_M3.csv",
                     "fuentes/ReincSem_Actual_M4.csv",
@@ -23,16 +32,27 @@ $(document).ready(function() {
     /**
      * Selecciona la opción de Reincidencias
      */
+
     $("#reincidencias").click(function () {
+
+        document.getElementById("productividad").style.backgroundColor = "rgb(63, 124, 191)";
+        document.getElementById("reincidencias").style.backgroundColor = "rgb(31, 77, 155)";
+        document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
+        document.getElementById("incumplimiento").style.backgroundColor = "rgb(63, 124, 191)";
+        document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
+        document.getElementById("mas72hrs").style.backgroundColor = "rgb(63, 124, 191)";
+
+    });
+
+    $("#porTecnico").click(function () {
 
         if (selecTop == 1) {
             $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
-                                        + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
-                                        + "</div></div>");
+                                            + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
+                                            + "</div></div>");
         }
 
         $("#divGrafica").hide();
-        $("#divBtnDetalle").hide();
         $("#divTabla").hide();
         $("#divAct").hide();
         $("#desDireccion").hide();
@@ -42,13 +62,9 @@ $(document).ready(function() {
         
         $("#imgConecta").show();
         $("#tablaReincidencias").show();
+        $("#divReinTitulo").show();
 
-        document.getElementById("productividad").style.backgroundColor = "rgb(63, 124, 191)";
-        document.getElementById("reincidencias").style.backgroundColor = "rgb(31, 77, 155)";
-        document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
-        document.getElementById("incumplimiento").style.backgroundColor = "rgb(63, 124, 191)";
-        document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
-        document.getElementById("mas72hrs").style.backgroundColor = "rgb(63, 124, 191)";
+        $("#tituloReincidencias").html("Reincidencias por Técnico");
 
         // Coloca bandera de locación
         selecProductividad = 0;
@@ -59,6 +75,41 @@ $(document).ready(function() {
         selec72hrs = 0;
 
         lecturaTG("fuentes/ReincSem_Actual.csv");
+
+    });
+
+    $("#ticketRep").click(function () {
+
+        if (selecTop == 1) {
+            $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
+                                            + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
+                                            + "</div></div>");
+        }
+
+        $("#divGrafica").show();
+        $("#divTabla").hide();
+        $("#divAct").hide();
+        $("#desDireccion").show();
+        $("#desPlaza").hide();
+        $("#desDistrito").hide();
+        $("#kpiTodos").hide();
+
+        $("#imgConecta").show();
+        $("#tablaReincidencias").hide();
+        $("#divReinTitulo").show();
+
+        $("#tituloReincidencias").html("Ticket repetido");
+        $("#opcDireccion option:first").prop("selected", true);
+
+        // Coloca bandera de locación
+        selecProductividad = 0;
+        selecReincidencias = 1;
+        selecBacklog = 0;
+        selecIncumplimiento = 0;
+        selecTop = 0;
+        selec72hrs = 0;
+
+        lecturaTR("fuentes/TicketRepetido.csv");
 
     });
 
@@ -81,6 +132,34 @@ function lecturaTG(documento) {
                 lecturaTGAnterior(fuenteSemAnt[i], i);
             }
             
+        }
+
+    });
+
+}
+
+
+function lecturaTR(documento) {
+
+    $.ajax({
+
+        type: "GET",
+        url: documento,
+        dataType: "text",
+        success: function (data) {
+
+            renglonesR = data.split(/\r\n|\n/);
+            renglonesR = renglonesR.filter((e, i) => i > 0);
+            renglonesR = renglonesR.filter((e, i) => i < (renglonesR.length - 1));
+            datosCompletosTR.length = 0;
+
+            for (let i = 0; i < renglonesR.length; i++) {
+                const element = renglonesR[i].split(",");
+                datosCompletosTR.push(element);
+            }
+
+            llenaArreglosTR();
+
         }
 
     });
@@ -527,5 +606,190 @@ function numIncidenciasAnt(numTecnico) {
     }
 
     return historico;
+
+}
+
+
+function llenaArreglosTR() {
+    
+    nacionalTR.length = 0;
+    direccionTR.length = 0;
+    plazaTR.length = 0;
+    distritoTR.length = 0;
+    ejeXSemanas.length = 0;
+    datosYOrdenes.length = 0;
+    datosYTicketRep.length = 0;
+    datosYOrdenes = ["numOrdenes"];
+    datosYTicketRep = ["porcTicketRepetido"];
+
+    for (let i = 0; i < datosCompletosTR.length; i++) {
+        
+        const element = datosCompletosTR[i];
+
+        if (element[0] == "Nacional") {
+            nacionalTR.push([element[1], element[2], element[3], element[5]]);
+        } else if (element[0] == "DIRECCION") {
+            direccionTR.push([element[1], element[2], element[3], element[5]]);
+        } else if (element[0] == "PLAZA") {
+            plazaTR.push([element[1], element[2], element[3], element[5]]);
+        } else if (element[0] == "DISTRITO") {
+            distritoTR.push([element[1], element[2], element[3], element[5]]);
+        }
+
+    }
+
+    for (let i = 0; i < nacionalTR.length; i++) {
+
+        const element = nacionalTR[i];
+        let numSemana = "Semana " + ("0" + element[1]).slice(-2);
+
+        ejeXSemanas.push(numSemana);
+        datosYOrdenes.push(element[2]);
+        datosYTicketRep.push(element[3]);
+
+    }
+
+    $("#grafica1").html("");
+    graficaBarraTR("#grafica1", datosYOrdenes, datosYTicketRep);
+
+}
+
+
+function graficaBarraTR(idGrafica, datosNumOrdenes, datosTicketRepetido) {
+
+    var chart = c3.generate({
+        bindto: idGrafica,
+        data: {
+            columns: [
+                datosNumOrdenes,
+                datosTicketRepetido
+            ],
+            type: "bar",
+            types: {
+                porcTicketRepetido: 'line',
+            },
+            labels: {
+                format:{
+                    numOrdenes: d3.format(","),
+                    porcTicketRepetido: d3.format(",.2%")
+                }
+            },
+            axes: {
+                numOrdenes: "y",
+                porcTicketRepetido: "y2",
+            },
+            order: null,
+            colors: {
+                numOrdenes: "#1E78B6",
+                porcTicketRepetido: "#FF7E10"
+            },
+            names: {
+                numOrdenes: "Soportes",
+                porcTicketRepetido: "% Ticket Repetido"
+            }
+        },
+        axis: {
+            x: {
+                type: 'category',
+                categories: ejeXSemanas,
+                tick: {
+                    rotate: -90,
+                    multiline: false,
+                    culling: {
+                        max: 40
+                    }
+                },
+                height: 80
+            },
+            y2: {
+                tick: {
+                    format: d3.format(",.2%")
+                },
+                // max: 0.15,
+                show: true
+            },
+        },
+        tooltip: {
+            format: {
+                value: function (value, ratio, id) {
+                    var format = id === "numOrdenes" ? d3.format(",") : d3.format(",.2%");
+                    return format(value);
+                }
+            }
+        },
+        zoom: {
+            enabled: true
+        }
+
+    });
+
+    setTimeout(function () {
+        chart.resize();
+    }, 300);
+
+}
+
+
+function pintaGraficaTRDir(valor) {
+
+    let datosYOrdenesDir = ["numOrdenes"],
+        datosYTicketRepDir = ["porcTicketRepetido"];
+
+    for (let i = 0; i < direccionTR.length; i++) {
+
+        const element = direccionTR[i];
+        
+        if (element[0] == valor) {
+            datosYOrdenesDir.push(element[2]);
+            datosYTicketRepDir.push(element[3]);
+        }
+
+    }
+
+    graficaBarraTR("#grafica1", datosYOrdenesDir, datosYTicketRepDir);
+
+}
+
+
+function pintaGraficaTRPlaza(valor) {
+
+    let datosYOrdenesPlaza = ["numOrdenes"],
+        datosYTicketRepPlaza = ["porcTicketRepetido"];
+
+    for (let i = 0; i < plazaTR.length; i++) {
+
+        const element = plazaTR[i];
+
+        if (element[0] == valor) {
+            datosYOrdenesPlaza.push(element[2]);
+            datosYTicketRepPlaza.push(element[3]);
+        }
+
+    }
+
+    graficaBarraTR("#grafica1", datosYOrdenesPlaza, datosYTicketRepPlaza);
+
+}
+
+
+function pintaGraficaTRDis(valor) {
+
+    console.log(valor);
+
+    let datosYOrdenesDis = ["numOrdenes"],
+        datosYTicketRepDis = ["porcTicketRepetido"];
+
+    for (let i = 0; i < distritoTR.length; i++) {
+
+        const element = distritoTR[i];
+
+        if (element[0] == valor) {
+            datosYOrdenesDis.push(element[2]);
+            datosYTicketRepDis.push(element[3]);
+        }
+
+    }
+
+    graficaBarraTR("#grafica1", datosYOrdenesDis, datosYTicketRepDis);
 
 }
