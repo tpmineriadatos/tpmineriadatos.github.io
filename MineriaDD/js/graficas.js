@@ -2,6 +2,7 @@ var selecBacklog = 0,
     selecIncumplimiento = 0,
     selecProductividad = 1, // Agregarlo y considerarlo
     selecReincidencias = 0,
+    selecTR = 0,
     selecTop = 0,
     selec72hrs = 0;
 
@@ -69,6 +70,7 @@ $(document).ready(function () {
     $("#divTabla").show();
     $("#tablaReincidencias").hide();
     $("#divReinTitulo").hide();
+    $("#divGrafReincidencias").hide();
 
     // selecProductividad = 1;
 
@@ -97,10 +99,12 @@ $(document).ready(function () {
         $("#desPlaza").hide();
         $("#tablaReincidencias").hide();
         $("#divReinTitulo").hide();
+        $("#divGrafReincidencias").hide();
 
         // Coloca bandera de locación
         selecProductividad = 1;
         selecReincidencias = 0;
+        selecTR = 0;
         selecBacklog = 0;
         selecIncumplimiento = 0;
         selecTop = 0;
@@ -143,7 +147,7 @@ $(document).ready(function () {
 
         $("#desDireccion").show();
 
-        if (selecIncumplimiento != 1) {
+        if ((selecIncumplimiento != 1) && (selecTR != 1)) {
 
             if (selecTop == 1) {
                 $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
@@ -151,7 +155,7 @@ $(document).ready(function () {
                                                 + "</div></div>");
             } else if ((selecProductividad == 1) || (selecReincidencias == 1)) {
 
-                $("#divGrafica").show();
+                // $("#divGrafica").show();
                 $("#divTabla").hide();
                 $("#divAct").hide();
                 $("#imgConecta").hide();
@@ -178,12 +182,15 @@ $(document).ready(function () {
 
         }
 
+        $("#divGrafica").show();
         $("#tablaReincidencias").hide();
         $("#divReinTitulo").hide();
+        $("#divGrafReincidencias").hide();
 
         // Coloca bandera de locación
         selecProductividad = 0;
         selecReincidencias = 0;
+        selecTR = 0;
         selecBacklog = 1;
         selecIncumplimiento = 0;
         selecTop = 0;
@@ -246,7 +253,7 @@ $(document).ready(function () {
 
         $("#desDireccion").show();
 
-        if (selecBacklog != 1) {
+        if ((selecBacklog != 1) && (selecTR != 1)) {
 
             if (selecTop == 1) {
                 $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
@@ -254,7 +261,7 @@ $(document).ready(function () {
                     + "</div></div>");
             } else if ((selecProductividad == 1) || (selecReincidencias == 1)) {
 
-                $("#divGrafica").show();
+                // $("#divGrafica").show();
                 $("#divTabla").hide();
                 $("#divAct").hide();
                 $("#imgConecta").hide();
@@ -281,12 +288,15 @@ $(document).ready(function () {
 
         }
 
+        $("#divGrafica").show();
         $("#tablaReincidencias").hide();
         $("#divReinTitulo").hide();
+        $("#divGrafReincidencias").hide();
 
         // Coloca bandera de locación
         selecProductividad = 0;
         selecReincidencias = 0;
+        selecTR = 0;
         selecBacklog = 0;
         selecIncumplimiento = 1;
         selecTop = 0;
@@ -347,7 +357,7 @@ $(document).ready(function () {
 
         if ((selecProductividad == 1) || (selecReincidencias == 1)) {
 
-            $("#divGrafica").show();
+            // $("#divGrafica").show();
             $("#divTabla").hide();
             $("#divAct").hide();
             $("#imgConecta").hide();
@@ -357,8 +367,10 @@ $(document).ready(function () {
 
         }
 
+        $("#divGrafica").show();
         $("#tablaReincidencias").hide();
         $("#divReinTitulo").hide();
+        $("#divGrafReincidencias").hide();
 
         $("#graficas").empty().append("<div class='col-md-6 col-sm-12' style='text-align: center;'><strong>"
                                         + "<label id='lblgrafica1' for='grafica1'>Top 10 BackLog - Plazas</label></strong><hr>"
@@ -373,6 +385,7 @@ $(document).ready(function () {
         // Coloca bandera de locación
         selecProductividad = 0;
         selecReincidencias = 0;
+        selecTR = 0;
         selecBacklog = 0;
         selecIncumplimiento = 0;
         selecTop = 1;
@@ -411,7 +424,7 @@ $(document).ready(function () {
                 + "</div></div>");
         } else if ((selecProductividad == 1) || (selecReincidencias == 1)) {
 
-            $("#divGrafica").show();
+            // $("#divGrafica").show();
             $("#divTabla").hide();
             $("#divAct").hide();
             $("#imgConecta").hide();
@@ -433,12 +446,15 @@ $(document).ready(function () {
 
         }
 
+        $("#divGrafica").show();
         $("#tablaReincidencias").hide();
         $("#divReinTitulo").hide();
+        $("#divGrafReincidencias").hide();
 
         // Coloca bandera de locación
         selecProductividad = 0;
         selecReincidencias = 0;
+        selecTR = 0;
         selecBacklog = 0;
         selecIncumplimiento = 0;
         selecTop = 0;
@@ -580,8 +596,11 @@ $(document).ready(function () {
                 $("#desPlaza").hide();
                 $("#desDistrito").hide();
 
-                $("#grafica1").html("");
-                graficaBarraTR("#grafica1", datosYOrdenes, datosYTicketRep);
+                $("#grafica2").html("");
+                $("#grafica3").html("");
+
+                graficaBarraIDR("#grafica2", datosYIDR, datosYIDS, datosYRSS);
+                graficaBarraTR("#grafica3", datosYOrdenes, datosYTicketRep);
 
             } else {
 
@@ -592,8 +611,11 @@ $(document).ready(function () {
 
                 $("#desPlaza").show();
                 $("#desDistrito").hide();
-                $("#grafica1").html("");
 
+                $("#grafica2").html("");
+                $("#grafica3").html("");
+
+                pintaGraficaIDRDir(valor);
                 pintaGraficaTRDir(valor);
 
             }
@@ -609,15 +631,21 @@ $(document).ready(function () {
         $("#desDistrito").show();
         
         if (selecProductividad != 1) {
-            
-            $("#grafica1").html("");
 
             if (selecBacklog == 1) {
+                $("#grafica1").html("");
                 lecturaCSV("fuentes/Backlog_Plazas.csv", valor);
             } else if (selecIncumplimiento == 1) {
+                $("#grafica1").html("");
                 lecturaCSV("fuentes/Plaza_incumplimientos.csv", valor);
             } else if (selecReincidencias == 1) {
+
+                $("#grafica2").html("");
+                $("#grafica3").html("");
+
+                pintaGraficaIDRPlaza(valor);
                 pintaGraficaTRPlaza(valor);
+
             }
 
             $("#opcDistrito").empty();
@@ -647,14 +675,20 @@ $(document).ready(function () {
 
         if (selecProductividad != 1) {
 
-            $("#grafica1").html("");
-
             if (selecBacklog == 1) {
+                $("#grafica1").html("");
                 lecturaCSV("fuentes/Backlog_Distritos.csv", valor);
             } else if (selecIncumplimiento == 1) {
+                $("#grafica1").html("");
                 lecturaCSV("fuentes/Distritos_incumplimientos.csv", valor);
             } else if (selecReincidencias == 1) {
+
+                $("#grafica2").html("");
+                $("#grafica3").html("");
+
+                pintaGraficaIDRDis(valor);
                 pintaGraficaTRDis(valor);
+
             }
 
         } else {

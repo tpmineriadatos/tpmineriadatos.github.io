@@ -20,6 +20,17 @@ var datosCompletosTR = [],
     datosYOrdenes = ["numOrdenes"],
     datosYTicketRep = ["porcTicketRepetido"];
 
+var renglonesIDR = [],
+    datosCompletosIDR = [],
+    nacionalIDR = [],
+    direccionIDR = [],
+    plazaIDR = [],
+    distritoIDR = [],
+    ejeXMeses = [],
+    datosYIDR = ["idr"],
+    datosYIDS = ["ids"],
+    datosYRSS = ["rss"];
+
 var fuenteSemAnt = ["fuentes/ReincSem_Actual_M2.csv",
                     "fuentes/ReincSem_Actual_M3.csv",
                     "fuentes/ReincSem_Actual_M4.csv",
@@ -42,7 +53,8 @@ $(document).ready(function() {
         document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("mas72hrs").style.backgroundColor = "rgb(63, 124, 191)";
 
-        lecturaTR("fuentes/TicketRepetido.csv");
+        lecturaTR1("fuentes/IDR_Ene-Marz.csv");
+        // lecturaTR("fuentes/TicketRepetido.csv");
 
     });
 
@@ -65,6 +77,7 @@ $(document).ready(function() {
         $("#imgConecta").show();
         $("#tablaReincidencias").show();
         $("#divReinTitulo").show();
+        $("#divGrafReincidencias").hide();
 
         $("#tituloReincidencias").html("Reincidencias por Técnico");
 
@@ -107,7 +120,7 @@ $(document).ready(function() {
 
         }
 
-        $("#divGrafica").show();
+        $("#divGrafica").hide();
         $("#divTabla").hide();
         $("#divAct").hide();
         $("#desDireccion").show();
@@ -116,8 +129,9 @@ $(document).ready(function() {
         $("#imgConecta").show();
         $("#tablaReincidencias").hide();
         $("#divReinTitulo").show();
+        $("#divGrafReincidencias").show();
 
-        $("#tituloReincidencias").html("Ticket repetido");
+        $("#tituloReincidencias").html("Índice de Reincidencias");
         $("#lblOpcPlaza").html("Plaza");
 
         // Coloca bandera de locación
@@ -129,16 +143,19 @@ $(document).ready(function() {
         selecTop = 0;
         selec72hrs = 0;
 
-        $("#grafica1").html("");
+        $("#grafica2").html("");
+        $("#grafica3").html("");
 
         if ($("#desDistrito").is(":visible")) {
 
             valor = $("#opcDistrito option:selected").val();
 
             if (valor != "Seleccionar") {
+                pintaGraficaIDRDis(valor);
                 pintaGraficaTRDis(valor);
             } else {
                 valor = $("#opcPlaza option:selected").val();
+                pintaGraficaIDRPlaza(valor);
                 pintaGraficaTRPlaza(valor);
             }
 
@@ -147,14 +164,17 @@ $(document).ready(function() {
             valor = $("#opcPlaza option:selected").val();
 
             if (valor != "Seleccionar") {
+                pintaGraficaIDRPlaza(valor);
                 pintaGraficaTRPlaza(valor);
             } else {
 
                 valor = $("#opcDireccion option:selected").val();
 
                 if (valor == "NACIONAL") {
-                    graficaBarraTR("#grafica1", datosYOrdenes, datosYTicketRep);
+                    graficaBarraIDR("#grafica2", datosYIDR, datosYIDS, datosYRSS);
+                    graficaBarraTR("#grafica3", datosYOrdenes, datosYTicketRep);
                 } else {
+                    pintaGraficaIDRDir(valor);
                     pintaGraficaTRDir(valor);
                 }
 
@@ -165,14 +185,14 @@ $(document).ready(function() {
             valor = $("#opcDireccion option:selected").val();
 
             if (valor == "NACIONAL") {
-                graficaBarraTR("#grafica1", datosYOrdenes, datosYTicketRep);
+                graficaBarraIDR("#grafica2", datosYIDR, datosYIDS, datosYRSS);
+                graficaBarraTR("#grafica3", datosYOrdenes, datosYTicketRep);
             } else {
+                pintaGraficaIDRDir(valor);
                 pintaGraficaTRDir(valor);
             }
 
         }
-
-        
 
     });
 
@@ -202,7 +222,35 @@ function lecturaTG(documento) {
 }
 
 
-function lecturaTR(documento) {
+function lecturaTR1(documento) {
+
+    $.ajax({
+
+        type: "GET",
+        url: documento,
+        dataType: "text",
+        success: function (data) {
+
+            renglonesIDR = data.split(/\r\n|\n/);
+            renglonesIDR = renglonesIDR.filter((e, i) => i > 0);
+            renglonesIDR = renglonesIDR.filter((e, i) => i < (renglonesIDR.length - 1));
+            datosCompletosIDR.length = 0;
+
+            for (let i = 0; i < renglonesIDR.length; i++) {
+                const element = renglonesIDR[i].split(",");
+                datosCompletosIDR.push(element);
+            }
+
+            lecturaTR2("fuentes/TicketRepetido.csv");
+
+        }
+
+    });
+
+}
+
+
+function lecturaTR2(documento) {
 
     $.ajax({
 
@@ -222,6 +270,7 @@ function lecturaTR(documento) {
             }
 
             llenaArreglosTR();
+            llenaArreglosIDR();
 
         }
 
@@ -704,21 +753,36 @@ function llenaArreglosTR() {
     for (let i = 0; i < nacionalTR.length; i++) {
 
         const element = nacionalTR[i];
-        let numSemana = "Semana " + ("0" + element[1]).slice(-2);
+        // let numSemana = "Semana " + ("0" + element[1]).slice(-2);
 
-        ejeXSemanas.push(numSemana);
+        // ejeXSemanas.push(numSemana);
         datosYOrdenes.push(element[2]);
         datosYTicketRep.push(element[3]);
 
     }
 
-    // $("#grafica1").html("");
-    // graficaBarraTR("#grafica1", datosYOrdenes, datosYTicketRep);
+    // $("#grafica2").html("");
+    // graficaBarraTR("#grafica2", datosYOrdenes, datosYTicketRep);
 
 }
 
 
 function graficaBarraTR(idGrafica, datosNumOrdenes, datosTicketRepetido) {
+
+    let optimos = datosTicketRepetido.filter((e, i) => i > 0);
+    let maxY2 = Math.max(...optimos),
+        minY2 = Math.min(...optimos),
+        maxEjeY2 = parseFloat(maxY2.toFixed(1)),
+        minEjeY2 = parseFloat(minY2.toFixed(1));
+
+    maxEjeY2 += (maxEjeY2 > maxY2) ? 0 : 0.1;
+    minEjeY2 -= (minEjeY2 < minY2) ? 0 : 0.1;
+
+    maxEjeY2 = parseFloat(maxEjeY2.toFixed(1));
+    minEjeY2 = parseFloat(minEjeY2.toFixed(1));
+
+    maxEjeY2 -= ((maxEjeY2 - maxY2) > 0.05) ? 0.05 : 0;
+    minEjeY2 -= ((minY2 - minEjeY2) > 0.05) ? 0 : 0.05;
 
     var chart = c3.generate({
         bindto: idGrafica,
@@ -743,8 +807,8 @@ function graficaBarraTR(idGrafica, datosNumOrdenes, datosTicketRepetido) {
             },
             order: null,
             colors: {
-                numOrdenes: "#1E78B6",
-                porcTicketRepetido: "#FF7E10"
+                numOrdenes: "#3F7CBF",
+                porcTicketRepetido: "#3D3B3B"
             },
             names: {
                 numOrdenes: "Soportes completos",
@@ -754,7 +818,7 @@ function graficaBarraTR(idGrafica, datosNumOrdenes, datosTicketRepetido) {
         axis: {
             x: {
                 type: 'category',
-                categories: ejeXSemanas,
+                categories: ejeXMeses,
                 tick: {
                     rotate: -90,
                     multiline: false,
@@ -768,9 +832,14 @@ function graficaBarraTR(idGrafica, datosNumOrdenes, datosTicketRepetido) {
                 tick: {
                     format: d3.format(",.2%")
                 },
-                // max: 0.15,
+                max: maxEjeY2,
+                min: minEjeY2,
+                padding: {
+                    // top: 0,
+                    bottom: 0
+                },
                 show: true
-            },
+            }
         },
         tooltip: {
             format: {
@@ -809,7 +878,7 @@ function pintaGraficaTRDir(valor) {
 
     }
 
-    graficaBarraTR("#grafica1", datosYOrdenesDir, datosYTicketRepDir);
+    graficaBarraTR("#grafica3", datosYOrdenesDir, datosYTicketRepDir);
 
 }
 
@@ -830,7 +899,7 @@ function pintaGraficaTRPlaza(valor) {
 
     }
 
-    graficaBarraTR("#grafica1", datosYOrdenesPlaza, datosYTicketRepPlaza);
+    graficaBarraTR("#grafica3", datosYOrdenesPlaza, datosYTicketRepPlaza);
 
 }
 
@@ -853,6 +922,310 @@ function pintaGraficaTRDis(valor) {
 
     }
 
-    graficaBarraTR("#grafica1", datosYOrdenesDis, datosYTicketRepDis);
+    graficaBarraTR("#grafica3", datosYOrdenesDis, datosYTicketRepDis);
 
 }
+
+
+function llenaArreglosIDR() {
+
+    nacionalIDR.length = 0;
+    direccionIDR.length = 0;
+    plazaIDR.length = 0;
+    distritoIDR.length = 0;
+    ejeXMeses.length = 0;
+    
+    datosYIDR = ["idr"];
+    datosYIDS = ["ids"];
+    datosYRSS = ["rss"];
+
+    for (let i = 0; i < datosCompletosIDR.length; i++) {
+
+        const element = datosCompletosIDR[i];
+        let rss = parseFloat(element[7]) / 100;
+        let ids = (parseFloat(element[9]) - parseFloat(element[10])) / 100;
+        let idr = parseFloat(element[10]) / 100;
+
+        ids = ids.toFixed(4);
+        ids = parseFloat(ids);
+
+        ejeXMeses.push(element[2]);
+
+        if (element[0] == "NACIONAL") {
+            nacionalIDR.push([element[1], rss, ids, idr]);
+        } else if (element[0] == "DIRECCION") {
+            direccionIDR.push([element[1], rss, ids, idr]);
+        } else if (element[0] == "PLAZA") {
+            plazaIDR.push([element[1], rss, ids, idr]);
+        } else if (element[0] == "DISTRITO") {
+            distritoIDR.push([element[1], rss, ids, idr]);
+        }
+
+    }
+
+    const listDist = new Set(ejeXMeses);
+
+    ejeXMeses = [...listDist];
+
+    for (let i = 0; i < nacionalIDR.length; i++) {
+
+        const element = nacionalIDR[i];
+
+        datosYRSS.push(element[1]);
+        datosYIDS.push(element[2]);
+        datosYIDR.push(element[3]);
+        
+    }
+    
+}
+
+
+function graficaBarraIDR(idGrafica, datosIDR, datosISR, datosRSS) {
+
+    let optimos = datosRSS.filter((e, i) => i > 0);
+    let maxY2 = Math.max(...optimos),
+        minY2 = Math.min(...optimos),
+        maxEjeY2 = parseFloat(maxY2.toFixed(1)),
+        minEjeY2 = parseFloat(minY2.toFixed(1));
+
+    maxEjeY2 += (maxEjeY2 > maxY2) ? 0 : 0.1;
+    minEjeY2 -= (minEjeY2 < minY2) ? 0 : 0.1;
+
+    maxEjeY2 = parseFloat(maxEjeY2.toFixed(1));
+    minEjeY2 = parseFloat(minEjeY2.toFixed(1));
+
+    maxEjeY2 -= ((maxEjeY2 - maxY2) > 0.05) ? 0.05 : 0;
+    minEjeY2 -= ((minY2 - minEjeY2) > 0.05) ? 0 : 0.05;
+
+    var chart = c3.generate({
+        bindto: idGrafica,
+        data: {
+            columns: [
+                datosRSS,
+                datosIDR,
+                datosISR
+            ],
+            type: "bar",
+            types: {
+                rss: 'line',
+            },
+            labels: {
+                format: {
+                    // numOrdenes: d3.format(","),
+                    rss: d3.format(",.2%")
+                }
+            },
+            axes: {
+                idr: "y",
+                ids: "y",
+                rss: "y2",
+            },
+            groups: [
+                ["idr", "ids"]
+            ],
+            order: null,
+            colors: {
+                idr: "#3F7CBF",
+                ids: "#EE9456",
+                rss: "#3D3B3B"
+            },
+            names: {
+                idr: "Índice de Reincidencias",
+                ids: "Índice de Soporte",
+                rss: "Reincidencias sobre soportes"
+            }
+        },
+        axis: {
+            x: {
+                type: 'category',
+                categories: ejeXMeses,
+                tick: {
+                    rotate: -90,
+                    multiline: false,
+                    culling: {
+                        max: 40
+                    }
+                },
+                height: 80
+            },
+            y: {
+                tick: {
+                    format: d3.format(",.2%")
+                },
+                // max: 0.15,
+                show: true
+            },
+            y2: {
+                tick: {
+                    format: d3.format(",.2%")
+                },
+                max: maxEjeY2,
+                min: minEjeY2,
+                padding: {
+                    // top: 0,
+                    bottom: 0
+                },
+                show: true
+            }
+        },
+        tooltip: {
+            format: {
+                value: function (value, ratio, id) {
+                    var format = id === "numOrdenes" ? d3.format(",") : d3.format(",.2%");
+                    return format(value);
+                }
+            }
+        },
+        zoom: {
+            enabled: true
+        },
+        tooltip: {
+            contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
+
+                // console.log(color(d[0].id));
+
+                function key_for_sum(arr) {
+
+                    let valor = (arr.id == "rss") ? 0 : arr.value;
+                    return valor; //value is the key
+
+                }
+
+                function sum(prev, next) {
+                    return prev + next;
+                }
+
+                var totals_object = {};
+                totals_object.x = d[0]["x"];
+                totals_object.value = d.map(key_for_sum).reduce(sum);// sum func
+                totals_object.name = "Índice de Soporte"; //total will be shown in tooltip
+                totals_object.index = d[0]["index"];
+                totals_object.id = "total"; //c3 will use this
+                d.push(totals_object);
+
+                var $$ = this,
+                    config = $$.config,
+                    titleFormat = config.tooltip_format_title || defaultTitleFormat,
+                    nameFormat = config.tooltip_format_name || function (name) {
+                        return name;
+                    },
+                    valueFormat = config.tooltip_format_value || defaultValueFormat,
+                    text, i, title, value, name, bgcolor;
+
+                for (i = 0; i < d.length; i++) {
+
+                    if (!(d[i] && (d[i].value || d[i].value === 0))) {
+                        continue;
+                    }
+
+                    if (d[i].id == "ids") {
+                        continue;
+                    }
+
+                    if (!text) {
+                        title = titleFormat ? titleFormat(d[i].x) : d[i].x;
+                        text = "<table class='" + $$.CLASS.tooltip + "'>" + (title || title === 0 ? "<tr><th colspan='2'>" + title + "</th></tr>" : "");
+                    }
+
+                    name = nameFormat(d[i].name);
+                    value = valueFormat(d[i].value, d[i].ratio, d[i].id, d[i].index);
+                    bgcolor = $$.levelColor ? $$.levelColor(d[i].value) : color(d[i].id);
+
+                    bgcolor = (d[i].id == "total") ? "#EE9456" : bgcolor; // cambio de color para el total
+
+                    text += "<tr class='" + $$.CLASS.tooltipName + "-" + d[i].id + "'>";
+                    text += "<td class='name'><span style='background-color:" + bgcolor + "'></span>" + name + "</td>";
+                    text += "<td class='value'>" + value + "</td>";
+                    text += "</tr>";
+
+                }
+
+                return text + "</table>";
+
+            }
+
+        }
+
+    });
+
+    setTimeout(function () {
+        chart.resize();
+    }, 300);
+
+}
+
+
+function pintaGraficaIDRDir(valor) {
+
+    let datosYIDRDir = ["idr"],
+        datosYIDSDir = ["ids"],
+        datosYRSSDir = ["rss"];
+
+    for (let i = 0; i < direccionIDR.length; i++) {
+
+        const element = direccionIDR[i];
+
+        if (element[0] == valor) {
+
+            datosYRSSDir.push(element[1]);
+            datosYIDSDir.push(element[2]);
+            datosYIDRDir.push(element[3]);
+
+        }
+
+    }
+
+    graficaBarraIDR("#grafica2", datosYIDRDir, datosYIDSDir, datosYRSSDir);
+
+}
+
+
+function pintaGraficaIDRPlaza(valor) {
+
+    let datosYIDRPlaza = ["idr"],
+        datosYIDSPlaza = ["ids"],
+        datosYRSSPlaza = ["rss"];
+
+    for (let i = 0; i < plazaIDR.length; i++) {
+
+        const element = plazaIDR[i];
+
+        if (element[0] == valor) {
+
+            datosYRSSPlaza.push(element[1]);
+            datosYIDSPlaza.push(element[2]);
+            datosYIDRPlaza.push(element[3]);
+
+        }
+
+    }
+
+    graficaBarraIDR("#grafica2", datosYIDRPlaza, datosYIDSPlaza, datosYRSSPlaza);
+
+}
+
+
+function pintaGraficaIDRDis(valor) {
+
+    let datosYIDRDis = ["idr"],
+        datosYIDSDis = ["ids"],
+        datosYRSSDis = ["rss"];
+
+    for (let i = 0; i < distritoIDR.length; i++) {
+
+        const element = distritoIDR[i];
+
+        if (element[0] == valor) {
+
+            datosYRSSDis.push(element[1]);
+            datosYIDSDis.push(element[2]);
+            datosYIDRDis.push(element[3]);
+
+        }
+
+    }
+
+    graficaBarraIDR("#grafica2", datosYIDRDis, datosYIDSDis, datosYRSSDis);
+
+}
+
