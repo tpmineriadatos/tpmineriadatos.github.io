@@ -39,7 +39,7 @@
 
 .tamanhoGrafica2 {
     height: 450px;
-    width: 750px;
+    /* width: 750px; */
 }
 
 .form-control-select {
@@ -80,12 +80,22 @@
     border: 2px solid rgb(31, 77, 155);
 }
 
-#grafica1 .c3-line-porcTicketRepetido {
-    stroke-width: 3px;
-    font-size: 15px;
+#grafica2 .c3-texts-idr {
+    font-weight: bold;
+    font-size: 14px;
 }
 
-#grafica1 .c3-chart-text text {
+#grafica3 .c3-line-porcTicketRepetido {
+    stroke-width: 1px;
+}
+
+#grafica3 .c3-texts-porcTicketRepetido {
+    font-weight: bold;
+    font-size: 13px;
+}
+
+#grafica3 .c3-texts-numOrdenes {
+    font-weight: bold;
     font-size: 13px;
 }
 

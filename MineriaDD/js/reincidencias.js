@@ -128,10 +128,9 @@ $(document).ready(function() {
 
         $("#imgConecta").show();
         $("#tablaReincidencias").hide();
-        $("#divReinTitulo").show();
         $("#divGrafReincidencias").show();
 
-        $("#tituloReincidencias").html("Índice de Reincidencias");
+        $("#divReinTitulo").hide();
         $("#lblOpcPlaza").html("Plaza");
 
         // Coloca bandera de locación
@@ -173,6 +172,7 @@ $(document).ready(function() {
                 if (valor == "NACIONAL") {
                     graficaBarraIDR("#grafica2", datosYIDR, datosYIDS, datosYRSS);
                     graficaBarraTR("#grafica3", datosYOrdenes, datosYTicketRep);
+                    $(".c3-text").removeAttr("style");
                 } else {
                     pintaGraficaIDRDir(valor);
                     pintaGraficaTRDir(valor);
@@ -187,6 +187,7 @@ $(document).ready(function() {
             if (valor == "NACIONAL") {
                 graficaBarraIDR("#grafica2", datosYIDR, datosYIDS, datosYRSS);
                 graficaBarraTR("#grafica3", datosYOrdenes, datosYTicketRep);
+                $(".c3-text").removeAttr("style");
             } else {
                 pintaGraficaIDRDir(valor);
                 pintaGraficaTRDir(valor);
@@ -807,7 +808,7 @@ function graficaBarraTR(idGrafica, datosNumOrdenes, datosTicketRepetido) {
             },
             order: null,
             colors: {
-                numOrdenes: "#3F7CBF",
+                numOrdenes: "#E8DB87", //8BBB99
                 porcTicketRepetido: "#3D3B3B"
             },
             names: {
@@ -827,6 +828,11 @@ function graficaBarraTR(idGrafica, datosNumOrdenes, datosTicketRepetido) {
                     }
                 },
                 height: 80
+            },
+            y: {
+                tick: {
+                    format: d3.format(",")
+                }
             },
             y2: {
                 tick: {
@@ -934,7 +940,7 @@ function llenaArreglosIDR() {
     plazaIDR.length = 0;
     distritoIDR.length = 0;
     ejeXMeses.length = 0;
-    
+
     datosYIDR = ["idr"];
     datosYIDS = ["ids"];
     datosYRSS = ["rss"];
@@ -943,7 +949,8 @@ function llenaArreglosIDR() {
 
         const element = datosCompletosIDR[i];
         let rss = parseFloat(element[7]) / 100;
-        let ids = (parseFloat(element[9]) - parseFloat(element[10])) / 100;
+        // let ids = (parseFloat(element[9]) - parseFloat(element[10])) / 100;
+        let ids = parseFloat(element[9]) / 100;
         let idr = parseFloat(element[10]) / 100;
 
         ids = ids.toFixed(4);
@@ -1001,9 +1008,9 @@ function graficaBarraIDR(idGrafica, datosIDR, datosISR, datosRSS) {
         bindto: idGrafica,
         data: {
             columns: [
-                datosRSS,
+                datosISR,
                 datosIDR,
-                datosISR
+                datosRSS,
             ],
             type: "bar",
             types: {
@@ -1011,7 +1018,8 @@ function graficaBarraIDR(idGrafica, datosIDR, datosISR, datosRSS) {
             },
             labels: {
                 format: {
-                    // numOrdenes: d3.format(","),
+                    idr: d3.format(",.2%"),
+                    ids: d3.format(",.2%"),
                     rss: d3.format(",.2%")
                 }
             },
@@ -1020,18 +1028,18 @@ function graficaBarraIDR(idGrafica, datosIDR, datosISR, datosRSS) {
                 ids: "y",
                 rss: "y2",
             },
-            groups: [
-                ["idr", "ids"]
-            ],
+            // groups: [
+            //     ["idr", "ids"]
+            // ],
             order: null,
             colors: {
-                idr: "#3F7CBF",
-                ids: "#EE9456",
+                idr: "#BFAB25", //3F7CBF //5E8C91
+                ids: "#5E8C91", //EE9456 //87ADD7 
                 rss: "#3D3B3B"
             },
             names: {
                 idr: "Índice de Reincidencias",
-                ids: "Índice de Soporte",
+                ids: "Índice de Soportes",
                 rss: "Reincidencias sobre soportes"
             }
         },
@@ -1052,7 +1060,7 @@ function graficaBarraIDR(idGrafica, datosIDR, datosISR, datosRSS) {
                 tick: {
                     format: d3.format(",.2%")
                 },
-                // max: 0.15,
+                max: 0.06,
                 show: true
             },
             y2: {
@@ -1060,7 +1068,8 @@ function graficaBarraIDR(idGrafica, datosIDR, datosISR, datosRSS) {
                     format: d3.format(",.2%")
                 },
                 max: maxEjeY2,
-                min: minEjeY2,
+                // min: minEjeY2,
+                min: 0,
                 padding: {
                     // top: 0,
                     bottom: 0
@@ -1079,72 +1088,72 @@ function graficaBarraIDR(idGrafica, datosIDR, datosISR, datosRSS) {
         zoom: {
             enabled: true
         },
-        tooltip: {
-            contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
+        // tooltip: {
+        //     contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
 
-                // console.log(color(d[0].id));
+        //         // console.log(color(d[0].id));
 
-                function key_for_sum(arr) {
+        //         function key_for_sum(arr) {
 
-                    let valor = (arr.id == "rss") ? 0 : arr.value;
-                    return valor; //value is the key
+        //             let valor = (arr.id == "rss") ? 0 : arr.value;
+        //             return valor; //value is the key
 
-                }
+        //         }
 
-                function sum(prev, next) {
-                    return prev + next;
-                }
+        //         function sum(prev, next) {
+        //             return prev + next;
+        //         }
 
-                var totals_object = {};
-                totals_object.x = d[0]["x"];
-                totals_object.value = d.map(key_for_sum).reduce(sum);// sum func
-                totals_object.name = "Índice de Soporte"; //total will be shown in tooltip
-                totals_object.index = d[0]["index"];
-                totals_object.id = "total"; //c3 will use this
-                d.push(totals_object);
+        //         var totals_object = {};
+        //         totals_object.x = d[0]["x"];
+        //         totals_object.value = d.map(key_for_sum).reduce(sum);// sum func
+        //         totals_object.name = "Índice de Soporte"; //total will be shown in tooltip
+        //         totals_object.index = d[0]["index"];
+        //         totals_object.id = "total"; //c3 will use this
+        //         d.push(totals_object);
 
-                var $$ = this,
-                    config = $$.config,
-                    titleFormat = config.tooltip_format_title || defaultTitleFormat,
-                    nameFormat = config.tooltip_format_name || function (name) {
-                        return name;
-                    },
-                    valueFormat = config.tooltip_format_value || defaultValueFormat,
-                    text, i, title, value, name, bgcolor;
+        //         var $$ = this,
+        //             config = $$.config,
+        //             titleFormat = config.tooltip_format_title || defaultTitleFormat,
+        //             nameFormat = config.tooltip_format_name || function (name) {
+        //                 return name;
+        //             },
+        //             valueFormat = config.tooltip_format_value || defaultValueFormat,
+        //             text, i, title, value, name, bgcolor;
 
-                for (i = 0; i < d.length; i++) {
+        //         for (i = 0; i < d.length; i++) {
 
-                    if (!(d[i] && (d[i].value || d[i].value === 0))) {
-                        continue;
-                    }
+        //             if (!(d[i] && (d[i].value || d[i].value === 0))) {
+        //                 continue;
+        //             }
 
-                    if (d[i].id == "ids") {
-                        continue;
-                    }
+        //             if (d[i].id == "ids") {
+        //                 continue;
+        //             }
 
-                    if (!text) {
-                        title = titleFormat ? titleFormat(d[i].x) : d[i].x;
-                        text = "<table class='" + $$.CLASS.tooltip + "'>" + (title || title === 0 ? "<tr><th colspan='2'>" + title + "</th></tr>" : "");
-                    }
+        //             if (!text) {
+        //                 title = titleFormat ? titleFormat(d[i].x) : d[i].x;
+        //                 text = "<table class='" + $$.CLASS.tooltip + "'>" + (title || title === 0 ? "<tr><th colspan='2'>" + title + "</th></tr>" : "");
+        //             }
 
-                    name = nameFormat(d[i].name);
-                    value = valueFormat(d[i].value, d[i].ratio, d[i].id, d[i].index);
-                    bgcolor = $$.levelColor ? $$.levelColor(d[i].value) : color(d[i].id);
+        //             name = nameFormat(d[i].name);
+        //             value = valueFormat(d[i].value, d[i].ratio, d[i].id, d[i].index);
+        //             bgcolor = $$.levelColor ? $$.levelColor(d[i].value) : color(d[i].id);
 
-                    bgcolor = (d[i].id == "total") ? "#EE9456" : bgcolor; // cambio de color para el total
+        //             bgcolor = (d[i].id == "total") ? "#EE9456" : bgcolor; // cambio de color para el total
 
-                    text += "<tr class='" + $$.CLASS.tooltipName + "-" + d[i].id + "'>";
-                    text += "<td class='name'><span style='background-color:" + bgcolor + "'></span>" + name + "</td>";
-                    text += "<td class='value'>" + value + "</td>";
-                    text += "</tr>";
+        //             text += "<tr class='" + $$.CLASS.tooltipName + "-" + d[i].id + "'>";
+        //             text += "<td class='name'><span style='background-color:" + bgcolor + "'></span>" + name + "</td>";
+        //             text += "<td class='value'>" + value + "</td>";
+        //             text += "</tr>";
 
-                }
+        //         }
 
-                return text + "</table>";
+        //         return text + "</table>";
 
-            }
+        //     }
 
-        }
+        // }
 
     });
 
