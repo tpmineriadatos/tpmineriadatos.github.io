@@ -38,7 +38,7 @@
 }
 
 .tamanhoGrafica2 {
-    height: 450px;
+    height: 400px;
     /* width: 750px; */
 }
 
@@ -85,6 +85,24 @@
     font-size: 14px;
 }
 
+#grafica2 .c3-ygrid-line.regular line {
+    stroke: orange;
+    stroke-width: 0.5px;
+}
+
+#grafica2 .c3-ygrid-line.regular text {
+    fill: orange;
+}
+
+#grafica2 .c3-ygrid-line.malo line {
+    stroke: red;
+    stroke-width: 0.5px;
+}
+
+#grafica2 .c3-ygrid-line.malo text {
+    fill: red;
+}
+
 #grafica3 .c3-line-porcTicketRepetido {
     stroke-width: 1px;
 }
@@ -98,6 +116,7 @@
     font-weight: bold;
     font-size: 13px;
 }
+
 
 /* // ----------------------------------------------------------- */
 

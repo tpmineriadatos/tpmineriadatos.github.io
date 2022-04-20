@@ -54,7 +54,6 @@ $(document).ready(function() {
         document.getElementById("mas72hrs").style.backgroundColor = "rgb(63, 124, 191)";
 
         lecturaTR1("fuentes/IDR.csv");
-        // lecturaTR("fuentes/TicketRepetido.csv");
 
     });
 
@@ -1018,7 +1017,26 @@ function graficaBarraIDR(idGrafica, datosIDR, datosISR, datosRSS) {
             },
             labels: {
                 format: {
-                    idr: d3.format(",.2%"),
+                    idr: function (v, id, i, j) {
+
+                        let valor = parseFloat((v * 100).toFixed(2)),
+                            simbolo = "",
+                            etiqueta = "";
+
+                        if (valor <= 0.7) {
+                            simbolo = "  (√) ";
+                        } else if (valor <= 1.3) {
+                            simbolo = "  (!) ";
+                        } else {
+                            simbolo = "  (×) ";
+                        }
+
+                        etiqueta = simbolo + valor + "%";
+
+                        return (etiqueta);
+                        
+                    },
+                    // idr: d3.format(",.2%"),
                     ids: d3.format(",.2%"),
                     rss: d3.format(",.2%")
                 }
@@ -1077,6 +1095,14 @@ function graficaBarraIDR(idGrafica, datosIDR, datosISR, datosRSS) {
                 show: true
             }
         },
+        // grid: {
+        //     y: {
+        //         lines: [
+        //             { value: 0.007, text: "0.7%", class: "regular" },
+        //             { value: 0.013, text: "1.3%", class: "malo" }
+        //         ]
+        //     }
+        // },
         tooltip: {
             format: {
                 value: function (value, ratio, id) {
