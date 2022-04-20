@@ -53,7 +53,7 @@ $(document).ready(function() {
         document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("mas72hrs").style.backgroundColor = "rgb(63, 124, 191)";
 
-        lecturaTR1("fuentes/IDR_Ene-Marz.csv");
+        lecturaTR1("fuentes/IDR.csv");
         // lecturaTR("fuentes/TicketRepetido.csv");
 
     });

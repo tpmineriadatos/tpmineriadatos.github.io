@@ -1094,7 +1094,7 @@ function imprimeTabla(datos, combo) {
         sortable: true,
         sortmode: "many",
         filterable: true,
-        filtermode: "excel",
+        // filtermode: "excel",
         autoshowfiltericon: true,
         pagesizeoptions: ['10', '20', '50', '100'],
         // altrows: true,
