@@ -43,13 +43,22 @@ var renglonesTabla = [],
 var datosCompleto = [],
     datosDireccion = [],
     listaRegion = [],
-    listaDistritosProd = [];
+    listaDistritosProd = [],
+    listaSupervisor = [],
+    semanasReporte = [];
 
 var pesosRelativos = { "addon": 1, "instCDD": 1.5, "empHS": 3, "soporProac": 1, "recol": 0.5 }
 
 var btnAplicado = 1,
-    semanaAct = "";
+    semanaAct = "",
+    nivelActualTabla = "";
 
+var datosFiltroNacional = [],
+    datosFiltroDireccion = [],
+    datosFiltroRegion = [],
+    datosFiltroDistrito = [],
+    datosFiltroSupervisor = [],
+    tablaActual = []; // revisar si vale la pena
 
 var aux, aux2;
 
@@ -71,6 +80,9 @@ $(document).ready(function () {
     $("#tablaReincidencias").hide();
     $("#divReinTitulo").hide();
     $("#divGrafReincidencias").hide();
+    $("#segundoNivel").show();
+    $("#desSupervisor").hide();
+    $("#kpiSegundoNivel").hide();
 
     // selecProductividad = 1;
 
@@ -100,6 +112,9 @@ $(document).ready(function () {
         $("#tablaReincidencias").hide();
         $("#divReinTitulo").hide();
         $("#divGrafReincidencias").hide();
+        $("#segundoNivel").show();
+        $("#desSupervisor").hide();
+        $("#kpiSegundoNivel").hide();
 
         // Coloca bandera de locación
         selecProductividad = 1;
@@ -129,7 +144,7 @@ $(document).ready(function () {
 
             $("#desDistrito").hide();
             $("#desPlaza").show();
-            $("#lblOpcPlaza").html("Región");
+            $("#lblOpcPlaza").html("&nbsp;&nbsp;&nbsp;Región");
             $("#opcPlaza").empty();
             $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
 
@@ -163,6 +178,8 @@ $(document).ready(function () {
                 $("#desPlaza").hide();
                 $("#desDistrito").hide();
                 $("#kpiTodos").hide();
+                $("#segundoNivel").hide();
+                $("#kpiSegundoNivel").hide();
 
             }
 
@@ -269,6 +286,8 @@ $(document).ready(function () {
                 $("#desPlaza").hide();
                 $("#desDistrito").hide();
                 $("#kpiTodos").hide();
+                $("#segundoNivel").hide();
+                $("#kpiSegundoNivel").hide();
 
             }
 
@@ -364,6 +383,8 @@ $(document).ready(function () {
             $("#desPlaza").hide();
             $("#desDistrito").hide();
             $("#kpiTodos").hide();
+            $("#segundoNivel").hide();
+            $("#kpiSegundoNivel").hide();
 
         }
 
@@ -429,6 +450,8 @@ $(document).ready(function () {
             $("#divAct").hide();
             $("#imgConecta").hide();
             $("#kpiTodos").hide();
+            $("#segundoNivel").hide();
+            $("#kpiSegundoNivel").hide();
 
             valor = $("#opcDireccion option:selected").val();
 
@@ -570,15 +593,21 @@ $(document).ready(function () {
         } else if (selecProductividad == 1) {
 
             if (valor == "NACIONAL") {
+
                 $("#desPlaza").hide();
                 $("#desDistrito").hide();
+                $("#desSupervisor").hide();
+                $("#kpiSegundoNivel").hide();
                 mostrarTablaCompleta();
+
             } else {
 
                 mostrarTablaFiltro(valor, "direccion");
 
                 $("#desDistrito").hide();
-                $("#lblOpcPlaza").html("Región");
+                $("#desSupervisor").hide();
+                $("#kpiSegundoNivel").hide();
+                $("#lblOpcPlaza").html("&nbsp;&nbsp;&nbsp;Región");
                 $("#opcPlaza").empty();
                 $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
 
@@ -588,6 +617,7 @@ $(document).ready(function () {
 
             $("#kpiRegion").html("");
             $("#kpiDistrito").html("");
+            // $("#kpiSupervisor").html("");
 
         } else if (selecReincidencias == 1) {
 
@@ -629,6 +659,8 @@ $(document).ready(function () {
         valor = $("#opcPlaza option:selected").val();
 
         $("#desDistrito").show();
+        $("#desSupervisor").hide();
+        $("#kpiSegundoNivel").hide();
         
         if (selecProductividad != 1) {
 
@@ -663,6 +695,7 @@ $(document).ready(function () {
             listasComboDistritoProd(valor);
 
             $("#kpiDistrito").html("");
+            // $("#kpiSupervisor").html("");
 
         }
 
@@ -672,6 +705,9 @@ $(document).ready(function () {
     $("#opcDistrito").on("change", function (event) {
 
         valor = $("#opcDistrito option:selected").val();
+
+        $("#desSupervisor").show();
+        $("#kpiSegundoNivel").show();
 
         if (selecProductividad != 1) {
 
@@ -692,9 +728,46 @@ $(document).ready(function () {
             }
 
         } else {
+
             mostrarTablaFiltro(valor, "distrito");
+
+            $("#opcSupervisor").empty();
+            $("#opcSupervisor").append("<option disabled selected>Seleccionar</option>");
+
+            listasComboSupervisor(valor);
+
+            $("#kpiSupervisor").html("");
+
         }
 
+    });
+
+    $("#opcSupervisor").on("change", function (event) {
+        valor = $("#opcSupervisor option:selected").val();
+        mostrarTablaFiltro(valor, "supervisor");
+    });
+
+    // Select color de tarjeta
+    $("#opcTarjeta").on("change", function (event) {
+        valor = $("#opcTarjeta option:selected").val();
+        cambioColorTarjeta(valor);
+    });
+
+    // Checkbox de semanas
+    $("#semM2").change(function() {
+        datosSemM2(this.checked);
+    });
+
+    $("#semM3").change(function() {
+        datosSemM3(this.checked);
+    });
+
+    $("#semM4").change(function () {
+        datosSemM4(this.checked);
+    });
+
+    $("#semM5").change(function () {
+        datosSemM5(this.checked);
     });
 
     $("#btnExcel").jqxButton();
@@ -734,11 +807,14 @@ function llenadoInfo() {
 
     let cantidadCeros = 0;
     datosCompleto.length = 0;
+    semanasReporte.length = 0;
 
     for (let i = 1; i < renglonesTabla.length; i++) {
 
         const element = renglonesTabla[i].split(",");
         var row = {};
+
+        semanasReporte.push(element[3]);
 
         if (parseFloat(element[13]) != 0) {
 
@@ -789,11 +865,20 @@ function llenadoInfo() {
     // aux = datosCompleto;
     console.log("cantidadCeros=", cantidadCeros);
 
-    semanaAct = datosCompleto[datosCompleto.length - 1].semana;
+    const listDist = new Set(semanasReporte);
+
+    semanasReporte = [...listDist];
+    semanasReporte.reverse();
+    semanaAct = semanasReporte[0];
 
     let actSemana = "Última actualización: Semana " + ("0" + semanaAct).slice(-2) + "&nbsp;&nbsp;&nbsp;";
 
     $("#ultActualizacion").empty().html(actSemana);
+    $("#numSemActual").empty().html(semanasReporte[0]);
+    $("#numSemM2").empty().html(semanasReporte[1]);
+    $("#numSemM3").empty().html(semanasReporte[2]);
+    $("#numSemM4").empty().html(semanasReporte[3]);
+    $("#numSemM5").empty().html(semanasReporte[4]);
 
     mostrarTablaCompleta();
 
@@ -802,68 +887,84 @@ function llenadoInfo() {
 
 function mostrarTablaCompleta() {
 
-    var datosImprimir = [];
+    let color = $("#opcTarjeta option:selected").val();
+
+    datosNacionalFijos.length = 0;
+    datosFiltroNacional.length = 0;
 
     for (let i = 0; i < datosCompleto.length; i++) {
 
         const element = datosCompleto[i];
         var row = {};
 
-        row["semana"] = element.semana;
-        row["direccion"] = element.direccion;
-        row["region"] = element.region;
-        row["distrito"] = element.distrito;
-        row["nsupervisor"] = element.nsupervisor;
-        row["nombresupervisor"] = element.nombresupervisor;
-        row["ninstalador"] = element.ninstalador;
-        row["nombreinstalador"] = element.nombreinstalador;
-        row["empresa"] = element.empresa;
-        row["productividad"] = element.productividad;
-        row["numordenes"] = element.numordenes;
-        row["numreincidencias"] = element.numreincidencias;
-        row["porcreincidencias"] = element.porcreincidencias;
-        row["diastrabajados"] = element.diastrabajados;
-        row["ventatecnico"] = element.ventatecnico;
-        row["calificacion"] = element.calificacion;
+        if (element.semana == semanasReporte[0]) {
+            
+            row["semana"] = element.semana;
+            row["direccion"] = element.direccion;
+            row["region"] = element.region;
+            row["distrito"] = element.distrito;
+            row["nsupervisor"] = element.nsupervisor;
+            row["nombresupervisor"] = element.nombresupervisor;
+            row["ninstalador"] = element.ninstalador;
+            row["nombreinstalador"] = element.nombreinstalador;
+            row["empresa"] = element.empresa;
+            row["productividad"] = element.productividad;
+            row["numordenes"] = element.numordenes;
+            row["numreincidencias"] = element.numreincidencias;
+            row["porcreincidencias"] = element.porcreincidencias;
+            row["diastrabajados"] = element.diastrabajados;
+            row["ventatecnico"] = element.ventatecnico;
+            row["calificacion"] = element.calificacion;
+    
+            row["addon"] = element.addon;
+            row["cddInstalaciones"] = element.cddInstalaciones;
+            row["empresarialHS"] = element.empresarialHS;
+            row["soporteProactiva"] = element.soporteProactiva;
+            row["recolecciones"] = element.recolecciones;
+    
+            row["tarjetaamarilla"] = element.tarjetaamarilla;
+            row["fechaultcurso"] = element.fechaultcurso;
+            row["curso"] = element.curso;
+    
+            // datosImprimir.push(row);
+            datosNacionalFijos.push(row);
+            datosFiltroNacional.push(row);
 
-        row["addon"] = element.addon;
-        row["cddInstalaciones"] = element.cddInstalaciones;
-        row["empresarialHS"] = element.empresarialHS;
-        row["soporteProactiva"] = element.soporteProactiva;
-        row["recolecciones"] = element.recolecciones;
-
-        row["tarjetaamarilla"] = element.tarjetaamarilla;
-        row["fechaultcurso"] = element.fechaultcurso;
-        row["curso"] = element.curso;
-
-        datosImprimir.push(row);
+        }
 
     }
 
-    kpiProductividad(datosCompleto, semanaAct, "Dirección");
+    kpiProductividad(datosNacionalFijos, semanaAct, "Dirección");
 
-    datosImprimir.sort(function (a, b) {
+    for (let i = 1; i < semanasReporte.length; i++) {
+        nacionalFiltros(i);
+    }
+
+    tarjetaNacional(color);
+
+    datosFiltroNacional.sort(function (a, b) {
         return a.calificacion - b.calificacion;
     });
 
-    // aux = datosImprimir;
-    imprimeTabla(datosImprimir, "nacional");
+    // aux = datosFiltroNacional;
+    imprimeTabla(datosFiltroNacional, "nacional");
 
 }
 
 
 function mostrarTablaFiltro(filtro, combo) {
 
-    var datosImprimir = [];
+    // var datosImprimir = [];
     let tipo = "";
 
     if (combo == "direccion") {
 
         tipo = "Dirección";
+        datosFiltroDireccion.length = 0;
 
-        for (let i = 0; i < datosCompleto.length; i++) {
+        for (let i = 0; i < datosFiltroNacional.length; i++) {
 
-            const element = datosCompleto[i];
+            const element = datosFiltroNacional[i];
 
             if (element.direccion == filtro) {
 
@@ -896,19 +997,33 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["fechaultcurso"] = element.fechaultcurso;
                 row["curso"] = element.curso;
 
-                datosImprimir.push(row);
+                // datosImprimir.push(row);
+                datosFiltroDireccion.push(row);
 
             }
 
         }
 
+        // console.log("datosFiltroDireccion");
+        // console.log(datosFiltroDireccion);
+
+        // kpiProductividad(datosFiltroDireccion, semanaAct, tipo);
+        kpiProductividad2(datosNacionalFijos, semanaAct, tipo, filtro);
+
+        datosFiltroDireccion.sort(function (a, b) {
+            return a.calificacion - b.calificacion;
+        });
+
+        imprimeTabla(datosFiltroDireccion, combo);
+
     } else if (combo == "region") {
 
         tipo = "Región";
+        datosFiltroRegion.length = 0;
 
-        for (let i = 0; i < datosCompleto.length; i++) {
+        for (let i = 0; i < datosFiltroDireccion.length; i++) {
 
-            const element = datosCompleto[i];
+            const element = datosFiltroDireccion[i];
 
             if (element.region == filtro) {
 
@@ -941,19 +1056,33 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["fechaultcurso"] = element.fechaultcurso;
                 row["curso"] = element.curso;
 
-                datosImprimir.push(row);
+                // datosImprimir.push(row);
+                datosFiltroRegion.push(row);
 
             }
 
         }
 
+        // console.log("datosFiltroRegion");
+        // console.log(datosFiltroRegion);
+
+        // kpiProductividad(datosFiltroRegion, semanaAct, tipo);
+        kpiProductividad2(datosNacionalFijos, semanaAct, tipo, filtro);
+
+        datosFiltroRegion.sort(function (a, b) {
+            return a.calificacion - b.calificacion;
+        });
+
+        imprimeTabla(datosFiltroRegion, combo);
+
     } else if (combo == "distrito") {
 
         tipo = "Distrito";
+        datosFiltroDistrito.length = 0;
 
-        for (let i = 0; i < datosCompleto.length; i++) {
+        for (let i = 0; i < datosFiltroRegion.length; i++) {
 
-            const element = datosCompleto[i];
+            const element = datosFiltroRegion[i];
 
             if (element.distrito == filtro) {
 
@@ -986,26 +1115,98 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["fechaultcurso"] = element.fechaultcurso;
                 row["curso"] = element.curso;
 
-                datosImprimir.push(row);
+                // datosImprimir.push(row);
+                datosFiltroDistrito.push(row);
 
             }
 
         }
 
+        // console.log("datosFiltroDistrito");
+        // console.log(datosFiltroDistrito);
+
+        // kpiProductividad(datosFiltroDistrito, semanaAct, tipo);
+        kpiProductividad2(datosNacionalFijos, semanaAct, tipo, filtro);
+
+        datosFiltroDistrito.sort(function (a, b) {
+            return a.calificacion - b.calificacion;
+        });
+
+        imprimeTabla(datosFiltroDistrito, combo);
+
+    } else if (combo == "supervisor") {
+
+        tipo = "Supervisor";
+        datosFiltroSupervisor.length = 0;
+
+        for (let i = 0; i < datosFiltroDistrito.length; i++) {
+
+            const element = datosFiltroDistrito[i];
+
+            if (element.nombresupervisor == filtro) {
+
+                var row = {};
+
+                row["semana"] = element.semana;
+                row["direccion"] = element.direccion;
+                row["region"] = element.region;
+                row["distrito"] = element.distrito;
+                row["nsupervisor"] = element.nsupervisor;
+                row["nombresupervisor"] = element.nombresupervisor;
+                row["ninstalador"] = element.ninstalador;
+                row["nombreinstalador"] = element.nombreinstalador;
+                row["empresa"] = element.empresa;
+                row["productividad"] = element.productividad;
+                row["numordenes"] = element.numordenes;
+                row["numreincidencias"] = element.numreincidencias;
+                row["porcreincidencias"] = element.porcreincidencias;
+                row["diastrabajados"] = element.diastrabajados;
+                row["ventatecnico"] = element.ventatecnico;
+                row["calificacion"] = element.calificacion;
+
+                row["addon"] = element.addon;
+                row["cddInstalaciones"] = element.cddInstalaciones;
+                row["empresarialHS"] = element.empresarialHS;
+                row["soporteProactiva"] = element.soporteProactiva;
+                row["recolecciones"] = element.recolecciones;
+
+                row["tarjetaamarilla"] = element.tarjetaamarilla;
+                row["fechaultcurso"] = element.fechaultcurso;
+                row["curso"] = element.curso;
+
+                // datosImprimir.push(row);
+                datosFiltroSupervisor.push(row);
+
+            }
+
+        }
+
+        // console.log("datosFiltroSupervisor");
+        // console.log(datosFiltroSupervisor);
+
+        // kpiProductividad(datosFiltroSupervisor, semanaAct, tipo);
+        kpiProductividad2(datosNacionalFijos, semanaAct, tipo, filtro);
+
+        datosFiltroSupervisor.sort(function (a, b) {
+            return a.calificacion - b.calificacion;
+        });
+
+        imprimeTabla(datosFiltroSupervisor, combo);
+
     }
-
-    kpiProductividad(datosImprimir, semanaAct, tipo);
-
-    datosImprimir.sort(function (a, b) {
-        return a.calificacion - b.calificacion;
-    });
-
-    imprimeTabla(datosImprimir, combo);
 
 }
 
 
 function imprimeTabla(datos, combo) {
+
+    tablaActual.length = 0;
+    nivelActualTabla = combo;
+
+    for (let i = 0; i < datos.length; i++) {
+        tablaActual.push(datos[i]);
+    }
+
 
     var source = {
         localData: datos,
@@ -1135,8 +1336,8 @@ function imprimeTabla(datos, combo) {
             { text: "Venta Técnico: 5%", align: "center", name: "vtatec" }
         ],
         ready: function () { // Solo se ejecuta la primera vez que se carga la tabla
-            // $("#contenidoTabla").jqxGrid('sortby', 'calificacion', "asc");
-            $("#contenidoTabla").jqxGrid("sortby", "semana", "desc");
+            $("#contenidoTabla").jqxGrid('sortby', 'calificacion', "asc");
+            // $("#contenidoTabla").jqxGrid("sortby", "semana", "desc");
             $("#contenidoTabla").jqxGrid("autoresizecolumns");
 
             // $("#contenidoTabla").jqxGrid("hidecolumn", "addon");
@@ -1175,24 +1376,40 @@ function imprimeTabla(datos, combo) {
         $("#contenidoTabla").jqxGrid("showcolumn", "direccion");
         $("#contenidoTabla").jqxGrid("showcolumn", "region");
         $("#contenidoTabla").jqxGrid("showcolumn", "distrito");
+        $("#contenidoTabla").jqxGrid("showcolumn", "nsupervisor");
+        $("#contenidoTabla").jqxGrid("showcolumn", "nombresupervisor");
 
     } else if (combo == "direccion") {
 
         $("#contenidoTabla").jqxGrid("hidecolumn", "direccion");
         $("#contenidoTabla").jqxGrid("showcolumn", "region");
         $("#contenidoTabla").jqxGrid("showcolumn", "distrito");
+        $("#contenidoTabla").jqxGrid("showcolumn", "nsupervisor");
+        $("#contenidoTabla").jqxGrid("showcolumn", "nombresupervisor");
 
     } else if (combo == "region") {
 
         $("#contenidoTabla").jqxGrid("hidecolumn", "direccion");
         $("#contenidoTabla").jqxGrid("hidecolumn", "region");
         $("#contenidoTabla").jqxGrid("showcolumn", "distrito");
+        $("#contenidoTabla").jqxGrid("showcolumn", "nsupervisor");
+        $("#contenidoTabla").jqxGrid("showcolumn", "nombresupervisor");
 
     } else if (combo == "distrito") {
 
         $("#contenidoTabla").jqxGrid("hidecolumn", "direccion");
         $("#contenidoTabla").jqxGrid("hidecolumn", "region");
         $("#contenidoTabla").jqxGrid("hidecolumn", "distrito");
+        $("#contenidoTabla").jqxGrid("showcolumn", "nsupervisor");
+        $("#contenidoTabla").jqxGrid("showcolumn", "nombresupervisor");
+
+    } else if (combo == "supervisor") {
+
+        $("#contenidoTabla").jqxGrid("hidecolumn", "direccion");
+        $("#contenidoTabla").jqxGrid("hidecolumn", "region");
+        $("#contenidoTabla").jqxGrid("hidecolumn", "distrito");
+        $("#contenidoTabla").jqxGrid("hidecolumn", "nsupervisor");
+        $("#contenidoTabla").jqxGrid("hidecolumn", "nombresupervisor");
 
     }
 
@@ -1212,8 +1429,8 @@ function imprimeTabla(datos, combo) {
 
     // }
 
-    // $("#contenidoTabla").jqxGrid("sortby", "calificacion", "asc");
-    $("#contenidoTabla").jqxGrid("sortby", "semana", "desc");
+    $("#contenidoTabla").jqxGrid("sortby", "calificacion", "asc");
+    // $("#contenidoTabla").jqxGrid("sortby", "semana", "desc");
     $("#contenidoTabla").jqxGrid("endupdate");
 
     // $("#btnPDF").jqxButton();
@@ -1229,9 +1446,9 @@ function listasComboRegion(direccionSelec) {
 
     listaRegion.length = 0;
 
-    for (let i = 0; i < datosCompleto.length; i++) {
+    for (let i = 0; i < datosNacionalFijos.length; i++) {
 
-        const element = datosCompleto[i];
+        const element = datosNacionalFijos[i];
 
         if (element.direccion == direccionSelec) {
 
@@ -1254,9 +1471,9 @@ function listasComboDistritoProd(regionSelec) {
 
     listaDistritosProd.length = 0;
 
-    for (let i = 0; i < datosCompleto.length; i++) {
+    for (let i = 0; i < datosNacionalFijos.length; i++) {
 
-        const element = datosCompleto[i];
+        const element = datosNacionalFijos[i];
 
         if (element.region == regionSelec) {
 
@@ -1271,6 +1488,30 @@ function listasComboDistritoProd(regionSelec) {
     }
 
     $("#desDistrito").show();
+
+}
+
+
+function listasComboSupervisor(distritoSelec) {
+
+    listaSupervisor.length = 0;
+
+    for (let i = 0; i < datosNacionalFijos.length; i++) {
+
+        const element = datosNacionalFijos[i];
+
+        if (element.distrito == distritoSelec) {
+
+            if ((listaSupervisor.length == 0) || !(listaSupervisor.includes(element.nombresupervisor))) {
+                listaSupervisor.push(element.nombresupervisor);
+                $("#opcSupervisor").append($("<option>", { value: element.nombresupervisor, text: element.nombresupervisor }));
+            }
+
+        }
+
+    }
+
+    $("#desSupervisor").show();
 
 }
 
@@ -2088,7 +2329,7 @@ function kpiProductividad(datos, semana, nivel) {
 
         }
 
-        kpiProd = (prodAcum / diasAcum).toFixed(2);
+        kpiProd = (diasAcum == 0) ? 0 : (prodAcum / diasAcum).toFixed(2);
 
         if (nivel == "Dirección") {
             divKPI = "#kpiDireccion";
@@ -2096,12 +2337,171 @@ function kpiProductividad(datos, semana, nivel) {
             divKPI = "#kpiRegion";
         } else if (nivel == "Distrito") {
             divKPI = "#kpiDistrito";
+        } else if (nivel == "Supervisor") {
+            divKPI = "#kpiSupervisor";
         }
 
         $(divKPI).html("&nbsp;&nbsp;&nbsp;Productividad " + nivel + " = <strong>" + kpiProd + "</strong>");
 
     } else {
-        alert("Error al cargar información.");
+        console.log("Filtro sin información.");
+        $(divKPI).html("&nbsp;&nbsp;&nbsp;Productividad " + nivel + " = <strong>-</strong>");
+    }
+
+}
+
+
+function kpiProductividad2(datos, semana, nivel, opcSeleccionada) {
+
+    let divKPI = "";
+    let prodAcum = 0,
+        diasAcum = 0,
+        kpiProd = 0;
+
+    if (nivel == "Dirección") {
+
+        divKPI = "#kpiDireccion";
+
+        if (datos.length > 0) {
+
+            for (let i = 0; i < datos.length; i++) {
+
+                const element = datos[i];
+                
+                if ((element.semana == semana) && (element.direccion == opcSeleccionada)) {
+
+                    let prod = 0;
+
+                    prod = element.addon * pesosRelativos.addon;
+                    prod += element.cddInstalaciones * pesosRelativos.instCDD;
+                    prod += element.empresarialHS * pesosRelativos.empHS;
+                    prod += element.soporteProactiva * pesosRelativos.soporProac;
+                    prod += element.recolecciones * pesosRelativos.recol;
+
+                    prodAcum += prod;
+                    diasAcum += parseFloat(element.diastrabajados);
+
+                }
+                
+            }
+
+            kpiProd = (diasAcum == 0) ? 0 : (prodAcum / diasAcum).toFixed(2);
+
+            $(divKPI).html("&nbsp;&nbsp;&nbsp;Productividad " + nivel + " = <strong>" + kpiProd + "</strong>");
+
+        } else {
+            console.log("Filtro sin información en la dirección", opcSeleccionada);
+            $(divKPI).html("&nbsp;&nbsp;&nbsp;Productividad " + nivel + " = <strong>-</strong>");
+        }
+
+    } else if (nivel == "Región") {
+
+        divKPI = "#kpiRegion";
+
+        if (datos.length > 0) {
+
+            for (let i = 0; i < datos.length; i++) {
+
+                const element = datos[i];
+
+                if ((element.semana == semana) && (element.region == opcSeleccionada)) {
+
+                    let prod = 0;
+
+                    prod = element.addon * pesosRelativos.addon;
+                    prod += element.cddInstalaciones * pesosRelativos.instCDD;
+                    prod += element.empresarialHS * pesosRelativos.empHS;
+                    prod += element.soporteProactiva * pesosRelativos.soporProac;
+                    prod += element.recolecciones * pesosRelativos.recol;
+
+                    prodAcum += prod;
+                    diasAcum += parseFloat(element.diastrabajados);
+
+                }
+
+            }
+
+            kpiProd = (diasAcum == 0) ? 0 : (prodAcum / diasAcum).toFixed(2);
+
+            $(divKPI).html("&nbsp;&nbsp;&nbsp;Productividad " + nivel + " = <strong>" + kpiProd + "</strong>");
+
+        } else {
+            console.log("Filtro sin información en la dirección", opcSeleccionada);
+            $(divKPI).html("&nbsp;&nbsp;&nbsp;Productividad " + nivel + " = <strong>-</strong>");
+        }
+
+    } else if (nivel == "Distrito") {
+
+        divKPI = "#kpiDistrito";
+
+        if (datos.length > 0) {
+
+            for (let i = 0; i < datos.length; i++) {
+
+                const element = datos[i];
+
+                if ((element.semana == semana) && (element.distrito == opcSeleccionada)) {
+
+                    let prod = 0;
+
+                    prod = element.addon * pesosRelativos.addon;
+                    prod += element.cddInstalaciones * pesosRelativos.instCDD;
+                    prod += element.empresarialHS * pesosRelativos.empHS;
+                    prod += element.soporteProactiva * pesosRelativos.soporProac;
+                    prod += element.recolecciones * pesosRelativos.recol;
+
+                    prodAcum += prod;
+                    diasAcum += parseFloat(element.diastrabajados);
+
+                }
+
+            }
+
+            kpiProd = (diasAcum == 0) ? 0 : (prodAcum / diasAcum).toFixed(2);
+
+            $(divKPI).html("&nbsp;&nbsp;&nbsp;Productividad " + nivel + " = <strong>" + kpiProd + "</strong>");
+
+        } else {
+            console.log("Filtro sin información en la dirección", opcSeleccionada);
+            $(divKPI).html("&nbsp;&nbsp;&nbsp;Productividad " + nivel + " = <strong>-</strong>");
+        }
+
+    } else if (nivel == "Supervisor") {
+
+        divKPI = "#kpiSupervisor";
+
+        if (datos.length > 0) {
+
+            for (let i = 0; i < datos.length; i++) {
+
+                const element = datos[i];
+
+                if ((element.semana == semana) && (element.nombresupervisor == opcSeleccionada)) {
+
+                    let prod = 0;
+
+                    prod = element.addon * pesosRelativos.addon;
+                    prod += element.cddInstalaciones * pesosRelativos.instCDD;
+                    prod += element.empresarialHS * pesosRelativos.empHS;
+                    prod += element.soporteProactiva * pesosRelativos.soporProac;
+                    prod += element.recolecciones * pesosRelativos.recol;
+
+                    prodAcum += prod;
+                    diasAcum += parseFloat(element.diastrabajados);
+
+                }
+
+            }
+
+            kpiProd = (diasAcum == 0) ? 0 : (prodAcum / diasAcum).toFixed(2);
+
+            $(divKPI).html("&nbsp;&nbsp;&nbsp;Productividad " + nivel + " = <strong>" + kpiProd + "</strong>");
+
+        } else {
+            console.log("Filtro sin información en la dirección", opcSeleccionada);
+            $(divKPI).html("&nbsp;&nbsp;&nbsp;Productividad " + nivel + " = <strong>-</strong>");
+        }
+
     }
 
 }

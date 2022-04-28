@@ -72,6 +72,8 @@ $(document).ready(function() {
         $("#desPlaza").hide();
         $("#desDistrito").hide();
         $("#kpiTodos").hide();
+        $("#segundoNivel").hide();
+        $("#kpiSegundoNivel").hide();
         
         $("#imgConecta").show();
         $("#tablaReincidencias").show();
@@ -124,6 +126,8 @@ $(document).ready(function() {
         $("#divAct").hide();
         $("#desDireccion").show();
         $("#kpiTodos").hide();
+        $("#segundoNivel").hide();
+        $("#kpiSegundoNivel").hide();
 
         $("#imgConecta").show();
         $("#tablaReincidencias").hide();

@@ -128,10 +128,10 @@
 
         <div id="desDireccion" class="col-md-4 col-sm-12">
             <div class="row">
-                <div class="col-md-2 col-sm-12 text-center">
+                <div class="col-md-3 col-sm-12 ">
                     <label id="labelZona" for="opcDireccion">&nbsp;&nbsp;&nbsp;Dirección</label>
                 </div>
-                <div class="col-md-10 col-sm-12">
+                <div class="col-md-9 col-sm-12">
                     <form>
                         <select name="opcDireccion" id="opcDireccion" class="form-control-select" style="width: 300px; margin-right: 20px;">
                             <option selected>NACIONAL</option>
@@ -144,29 +144,31 @@
                 </div>
             </div>
         </div>
-
+        
         <div id="desPlaza" class="col-md-4 col-sm-12">
             <div class="row">
-                <div class="col-md-2 col-sm-12 text-center">
-                    <label for="opcPlaza" id="lblOpcPlaza">&nbsp;Plaza</label>
+                <div class="col-md-3 col-sm-12 ">
+                    <label for="opcPlaza" id="lblOpcPlaza">&nbsp;&nbsp;&nbsp;Plaza</label>
                 </div>
-                <div class="col-md-10 col-sm-12">
+                <div class="col-md-9 col-sm-12">
                     <form>
-                        <select name="opcPlaza" id="opcPlaza" class="form-control-select" style="width: 300px; margin-right: 20px;">
+                        <select name="opcPlaza" id="opcPlaza" class="form-control-select"
+                            style="width: 300px; margin-right: 20px;">
                         </select>
                     </form>
                 </div>
             </div>
         </div>
-
+        
         <div id="desDistrito" class="col-md-4 col-sm-12">
             <div class="row">
-                <div class="col-md-2 col-sm-12 text-center">
-                    <label for="opcDistrito">&nbsp;Distrito</label>
+                <div class="col-md-2 col-sm-12 ">
+                    <label for="opcDistrito">&nbsp;&nbsp;&nbsp;Distrito</label>
                 </div>
                 <div class="col-md-10 col-sm-12">
                     <form>
                         <select name="opcDistrito" id="opcDistrito" class="form-control-select" style="width: 300px; margin-right: 20px;">
+
                         </select>
                     </form>
                 </div>
@@ -180,25 +182,117 @@
         <div id="desKpiDireccion" class="col-md-4 col-sm-12">
             <div class="row">
                 <div id="kpiDireccion" class="col-md-12 col-sm-4">
-                    
+        
                 </div>
             </div>
         </div>
-    
+        
         <div id="desKpiRegion" class="col-md-4 col-sm-12">
             <div class="row">
                 <div id="kpiRegion" class="col-md-12 col-sm-4">
+        
+                </div>
+            </div>
+        </div>
+        
+        <div id="desKpiDistrito" class="col-md-4 col-sm-12">
+            <div class="row">
+                <div id="kpiDistrito" class="col-md-12 col-sm-4">
+        
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
+    <div class="row mt-3" id="segundoNivel">
+    
+        <div id="desSupervisor" class="col-md-4 col-sm-12">
+            <div class="row">
+                <div class="col-md-3 col-sm-12 ">
+                    <label id="labelZona" for="opcSupervisor">&nbsp;&nbsp;&nbsp;Supervisor</label>
+                </div>
+                <div class="col-md-9 col-sm-12">
+                    <form>
+                        <select name="opcSupervisor" id="opcSupervisor" class="form-control-select" style="width: 300px; margin-right: 20px;">
+                            <option selected disabled>Seleccionar</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="desTarjeta" class="col-md-4 col-sm-12">
+            <div class="row">
+                <div class="col-md-3 col-sm-12 ">
+                    <label for="opcTarjeta">&nbsp;&nbsp;&nbsp;Tarjeta</label>
+                </div>
+                <div class="col-md-9 col-sm-12">
+                    <form>
+                        <select name="opcTarjeta" id="opcTarjeta" class="form-control-select" style="width: 300px; margin-right: 20px;">
+                            <option value="todo" selected>Listado completo</option>
+                            <option value="amarilla">Amarilla</option>
+                            <option value="naranja">Naranja</option>
+                            <option value="morada">Morada</option>
+                            <option value="roja">Roja</option>
+                            <option value="sinTarjeta">Sin Tarjeta</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+    
+        <div id="desSemana" class="col-md-4 col-sm-12">
+
+                <div class="col-md-1 col-sm-12 d-inline">
+                    <label>&nbsp;&nbsp;&nbsp;Semana:</label>
+                </div>
+
+                <div class="col-md-11 col-sm-12 d-inline" style="margin-left: 10px;">
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="semActual" value="semActual" disabled checked>
+                        <label class="form-check-label etiqueta" for="semActual" id="numSemActual"></label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="semM2" value="semM2">
+                        <label class="form-check-label etiqueta" for="semM2" id="numSemM2"></label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="semM3" value="semM3">
+                        <label class="form-check-label etiqueta" for="semM3" id="numSemM3"></label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="semM4" value="semM4">
+                        <label class="form-check-label etiqueta" for="semM4" id="numSemM4"></label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="semM5" value="semM5">
+                        <label class="form-check-label etiqueta" for="semM5" id="numSemM5"></label>
+                    </div>
+
+                </div>
+
+        </div>
+    
+    </div>
+
+    <div id="kpiSegundoNivel" class="row">
+    
+        <div id="desKpiSupervisor" class="col-md-4 col-sm-12">
+            <div class="row">
+                <div id="kpiSupervisor" class="col-md-12 col-sm-4">
                     
                 </div>
             </div>
         </div>
     
-        <div id="desKpiDistrito" class="col-md-4 col-sm-12">
-            <div class="row">
-                <div id="kpiDistrito" class="col-md-12 col-sm-4">
-                    
-                </div>
-            </div>
+        <div class="col-md-4 col-sm-12">
+            
+        </div>
+    
+        <div class="col-md-4 col-sm-12">
+            
         </div>
     
     </div>
@@ -387,6 +481,7 @@
         </div>
     </div>
 
+    <script src="js/desempenio.js"></script>
     <script src="js/graficas.js"></script>
     <script src="js/reincidencias.js"></script>
 
