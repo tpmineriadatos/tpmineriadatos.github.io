@@ -854,6 +854,12 @@ function llenadoInfo() {
             row["fechaultcurso"] = element[22];
             row["curso"] = element[23].toUpperCase();
 
+            // row["cmcumplimiento"] = parseFloat(element[24]) * 100;
+            row["fibra"] = element[25];
+            row["promfibra"] = element[26];
+            row["utp"] = element[27];
+            row["promutp"] = element[28];
+
             datosCompleto.push(row);
 
         } else {
@@ -925,6 +931,12 @@ function mostrarTablaCompleta() {
             row["tarjetaamarilla"] = element.tarjetaamarilla;
             row["fechaultcurso"] = element.fechaultcurso;
             row["curso"] = element.curso;
+
+            // row["cmcumplimiento"] = element.cmcumplimiento;
+            row["fibra"] = element.fibra;
+            row["promfibra"] = element.promfibra;
+            row["utp"] = element.utp;
+            row["promutp"] = element.promutp;
     
             // datosImprimir.push(row);
             datosNacionalFijos.push(row);
@@ -997,6 +1009,12 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["fechaultcurso"] = element.fechaultcurso;
                 row["curso"] = element.curso;
 
+                // row["cmcumplimiento"] = element.cmcumplimiento;
+                row["fibra"] = element.fibra;
+                row["promfibra"] = element.promfibra;
+                row["utp"] = element.utp;
+                row["promutp"] = element.promutp;
+
                 // datosImprimir.push(row);
                 datosFiltroDireccion.push(row);
 
@@ -1055,6 +1073,12 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["tarjetaamarilla"] = element.tarjetaamarilla;
                 row["fechaultcurso"] = element.fechaultcurso;
                 row["curso"] = element.curso;
+
+                // row["cmcumplimiento"] = element.cmcumplimiento;
+                row["fibra"] = element.fibra;
+                row["promfibra"] = element.promfibra;
+                row["utp"] = element.utp;
+                row["promutp"] = element.promutp;
 
                 // datosImprimir.push(row);
                 datosFiltroRegion.push(row);
@@ -1115,6 +1139,12 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["fechaultcurso"] = element.fechaultcurso;
                 row["curso"] = element.curso;
 
+                // row["cmcumplimiento"] = element.cmcumplimiento;
+                row["fibra"] = element.fibra;
+                row["promfibra"] = element.promfibra;
+                row["utp"] = element.utp;
+                row["promutp"] = element.promutp;
+
                 // datosImprimir.push(row);
                 datosFiltroDistrito.push(row);
 
@@ -1173,6 +1203,12 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["tarjetaamarilla"] = element.tarjetaamarilla;
                 row["fechaultcurso"] = element.fechaultcurso;
                 row["curso"] = element.curso;
+
+                // row["cmcumplimiento"] = element.cmcumplimiento;
+                row["fibra"] = element.fibra;
+                row["promfibra"] = element.promfibra;
+                row["utp"] = element.utp;
+                row["promutp"] = element.promutp;
 
                 // datosImprimir.push(row);
                 datosFiltroSupervisor.push(row);
@@ -1237,7 +1273,13 @@ function imprimeTabla(datos, combo) {
 
                 { name: "tarjetaamarilla", type: "string" },
                 { name: "fechaultcurso", type: "string" },
-                { name: "curso", type: "string" }
+                { name: "curso", type: "string" },
+
+                // { name: "cmcumplimiento", type: "number" },
+                { name: "fibra", type: "number" },
+                { name: "promfibra", type: "number" },
+                { name: "utp", type: "number" },
+                { name: "promutp", type: "number" }
 
             ]//,
         // sortcolumn: 'calificacion',
@@ -1315,6 +1357,12 @@ function imprimeTabla(datos, combo) {
             { text: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fecha&nbsp;&nbsp;&nbsp;&nbsp;", columngroup: "ultcurso", dataField: "fechaultcurso", cellsAlign: "center", align: "center", cellclassname: cellclass },
             { text: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Descripción&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", columngroup: "ultcurso", dataField: "curso", cellsAlign: "center", align: "center", cellclassname: cellclass },
 
+            { text: "#Órd. en Fibra", columngroup: "sobreconsumo", dataField: "fibra", width: 100, cellsAlign: "center", align: "center", cellclassname: cellclass },
+            { text: "Prom. sobreconsumo (mts.)", columngroup: "sobreconsumo", dataField: "promfibra", width: 100, cellsAlign: "center", align: "center", cellsformat: "n", cellclassname: cellclass },
+            { text: "#Órd. en UTP", columngroup: "sobreconsumo", dataField: "utp", width: 100, cellsAlign: "center", align: "center", cellclassname: cellclass },
+            { text: "Prom. sobreconsumo (mts.)", columngroup: "sobreconsumo", dataField: "promutp", width: 100, cellsAlign: "center", align: "center", cellsformat: "n", cellclassname: cellclass },
+            // { text: "% Órdenes", columngroup: "sobreconsumo", dataField: "cmcumplimiento", width: 100, cellsAlign: "center", align: "center", cellsformat: "p0", cellclassname: cellclass },
+
             { text: "Obj: Igual a 6", columngroup: "dias", dataField: "diastrabajados", width: 120, cellsAlign: "right", align: "center", cellclassname: cellclass },
             { text: "Obj: Mayor a 3.5", columngroup: "produc", dataField: "productividad", width: 100, cellsAlign: "right", align: "center", cellclassname: cellclass },
             { text: "OT Terminadas", columngroup: "nrein", dataField: "numordenes", width: 100, cellsAlign: "right", align: "center", cellclassname: cellclass },
@@ -1330,6 +1378,8 @@ function imprimeTabla(datos, combo) {
         ],
         columngroups: [
             { text: "Último curso", align: "center", name: "ultcurso" },
+            // { text: "% Órdenes con", align: "center", name: "consumo" },
+            { text: "Sobreconsumo de materiales", align: "center", name: "sobreconsumo" },
             { text: "Asistencia: 20%", align: "center", name: "dias" },
             { text: "Productividad: 35%", align: "center", name: "produc" },
             { text: "% Reincidencias Pond: 40%", align: "center", name: "nrein" },
