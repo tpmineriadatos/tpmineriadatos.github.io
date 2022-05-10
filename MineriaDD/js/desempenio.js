@@ -89,6 +89,10 @@ function tarjetaNacional(color) {
         
     }
 
+    datosFiltroNacional.sort(function (a, b) {
+        return a.calificacion - b.calificacion;
+    });
+
     // console.log("datosFiltroNacional");
     // console.log(datosFiltroNacional);
 
@@ -114,6 +118,10 @@ function tarjetaDireccion(direccion) {
         const element = auxColor[i];
         datosFiltroDireccion.push(element);
     }
+
+    datosFiltroDireccion.sort(function (a, b) {
+        return a.calificacion - b.calificacion;
+    });
 
     // console.log("datosFiltroDireccion");
     // console.log(datosFiltroDireccion);
@@ -141,6 +149,10 @@ function tarjetaRegion(region) {
         datosFiltroRegion.push(element);
     }
 
+    datosFiltroRegion.sort(function (a, b) {
+        return a.calificacion - b.calificacion;
+    });
+
     // console.log("datosFiltroRegion");
     // console.log(datosFiltroRegion);
 
@@ -167,6 +179,10 @@ function tarjetaDistrito(distrito) {
         datosFiltroDistrito.push(element);
     }
 
+    datosFiltroDistrito.sort(function (a, b) {
+        return a.calificacion - b.calificacion;
+    });
+
     // console.log("datosFiltroDistrito");
     // console.log(datosFiltroDistrito);
 
@@ -192,6 +208,10 @@ function tarjetaSupervisor(supervisor) {
         const element = auxColor[i];
         datosFiltroSupervisor.push(element);
     }
+
+    datosFiltroSupervisor.sort(function (a, b) {
+        return a.calificacion - b.calificacion;
+    });
 
     // console.log("datosFiltroSupervisor");
     // console.log(datosFiltroSupervisor);
@@ -488,6 +508,10 @@ function nacionalFiltros(k) {
             }
 
         }
+
+        datosNacionalFijos.sort(function (a, b) {
+            return a.calificacion - b.calificacion;
+        });
 
     }
 
