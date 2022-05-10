@@ -86,12 +86,21 @@
                             </div>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="nombreMenu" id="incumplimiento">
                                 <strong class="textoMenu">Incumplimiento</strong>
                             </div>
                         </a>
+
+                        <ul class="dropdown-menu listaRein" aria-labelledby="navbarDarkDropdownMenuLink">
+                            <li><a class="dropdown-item" href="#" id="incumIndicador">Indicador</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#" id="incumTop">Top 10</a></li>
+                        </ul>
+
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">
@@ -370,7 +379,7 @@
                         <label class="tituloGris" style="font-size: large;">Índice de Reincidencias</label>
                     </div>
                 </div>
-                <div id="grafica2" class="tamanhoGrafica2">
+                <div id="grafica22" class="tamanhoGrafica2">
 
                 </div>
             </div>
@@ -482,6 +491,7 @@
     </div>
 
     <script src="js/desempenio.js"></script>
+    <script src="js/incumplimiento.js"></script>
     <script src="js/graficas.js"></script>
     <script src="js/reincidencias.js"></script>
 

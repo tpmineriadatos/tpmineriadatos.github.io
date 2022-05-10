@@ -88,6 +88,7 @@ $(document).ready(function() {
         selecTR = 0;
         selecBacklog = 0;
         selecIncumplimiento = 0;
+        selecTopIncumplimiento = 0;
         selecTop = 0;
         selec72hrs = 0;
 
@@ -142,10 +143,11 @@ $(document).ready(function() {
         selecTR = 1;
         selecBacklog = 0;
         selecIncumplimiento = 0;
+        selecTopIncumplimiento = 0;
         selecTop = 0;
         selec72hrs = 0;
 
-        $("#grafica2").html("");
+        $("#grafica22").html("");
         $("#grafica3").html("");
 
         if ($("#desDistrito").is(":visible")) {
@@ -173,7 +175,7 @@ $(document).ready(function() {
                 valor = $("#opcDireccion option:selected").val();
 
                 if (valor == "NACIONAL") {
-                    graficaBarraIDR("#grafica2", datosYIDR, datosYIDS, datosYRSS);
+                    graficaBarraIDR("#grafica22", datosYIDR, datosYIDS, datosYRSS);
                     graficaBarraTR("#grafica3", datosYOrdenes, datosYTicketRep);
                     $(".c3-text").removeAttr("style");
                 } else {
@@ -188,7 +190,7 @@ $(document).ready(function() {
             valor = $("#opcDireccion option:selected").val();
 
             if (valor == "NACIONAL") {
-                graficaBarraIDR("#grafica2", datosYIDR, datosYIDS, datosYRSS);
+                graficaBarraIDR("#grafica22", datosYIDR, datosYIDS, datosYRSS);
                 graficaBarraTR("#grafica3", datosYOrdenes, datosYTicketRep);
                 $(".c3-text").removeAttr("style");
             } else {
@@ -765,8 +767,8 @@ function llenaArreglosTR() {
 
     }
 
-    // $("#grafica2").html("");
-    // graficaBarraTR("#grafica2", datosYOrdenes, datosYTicketRep);
+    // $("#grafica22").html("");
+    // graficaBarraTR("#grafica22", datosYOrdenes, datosYTicketRep);
 
 }
 
@@ -1214,7 +1216,7 @@ function pintaGraficaIDRDir(valor) {
 
     }
 
-    graficaBarraIDR("#grafica2", datosYIDRDir, datosYIDSDir, datosYRSSDir);
+    graficaBarraIDR("#grafica22", datosYIDRDir, datosYIDSDir, datosYRSSDir);
 
 }
 
@@ -1239,7 +1241,7 @@ function pintaGraficaIDRPlaza(valor) {
 
     }
 
-    graficaBarraIDR("#grafica2", datosYIDRPlaza, datosYIDSPlaza, datosYRSSPlaza);
+    graficaBarraIDR("#grafica22", datosYIDRPlaza, datosYIDSPlaza, datosYRSSPlaza);
 
 }
 
@@ -1264,7 +1266,7 @@ function pintaGraficaIDRDis(valor) {
 
     }
 
-    graficaBarraIDR("#grafica2", datosYIDRDis, datosYIDSDis, datosYRSSDis);
+    graficaBarraIDR("#grafica22", datosYIDRDis, datosYIDSDis, datosYRSSDis);
 
 }
 

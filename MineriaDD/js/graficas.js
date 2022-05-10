@@ -1,5 +1,6 @@
 var selecBacklog = 0,
     selecIncumplimiento = 0,
+    selecTopIncumplimiento = 0, // Agregarlo en todos los cambios de vista
     selecProductividad = 1, // Agregarlo y considerarlo
     selecReincidencias = 0,
     selecTR = 0,
@@ -98,8 +99,8 @@ $(document).ready(function () {
 
         if (selecTop == 1) {
             $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
-                + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
-                + "</div></div>");
+                                            + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
+                                            + "</div></div>");
         }
 
         $("#divGrafica").hide();
@@ -122,6 +123,7 @@ $(document).ready(function () {
         selecTR = 0;
         selecBacklog = 0;
         selecIncumplimiento = 0;
+        selecTopIncumplimiento = 0;
         selecTop = 0;
         selec72hrs = 0;
 
@@ -164,11 +166,7 @@ $(document).ready(function () {
 
         if ((selecIncumplimiento != 1) && (selecTR != 1)) {
 
-            if (selecTop == 1) {
-                $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
-                                                + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
-                                                + "</div></div>");
-            } else if ((selecProductividad == 1) || (selecReincidencias == 1)) {
+            if ((selecProductividad == 1) || (selecReincidencias == 1)) {
 
                 // $("#divGrafica").show();
                 $("#divTabla").hide();
@@ -199,6 +197,10 @@ $(document).ready(function () {
 
         }
 
+        $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
+                                        + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
+                                        + "</div></div>");
+
         $("#divGrafica").show();
         $("#tablaReincidencias").hide();
         $("#divReinTitulo").hide();
@@ -210,6 +212,7 @@ $(document).ready(function () {
         selecTR = 0;
         selecBacklog = 1;
         selecIncumplimiento = 0;
+        selecTopIncumplimiento = 0;
         selecTop = 0;
         selec72hrs = 0;
 
@@ -265,112 +268,6 @@ $(document).ready(function () {
 
     });
 
-    // Seleccionar menú Incumplimiento
-    $("#incumplimiento").click(function () {
-
-        $("#desDireccion").show();
-
-        if ((selecBacklog != 1) && (selecTR != 1)) {
-
-            if (selecTop == 1) {
-                $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
-                    + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
-                    + "</div></div>");
-            } else if ((selecProductividad == 1) || (selecReincidencias == 1)) {
-
-                // $("#divGrafica").show();
-                $("#divTabla").hide();
-                $("#divAct").hide();
-                $("#imgConecta").hide();
-                $("#lblOpcPlaza").html("Plaza");
-                $("#desPlaza").hide();
-                $("#desDistrito").hide();
-                $("#kpiTodos").hide();
-                $("#segundoNivel").hide();
-                $("#kpiSegundoNivel").hide();
-
-            }
-
-            valor = $("#opcDireccion option:selected").val();
-
-            if (valor != "NACIONAL") {
-
-                $("#desPlaza").show();
-                $("#desDistrito").hide();
-
-                $("#opcPlaza").empty();
-                $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
-
-                llenaListasPlaza(valor);
-
-            }
-
-        }
-
-        $("#divGrafica").show();
-        $("#tablaReincidencias").hide();
-        $("#divReinTitulo").hide();
-        $("#divGrafReincidencias").hide();
-
-        // Coloca bandera de locación
-        selecProductividad = 0;
-        selecReincidencias = 0;
-        selecTR = 0;
-        selecBacklog = 0;
-        selecIncumplimiento = 1;
-        selecTop = 0;
-        selec72hrs = 0;
-
-        document.getElementById("productividad").style.backgroundColor = "rgb(63, 124, 191)";
-        document.getElementById("reincidencias").style.backgroundColor = "rgb(63, 124, 191)";
-        document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
-        document.getElementById("incumplimiento").style.backgroundColor = "rgb(31, 77, 155)";
-        document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
-        document.getElementById("mas72hrs").style.backgroundColor = "rgb(63, 124, 191)";
-
-        if ($("#desDistrito").is(":visible")) {
-
-            valor = $("#opcDistrito option:selected").val();
-
-            if (valor != "Seleccionar") {
-                lecturaCSV("fuentes/Distritos_incumplimientos.csv", valor);
-            } else {
-                valor = $("#opcPlaza option:selected").val();
-                lecturaCSV("fuentes/Plaza_incumplimientos.csv", valor);
-            }
-
-        } else if ($("#desPlaza").is(":visible")) {
-
-            valor = $("#opcPlaza option:selected").val();
-
-            if (valor != "Seleccionar") {
-                lecturaCSV("fuentes/Plaza_incumplimientos.csv", valor);
-            } else {
-
-                valor = $("#opcDireccion option:selected").val();
-
-                if (valor == "NACIONAL") {
-                    lecturaCSV("fuentes/Nacional_incumplimientos.csv", "NACIONAL");
-                } else {
-                    $("#grafica1").html("");
-                }
-
-            }
-
-        } else {
-
-            valor = $("#opcDireccion option:selected").val();
-
-            if (valor == "NACIONAL") {
-                lecturaCSV("fuentes/Nacional_incumplimientos.csv", "NACIONAL");
-            } else {
-                $("#grafica1").html("");
-            }
-
-        }
-
-    });
-
     // Seleccionar menú Top del día
     $("#top").click(function () {
 
@@ -409,6 +306,7 @@ $(document).ready(function () {
         selecTR = 0;
         selecBacklog = 0;
         selecIncumplimiento = 0;
+        selecTopIncumplimiento = 0;
         selecTop = 1;
         selec72hrs = 0;
 
@@ -439,11 +337,7 @@ $(document).ready(function () {
     // Seleccionar menú Más de 72 hrs
     $("#mas72hrs").click(function () {
 
-        if (selecTop == 1) {
-            $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
-                + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
-                + "</div></div>");
-        } else if ((selecProductividad == 1) || (selecReincidencias == 1)) {
+        if ((selecProductividad == 1) || (selecReincidencias == 1)) {
 
             // $("#divGrafica").show();
             $("#divTabla").hide();
@@ -469,6 +363,10 @@ $(document).ready(function () {
 
         }
 
+        $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
+                                        + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
+                                        + "</div></div>");
+
         $("#divGrafica").show();
         $("#tablaReincidencias").hide();
         $("#divReinTitulo").hide();
@@ -480,6 +378,7 @@ $(document).ready(function () {
         selecTR = 0;
         selecBacklog = 0;
         selecIncumplimiento = 0;
+        selecTopIncumplimiento = 0;
         selecTop = 0;
         selec72hrs = 1;
 
@@ -626,10 +525,10 @@ $(document).ready(function () {
                 $("#desPlaza").hide();
                 $("#desDistrito").hide();
 
-                $("#grafica2").html("");
+                $("#grafica22").html("");
                 $("#grafica3").html("");
 
-                graficaBarraIDR("#grafica2", datosYIDR, datosYIDS, datosYRSS);
+                graficaBarraIDR("#grafica22", datosYIDR, datosYIDS, datosYRSS);
                 graficaBarraTR("#grafica3", datosYOrdenes, datosYTicketRep);
 
             } else {
@@ -642,13 +541,31 @@ $(document).ready(function () {
                 $("#desPlaza").show();
                 $("#desDistrito").hide();
 
-                $("#grafica2").html("");
+                $("#grafica22").html("");
                 $("#grafica3").html("");
 
                 pintaGraficaIDRDir(valor);
                 pintaGraficaTRDir(valor);
 
             }
+
+        } else if (selecTopIncumplimiento == 1) {
+
+            // $("#desPlaza").hide();
+            // $("#desDistrito").hide();
+
+            $("#grafica1").html("");
+            $("#grafica2").html("");
+
+            if (valor == "NACIONAL") {
+                $("#lblgrafica1").html("Top 10 Distritos - Mayor incremento en incumplimiento");
+                $("#lblgrafica2").html("Top 10 Distritos - Mayor decremento en incumplimiento");
+            } else {
+                $("#lblgrafica1").html("Top 5 Distritos - Mayor incremento en incumplimiento");
+                $("#lblgrafica2").html("Top 5 Distritos - Mayor decremento en incumplimiento");
+            }
+
+            lecturaCSV("fuentes/Top10Incumplimientos.csv", valor);
 
         }
 
@@ -1386,7 +1303,7 @@ function imprimeTabla(datos, combo) {
             { text: "Venta Técnico: 5%", align: "center", name: "vtatec" }
         ],
         ready: function () { // Solo se ejecuta la primera vez que se carga la tabla
-            $("#contenidoTabla").jqxGrid('sortby', 'calificacion', "asc");
+            // $("#contenidoTabla").jqxGrid('sortby', 'calificacion', "asc");
             // $("#contenidoTabla").jqxGrid("sortby", "semana", "desc");
             $("#contenidoTabla").jqxGrid("autoresizecolumns");
 
@@ -1479,7 +1396,7 @@ function imprimeTabla(datos, combo) {
 
     // }
 
-    $("#contenidoTabla").jqxGrid("sortby", "calificacion", "asc");
+    // $("#contenidoTabla").jqxGrid("sortby", "calificacion", "asc");
     // $("#contenidoTabla").jqxGrid("sortby", "semana", "desc");
     $("#contenidoTabla").jqxGrid("endupdate");
 
@@ -2012,9 +1929,16 @@ function lecturaCSV(documento, direccion) {
         url: documento,
         dataType: "text",
         success: function (data) {
+
             renglones = data.split(/\r\n|\n/);
             titulos = renglones[0].split(",");
-            datosDIreccionSeleccionada(direccion);
+
+            if (selecTopIncumplimiento == 1) {
+                datosTopIncumplimiento(direccion);
+            } else {
+                datosDIreccionSeleccionada(direccion);
+            }
+
         }
     });
 
