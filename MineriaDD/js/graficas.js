@@ -291,14 +291,14 @@ $(document).ready(function () {
         $("#divGrafReincidencias").hide();
 
         $("#graficas").empty().append("<div class='col-md-6 col-sm-12' style='text-align: center;'><strong>"
-                                        + "<label id='lblgrafica1' for='grafica1'>Top 10 BackLog - Plazas</label></strong><hr>"
+                                        + "<label id='lblgrafica1' for='grafica1'></label></strong><hr>"
                                         + "<div id='grafica1' class='tamanhoGrafica2'></div></div>"
                                         + "<div class='col-md-6 col-sm-12' style='text-align: center;'><strong>"
-                                        + "<label id='lblgrafica2' for='grafica2'>Top 20 Backlog - Distritos</label></strong><hr>"
+                                        + "<label id='lblgrafica2' for='grafica2'></label></strong><hr>"
                                         + "<div id='grafica2' class='tamanhoGrafica2'></div></div>");
 
         $("#lblgrafica1").html("Top 20 Distritos - Backlog<br>Actualización: " + convierteFecha(fechaHoy));
-        $("#lblgrafica2").html("Top 20 Distritos - % Incumplimiento<br>Actualización: " + convierteFecha(fechaAyer));
+        $("#lblgrafica2").html("Top 20 Distritos - Incumplimiento<br>Actualización: " + convierteFecha(fechaAyer));
 
         // Coloca bandera de locación
         selecProductividad = 0;
@@ -467,11 +467,11 @@ $(document).ready(function () {
             $("#grafica2").html("");
 
             if (valor == "NACIONAL") {
-                $("#lblgrafica2").html("Top 20 Distritos - % Incumplimiento<br>Actualización: " + convierteFecha(fechaAyer));
+                $("#lblgrafica2").html("Top 20 Distritos - Incumplimiento<br>Actualización: " + convierteFecha(fechaAyer));
                 lecturaCSV("fuentes/TopDistrito.csv", "DISTRITOS");
                 lecturaCSV("fuentes/TopIncumplimientos.csv", "PLAZAS");
             } else {
-                $("#lblgrafica2").html("Top 15 Distritos - % Incumplimiento<br>Actualización: " + convierteFecha(fechaAyer));
+                $("#lblgrafica2").html("Top 15 Distritos - Incumplimiento<br>Actualización: " + convierteFecha(fechaAyer));
                 lecturaCSV("fuentes/TopDirDistritos.csv", "TOPD");
                 lecturaCSV("fuentes/TopIncumplimientos.csv", "TOPP");
 
