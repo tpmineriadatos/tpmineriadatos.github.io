@@ -558,8 +558,8 @@ $(document).ready(function () {
             $("#grafica2").html("");
 
             if (valor == "NACIONAL") {
-                $("#lblgrafica1").html("Top 10 Distritos - Mayor incremento en incumplimiento");
-                $("#lblgrafica2").html("Top 10 Distritos - Mayor decremento en incumplimiento");
+                $("#lblgrafica1").html("Top 15 Distritos - Mayor incremento en incumplimiento");
+                $("#lblgrafica2").html("Top 15 Distritos - Mayor decremento en incumplimiento");
             } else {
                 $("#lblgrafica1").html("Top 5 Distritos - Mayor incremento en incumplimiento");
                 $("#lblgrafica2").html("Top 5 Distritos - Mayor decremento en incumplimiento");

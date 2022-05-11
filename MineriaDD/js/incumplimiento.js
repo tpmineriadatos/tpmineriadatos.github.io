@@ -152,10 +152,10 @@ $(document).ready(function() {
         $("#divGrafica").show();
 
         $("#graficas").empty().append("<div class='col-md-6 col-sm-12' style='text-align: center;'><strong>"
-                                        + "<label id='lblgrafica1' for='grafica1'>Top 10 BackLog - Plazas</label></strong>"
+                                        + "<label id='lblgrafica1' for='grafica1'>Top 10 BackLog - Plazas</label></strong><hr>"
                                         + "<div id='grafica1' class='tamanhoGrafica2'></div></div>"
                                         + "<div class='col-md-6 col-sm-12' style='text-align: center;'><strong>"
-                                        + "<label id='lblgrafica2' for='grafica2'>Top 20 Backlog - Distritos</label></strong>"
+                                        + "<label id='lblgrafica2' for='grafica2'>Top 20 Backlog - Distritos</label></strong><hr>"
                                         + "<div id='grafica2' class='tamanhoGrafica2'></div></div>");
 
         // $("#lblgrafica1").html("Top 10 Distritos - Mayor incremento en incumplimiento");
@@ -174,8 +174,8 @@ $(document).ready(function() {
         valor = $("#opcDireccion option:selected").val();
 
         if (valor == "NACIONAL") {
-            $("#lblgrafica1").html("Top 10 Distritos - Mayor incremento en incumplimiento");
-            $("#lblgrafica2").html("Top 10 Distritos - Mayor decremento en incumplimiento");
+            $("#lblgrafica1").html("Top 15 Distritos - Mayor incremento en incumplimiento");
+            $("#lblgrafica2").html("Top 15 Distritos - Mayor decremento en incumplimiento");
         } else {
             $("#lblgrafica1").html("Top 5 Distritos - Mayor incremento en incumplimiento");
             $("#lblgrafica2").html("Top 5 Distritos - Mayor decremento en incumplimiento");
@@ -268,8 +268,15 @@ function datosTopIncumplimiento(direccionSeleccionada) {
 
 function graficaTop10Incumplimiento(idGrafica, ejeX, semanaAnterior, semanaActual, crecimiento) {
 
+    let currentdate = new Date();
+    let oneJan = new Date(currentdate.getFullYear(), 0, 1);
+    let numberOfDays = Math.floor((currentdate - oneJan) / (24 * 60 * 60 * 1000));
+    let semanaResultante = Math.ceil((currentdate.getDay() + 1 + numberOfDays) / 7);
+
     let colorCrecimiento = (idGrafica == "#grafica1") ? "#9E1946" : "#0B5D1E";
     let increDecre = (idGrafica == "#grafica1") ? "Incremento semanal" : "Decremento semanal";
+    let tituloSemAnterior = "Incumplimiento semana " + (semanaResultante - 3);
+    let tituloSemActual = "Incumplimiento semana " + (semanaResultante - 2);
     
     var chart = c3.generate({
         bindto: idGrafica,
@@ -303,8 +310,8 @@ function graficaTop10Incumplimiento(idGrafica, ejeX, semanaAnterior, semanaActua
                 crecimiento: colorCrecimiento
             },
             names: {
-                semanaAnterior: "Incumplimiento sem. anterior",
-                semanaActual: "Incumplimiento sem. actual",
+                semanaAnterior: tituloSemAnterior,
+                semanaActual: tituloSemActual,
                 crecimiento: increDecre
             }
         },
