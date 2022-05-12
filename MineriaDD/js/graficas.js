@@ -1521,6 +1521,10 @@ function dibujaGrafica(urlDatos, idGrafica, valorX) {
         tooltip: {
             contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
 
+                d.sort(function (a, b) {
+                    return b.value - a.value;
+                });
+
                 function key_for_sum(arr) {
 
                     let valor = (arr.id == "incumplimientoAgenda") ? 0 : arr.value;
@@ -1630,6 +1634,10 @@ function dibujaGraficaJSON(idGrafica, valorX) {
         },
         tooltip: {
             contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
+
+                d.sort(function (a, b) {
+                    return b.value - a.value;
+                });
 
                 function key_for_sum(arr) {
 
@@ -1816,6 +1824,10 @@ function dibujaGraficaBarra(idGrafica) {
         },
         tooltip: {
             contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
+
+                d.sort(function (a, b) {
+                    return b.value - a.value;
+                });
 
                 function key_for_sum(arr) {
 
