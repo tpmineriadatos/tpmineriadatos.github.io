@@ -275,8 +275,8 @@ function graficaTop10Incumplimiento(idGrafica, ejeX, semanaAnterior, semanaActua
 
     let colorCrecimiento = (idGrafica == "#grafica1") ? "#9E1946" : "#0B5D1E";
     let increDecre = (idGrafica == "#grafica1") ? "Incremento semanal" : "Decremento semanal";
-    let tituloSemAnterior = "Incumplimiento semana " + (semanaResultante - 2);
-    let tituloSemActual = "Incumplimiento semana " + (semanaResultante - 1);
+    let tituloSemAnterior = "Incumplimiento semana 18";
+    let tituloSemActual = "Incumplimiento semana 19";
     
     var chart = c3.generate({
         bindto: idGrafica,
