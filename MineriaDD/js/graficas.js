@@ -48,7 +48,8 @@ var datosCompleto = [],
     listaSupervisor = [],
     semanasReporte = [];
 
-var pesosRelativos = { "addon": 1, "instCDD": 1.5, "empHS": 3, "soporProac": 1, "recol": 0.5 }
+var pesosRelativos = { "addon": 1, "instCDD": 1.5, "empHS": 3, "soporProac": 1, "recol": 0.5 },
+    diasSemana = { 0: "domingo", 1: "lunes", 2: "martes", 3: "miércoles", 4: "jueves", 5: "viernes", 6: "sábado" };
 
 var btnAplicado = 1,
     semanaAct = "",
@@ -1483,6 +1484,7 @@ function listasComboSupervisor(distritoSelec) {
 }
 
 
+// Trabajar el día de la semana en el tooltip
 function dibujaGrafica(urlDatos, idGrafica, valorX) {
 
     var chart = c3.generate({
@@ -1519,6 +1521,12 @@ function dibujaGrafica(urlDatos, idGrafica, valorX) {
             enabled: true
         },
         tooltip: {
+            // format: {
+            //     title: function (d) {
+            //         console.log(d);
+            //         return ("Hola " + d);
+            //     }
+            // },
             contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
 
                 d.sort(function (a, b) {
@@ -1633,6 +1641,19 @@ function dibujaGraficaJSON(idGrafica, valorX) {
             enabled: true
         },
         tooltip: {
+            format: {
+
+                title: function (d) {
+
+                    let fechaHora = Fecha_Descarga[d] + " 00:00:00",
+                        auxFecha = new Date(fechaHora),
+                        diaSemana = auxFecha.getDay();
+                    // console.log(diasSemana[diaSemana]);
+                    return (Fecha_Descarga[d] + " - " + diasSemana[diaSemana]);
+
+                }
+
+            },
             contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
 
                 d.sort(function (a, b) {
@@ -1823,6 +1844,19 @@ function dibujaGraficaBarra(idGrafica) {
             enabled: true
         },
         tooltip: {
+            format: {
+
+                title: function (d) {
+
+                    let fechaHora = fecha_apertura[d] + " 00:00:00",
+                        auxFecha = new Date(fechaHora),
+                        diaSemana = auxFecha.getDay();
+                    // console.log(diasSemana[diaSemana]);
+                    return (fecha_apertura[d] + " - " + diasSemana[diaSemana]);
+
+                }
+
+            },
             contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
 
                 d.sort(function (a, b) {
