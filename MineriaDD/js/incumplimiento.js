@@ -8,6 +8,10 @@ var topDistritosInc2 = [],
     incsemanaActual2 = [],
     incCrecimiento2 = [];
 
+var numSemanaActual = 0,
+    numSemanaAnterior = 0;
+
+
 var aux3;
 
 
@@ -191,11 +195,11 @@ $(document).ready(function() {
 function datosTopIncumplimiento(direccionSeleccionada) {
     
     // alert(direccionSeleccionada);
-
     let incSemanaAnterior2Aux = [],
         incsemanaActual2Aux = [],
         incCrecimiento2Aux = [];
-
+    
+    let auxTitulos = renglones[0].split(",");
     
     topDistritosInc.length = 0;
     incSemanaAnterior.length = 0;
@@ -215,7 +219,8 @@ function datosTopIncumplimiento(direccionSeleccionada) {
     incsemanaActual2.push("semanaActual");
     incCrecimiento2.push("crecimiento");
 
-    // let valor = $("#opcDireccion option:selected").val();
+    numSemanaActual = auxTitulos[2].substr(6, auxTitulos[2].length - 1);
+    numSemanaAnterior = auxTitulos[3].substr(6, auxTitulos[3].length - 1);
 
     // Guarda los Peores
     for (let i = 1; i < renglones.length; i++) {
@@ -268,15 +273,15 @@ function datosTopIncumplimiento(direccionSeleccionada) {
 
 function graficaTop10Incumplimiento(idGrafica, ejeX, semanaAnterior, semanaActual, crecimiento) {
 
-    let currentdate = new Date();
-    let oneJan = new Date(currentdate.getFullYear(), 0, 1);
-    let numberOfDays = Math.floor((currentdate - oneJan) / (24 * 60 * 60 * 1000));
-    let semanaResultante = Math.ceil((currentdate.getDay() + 1 + numberOfDays) / 7);
+    // let currentdate = new Date();
+    // let oneJan = new Date(currentdate.getFullYear(), 0, 1);
+    // let numberOfDays = Math.floor((currentdate - oneJan) / (24 * 60 * 60 * 1000));
+    // let semanaResultante = Math.ceil((currentdate.getDay() + 1 + numberOfDays) / 7);
 
     let colorCrecimiento = (idGrafica == "#grafica1") ? "#9E1946" : "#0B5D1E";
     let increDecre = (idGrafica == "#grafica1") ? "Incremento semanal" : "Decremento semanal";
-    let tituloSemAnterior = "Incumplimiento semana 18";
-    let tituloSemActual = "Incumplimiento semana 19";
+    let tituloSemAnterior = "Incumplimiento semana " + numSemanaAnterior;
+    let tituloSemActual = "Incumplimiento semana " + numSemanaActual;
     
     var chart = c3.generate({
         bindto: idGrafica,
