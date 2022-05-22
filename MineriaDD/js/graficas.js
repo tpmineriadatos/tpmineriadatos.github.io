@@ -39,7 +39,8 @@ var listaBacklog = ["NACIONAL", "CENTRO", "NORTE-NORESTE", "OCCIDENTE-BAJIO","OR
     listaPlazas = [];
 
 var renglonesTabla = [],
-    titulosTabla = [];
+    titulosTabla = [],
+    fechasBacklogNacional = [];
 
 var datosCompleto = [],
     datosDireccion = [],
@@ -162,6 +163,8 @@ $(document).ready(function () {
 
     // Seleccionar menú Backlog
     $("#backlog").click(function () {
+
+        lecturaBacklogNacional();
 
         $("#desDireccion").show();
 
@@ -1521,12 +1524,19 @@ function dibujaGrafica(urlDatos, idGrafica, valorX) {
             enabled: true
         },
         tooltip: {
-            // format: {
-            //     title: function (d) {
-            //         console.log(d);
-            //         return ("Hola " + d);
-            //     }
-            // },
+            format: {
+
+                title: function (d) {
+
+                    let fechaHora = fechasBacklogNacional[d] + " 00:00:00",
+                        auxFecha = new Date(fechaHora),
+                        diaSemana = auxFecha.getDay();
+                    // console.log(diasSemana[diaSemana]);
+                    return (fechasBacklogNacional[d] + " - " + diasSemana[diaSemana]);
+
+                }
+
+            },
             contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
 
                 d.sort(function (a, b) {
@@ -2675,5 +2685,27 @@ function convierteFecha(fecha) {
     let faux = fecha.split("-");
     let fresult = faux.reverse().join("-");
     return fresult;
+
+}
+
+
+function lecturaBacklogNacional() {
+
+    $.ajax({
+        type: "GET",
+        url: "fuentes/Backlog_Nacional.csv",
+        dataType: "text",
+        success: function (data) {
+
+            renglones = data.split(/\r\n|\n/);
+            titulos = renglones[0].split(",");
+
+            for (let i = 1; i < renglones.length; i++) {
+                const element = renglones[i].split(",");
+                fechasBacklogNacional.push(element[0]);
+            }
+
+        }
+    });
 
 }
