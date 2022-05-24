@@ -38,7 +38,8 @@
 }
 
 .tamanhoGrafica2 {
-    height: 400px;
+    height: 450px;
+    max-width: 700px;
     /* width: 750px; */
 }
 
@@ -80,26 +81,26 @@
     border: 2px solid rgb(31, 77, 155);
 }
 
-#grafica2 .c3-texts-idr {
+#grafica22 .c3-texts-idr {
     font-weight: bold;
     font-size: 14px;
 }
 
-#grafica2 .c3-ygrid-line.regular line {
+#grafica22 .c3-ygrid-line.regular line {
     stroke: orange;
     stroke-width: 0.5px;
 }
 
-#grafica2 .c3-ygrid-line.regular text {
+#grafica22 .c3-ygrid-line.regular text {
     fill: orange;
 }
 
-#grafica2 .c3-ygrid-line.malo line {
+#grafica22 .c3-ygrid-line.malo line {
     stroke: red;
     stroke-width: 0.5px;
 }
 
-#grafica2 .c3-ygrid-line.malo text {
+#grafica22 .c3-ygrid-line.malo text {
     fill: red;
 }
 
@@ -116,6 +117,17 @@
     font-weight: bold;
     font-size: 13px;
 }
+
+#grafica1 .c3-texts-crecimiento {
+    font-weight: bold;
+    font-size: 12px;
+}
+
+#grafica2 .c3-texts-crecimiento {
+    font-weight: bold;
+    font-size: 12px;
+}
+
 
 
 /* // ----------------------------------------------------------- */
