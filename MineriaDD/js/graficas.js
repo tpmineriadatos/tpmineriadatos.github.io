@@ -94,6 +94,7 @@ $(document).ready(function () {
 
     obtieneDatos();
     obtieneFechas("fuentes/Backlog_Nacional.csv");
+    lecturaBacklogNacional();
     // dibujaGrafica("fuentes/Backlog_Nacional.csv", "#grafica1", "Fecha_Descarga");
 
     // Seleccionar menú Desempeño
@@ -164,7 +165,7 @@ $(document).ready(function () {
     // Seleccionar menú Backlog
     $("#backlog").click(function () {
 
-        lecturaBacklogNacional();
+        // lecturaBacklogNacional();
 
         $("#desDireccion").show();
 
@@ -1768,6 +1769,21 @@ function dibujaGraficaJSON72hrs(idGrafica, valorX) {
                     }
                 },
                 height: 80
+            }
+        },
+        tooltip: {
+            format: {
+
+                title: function (d) {
+
+                    let fechaHora = Fecha_Descarga[d] + " 00:00:00",
+                        auxFecha = new Date(fechaHora),
+                        diaSemana = auxFecha.getDay();
+                    // console.log(diasSemana[diaSemana]);
+                    return (Fecha_Descarga[d] + " - " + diasSemana[diaSemana]);
+
+                }
+
             }
         },
         zoom: {
