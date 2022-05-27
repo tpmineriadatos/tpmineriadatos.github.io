@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguimiento Diario</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/c3/c3.min.css">
+    <link rel="stylesheet" href="css/menu.css">
+
+    <script src="js/c3/d3-5.8.2.min.js" charset="utf-8"></script>
+    <script src="js/c3/c3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid menuPrincipal">
+
+            <a class="navbar-brand" href="#">
+                <img src="img/LOGO_TP_Residencial.jpg" style="height: 70px;" />
+            </a>
+
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">
+                            <div class="nombreMenu" id="backlog">
+                                <strong class="textoMenu">Backlog</strong>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="nombreMenu" id="incumplimiento">
+                                <strong class="textoMenu">Incumplimiento</strong>
+                            </div>
+                        </a>
+
+                        <ul class="dropdown-menu listaRein" aria-labelledby="navbarDarkDropdownMenuLink">
+                            <li><a class="dropdown-item" href="#" id="incumIndicador">Indicador</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#" id="incumTop">Top Semanal</a></li>
+                        </ul>
+
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">
+                            <div class="nombreMenu" id="top">
+                                <strong class="textoMenu">Top del día</strong>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">
+                            <div class="nombreMenu" id="mas72hrs">
+                                <strong class="textoMenu">Más de 72 hrs</strong>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                
+            </div>
+
+        </div>
+    </nav>
+
+    <div class="row">
+
+        <div id="desDireccion" class="col-md-4 col-sm-12">
+            <div class="row">
+                <div class="col-md-3 col-sm-12 ">
+                    <label id="labelZona" for="opcDireccion">&nbsp;&nbsp;&nbsp;Dirección</label>
+                </div>
+                <div class="col-md-9 col-sm-12">
+                    <form>
+                        <select name="opcDireccion" id="opcDireccion" class="form-control-select" style="width: 300px; margin-right: 20px;">
+                            <option selected>NACIONAL</option>
+                            <option>CENTRO</option>
+                            <option>NORTE-NORESTE</option>
+                            <option>OCCIDENTE-BAJIO</option>
+                            <option>ORIENTE-SUR</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="desPlaza" class="col-md-4 col-sm-12">
+            <div class="row">
+                <div class="col-md-3 col-sm-12 ">
+                    <label for="opcPlaza" id="lblOpcPlaza">&nbsp;&nbsp;&nbsp;Plaza</label>
+                </div>
+                <div class="col-md-9 col-sm-12">
+                    <form>
+                        <select name="opcPlaza" id="opcPlaza" class="form-control-select"
+                            style="width: 300px; margin-right: 20px;">
+                        </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="desDistrito" class="col-md-4 col-sm-12">
+            <div class="row">
+                <div class="col-md-2 col-sm-12 ">
+                    <label for="opcDistrito">&nbsp;&nbsp;&nbsp;Distrito</label>
+                </div>
+                <div class="col-md-10 col-sm-12">
+                    <form>
+                        <select name="opcDistrito" id="opcDistrito" class="form-control-select" style="width: 300px; margin-right: 20px;">
+
+                        </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <div class="col-md-12 col-sm-12" id="divGrafica">
+        <div id="graficas" class="row">
+            <div class="col-md-11 col-sm-12">
+                <div id="grafica1" class="tamanhoGrafica">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <script src="js/graficas.js"></script>
+    <script src="js/incumplimiento.js"></script>
+
+</body>
+
+</html>
