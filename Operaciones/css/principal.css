@@ -1,0 +1,70 @@
+.menuPrincipal {
+    background-color: rgb(63, 124, 191);
+    /* background: linear-gradient(to left, rgba(64, 139, 219, 0.986), rgb(63, 124, 191)); */
+    display: flex;
+    height: 70px;
+}
+
+.nombreBacklog {
+    color: whitesmoke;
+    margin-left: 15px;
+    margin-right: 20px;
+    margin-top: 7px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 35px;
+    height: 100%;
+}
+
+.nombreMenu {
+    text-align: center;
+    color: whitesmoke;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 70px;
+    width: 123px;
+    display: inline-grid;
+    cursor: pointer;
+    /* font-size: 35px; */
+}
+
+/* .nombreMenu:hover {
+    background-color: rgb(25, 86, 255)
+} */
+
+.textoMenu {
+    margin-top: 20px;
+}
+
+.titDash {
+    width: 200px;
+    text-align: end;
+    font-size: 25px;
+}
+
+h1 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    color: rgb(94, 94, 94);
+}
+
+.imgBtn {
+    height: 150px;
+    width: 445px;
+}
+
+.imgBtn:hover {
+    height: 155px;
+    width: 450px;
+}
+
+.a-link:hover {
+    filter: drop-shadow(0 0 5px rgb(94, 94, 94));
+}
+
+.alturaDiv {
+    height: 200px;
+}
+
+.header {
+    background-color: rgb(182, 182, 182);
+}
