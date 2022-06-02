@@ -53,7 +53,7 @@ function llenaInfoDetalle(segmento, seleccion) {
 
     for (let i = 0; i < datosCompletosDetalle.length; i++) {
         const element = datosCompletosDetalle[i];
-        semAnioDetalle.push(element[18]);
+        semAnioDetalle.push(element[20]);
     }
 
     const listDist2 = new Set(semAnioDetalle);
@@ -69,16 +69,20 @@ function llenaInfoDetalle(segmento, seleccion) {
         if (element[0] == "NACIONAL") {
             // nacionalDetalle.push([element[1], element[4], element[6]]);
             direccionDetalle.push([element[1], element[4], element[5], element[6], element[7], element[8], element[9], element[10],
-                                element[11], element[12], element[13], element[14], element[15], element[16], element[17], element[18]]);
+                                    element[11], element[12], element[13], element[14], element[15], element[16], element[17],
+                                    element[18], element[19], element[20]]);
         } else if (element[0] == "DIRECCION") {
             direccionDetalle.push([element[1], element[4], element[5], element[6], element[7], element[8], element[9], element[10],
-                                element[11], element[12], element[13], element[14], element[15], element[16], element[17], element[18]]);
+                                    element[11], element[12], element[13], element[14], element[15], element[16], element[17],
+                                    element[18], element[19], element[20]]);
         } else if (element[0] == "PLAZA") {
             plazaDetalle.push([element[1], element[4], element[5], element[6], element[7], element[8], element[9], element[10],
-                                element[11], element[12], element[13], element[14], element[15], element[16], element[17], element[18]]);
+                                element[11], element[12], element[13], element[14], element[15], element[16], element[17],
+                                element[18], element[19], element[20]]);
         } else if (element[0] == "DISTRITO") {
             distritoDetalle.push([element[1], element[4], element[5], element[6], element[7], element[8], element[9], element[10],
-                                element[11], element[12], element[13], element[14], element[15], element[16], element[17], element[18]]);
+                                    element[11], element[12], element[13], element[14], element[15], element[16], element[17],
+                                    element[18], element[19], element[20]]);
         }
 
     }
@@ -110,6 +114,8 @@ function selecDirecDetalle(direccion, semana) {
         datosYCurso12 = ["curso12"],
         datosYCurso13 = ["curso13"],
         datosYCurso14 = ["curso14"],
+        datosYCurso15 = ["curso15"],
+        datosYCurso16 = ["curso16"],
         titulo = "",
         auxAnioSemana = semana.split("-"),
         numSemana = auxAnioSemana[1];
@@ -118,7 +124,7 @@ function selecDirecDetalle(direccion, semana) {
 
         const element = direccionDetalle[i];
 
-        if ((element[0] == direccion) && (element[15] == semana)) {
+        if ((element[0] == direccion) && (element[17] == semana)) {
 
             let curso1 = parseInt(element[1]),
                 curso2 = parseInt(element[2]),
@@ -133,10 +139,12 @@ function selecDirecDetalle(direccion, semana) {
                 curso11 = parseInt(element[11]),
                 curso12 = parseInt(element[12]),
                 curso13 = parseInt(element[13]),
-                curso14 = parseInt(element[14]);
+                curso14 = parseInt(element[14]),
+                curso15 = parseInt(element[15]),
+                curso16 = parseInt(element[16]);
 
-            let total = curso1 + curso2 + curso3 + curso4 + curso5 + curso6 + curso7
-                        + curso8 + curso9 + curso10 + curso11 + curso12 + curso13 + curso14;
+            let total = curso1 + curso2 + curso3 + curso4 + curso5 + curso6 + curso7 + curso8 + curso9
+                        + curso10 + curso11 + curso12 + curso13 + curso14 + curso15 + curso16;
 
             datosYCurso1.push(curso1);
             datosYCurso2.push(curso2);
@@ -152,6 +160,9 @@ function selecDirecDetalle(direccion, semana) {
             datosYCurso12.push(curso12);
             datosYCurso13.push(curso13);
             datosYCurso14.push(curso14);
+            datosYCurso15.push(curso15);
+            datosYCurso16.push(curso16);
+
             titulo = "Total de cursos: " + total;
 
         }
@@ -159,8 +170,9 @@ function selecDirecDetalle(direccion, semana) {
     }
 
     $("#labelDetalle").html("Cursos requeridos en la semana " + numSemana);
-    graficaDetalle("#grafDetalle", datosYCurso1, datosYCurso2, datosYCurso3, datosYCurso4, datosYCurso5, datosYCurso6, datosYCurso7,
-                        datosYCurso8, datosYCurso9, datosYCurso10, datosYCurso11, datosYCurso12, datosYCurso13, datosYCurso14, titulo);
+    graficaDetalle("#grafDetalle", datosYCurso1, datosYCurso2, datosYCurso3, datosYCurso4, datosYCurso5, datosYCurso6,
+                                    datosYCurso7, datosYCurso8, datosYCurso9, datosYCurso10, datosYCurso11, datosYCurso12,
+                                    datosYCurso13, datosYCurso14, datosYCurso15, datosYCurso16, titulo);
 
 }
 
@@ -181,6 +193,8 @@ function selecPlazaDetalle(plaza, semana) {
         datosYCurso12 = ["curso12"],
         datosYCurso13 = ["curso13"],
         datosYCurso14 = ["curso14"],
+        datosYCurso15 = ["curso15"],
+        datosYCurso16 = ["curso16"],
         titulo = "",
         auxAnioSemana = semana.split("-"),
         numSemana = auxAnioSemana[1];
@@ -189,7 +203,7 @@ function selecPlazaDetalle(plaza, semana) {
 
         const element = plazaDetalle[i];
 
-        if ((element[0] == plaza) && (element[15] == semana)) {
+        if ((element[0] == plaza) && (element[17] == semana)) {
 
             let curso1 = parseInt(element[1]),
                 curso2 = parseInt(element[2]),
@@ -204,10 +218,12 @@ function selecPlazaDetalle(plaza, semana) {
                 curso11 = parseInt(element[11]),
                 curso12 = parseInt(element[12]),
                 curso13 = parseInt(element[13]),
-                curso14 = parseInt(element[14]);
+                curso14 = parseInt(element[14]),
+                curso15 = parseInt(element[15]),
+                curso16 = parseInt(element[16]);
 
-            let total = curso1 + curso2 + curso3 + curso4 + curso5 + curso6 + curso7
-                        + curso8 + curso9 + curso10 + curso11 + curso12 + curso13 + curso14;
+            let total = curso1 + curso2 + curso3 + curso4 + curso5 + curso6 + curso7 + curso8 + curso9
+                        + curso10 + curso11 + curso12 + curso13 + curso14 + curso15 + curso16;
 
             datosYCurso1.push(curso1);
             datosYCurso2.push(curso2);
@@ -223,6 +239,9 @@ function selecPlazaDetalle(plaza, semana) {
             datosYCurso12.push(curso12);
             datosYCurso13.push(curso13);
             datosYCurso14.push(curso14);
+            datosYCurso15.push(curso15);
+            datosYCurso16.push(curso16);
+
             titulo = "Total de cursos: " + total;
 
         }
@@ -230,8 +249,9 @@ function selecPlazaDetalle(plaza, semana) {
     }
 
     $("#labelDetalle").html("Cursos requeridos en la semana " + numSemana);
-    graficaDetalle("#grafDetalle", datosYCurso1, datosYCurso2, datosYCurso3, datosYCurso4, datosYCurso5, datosYCurso6, datosYCurso7,
-                        datosYCurso8, datosYCurso9, datosYCurso10, datosYCurso11, datosYCurso12, datosYCurso13, datosYCurso14, titulo);
+    graficaDetalle("#grafDetalle", datosYCurso1, datosYCurso2, datosYCurso3, datosYCurso4, datosYCurso5, datosYCurso6,
+                                    datosYCurso7, datosYCurso8, datosYCurso9, datosYCurso10, datosYCurso11, datosYCurso12,
+                                    datosYCurso13, datosYCurso14, datosYCurso15, datosYCurso16, titulo);
 
 }
 
@@ -252,6 +272,8 @@ function selecDistDetalle(distrito, semana) {
         datosYCurso12 = ["curso12"],
         datosYCurso13 = ["curso13"],
         datosYCurso14 = ["curso14"],
+        datosYCurso15 = ["curso15"],
+        datosYCurso16 = ["curso16"],
         titulo = "",
         auxAnioSemana = semana.split("-"),
         numSemana = auxAnioSemana[1];
@@ -260,7 +282,7 @@ function selecDistDetalle(distrito, semana) {
 
         const element = distritoDetalle[i];
 
-        if ((element[0] == distrito) && (element[15] == semana)) {
+        if ((element[0] == distrito) && (element[17] == semana)) {
 
             let curso1 = parseInt(element[1]),
                 curso2 = parseInt(element[2]),
@@ -275,10 +297,12 @@ function selecDistDetalle(distrito, semana) {
                 curso11 = parseInt(element[11]),
                 curso12 = parseInt(element[12]),
                 curso13 = parseInt(element[13]),
-                curso14 = parseInt(element[14]);
+                curso14 = parseInt(element[14]),
+                curso15 = parseInt(element[15]),
+                curso16 = parseInt(element[16]);
 
-            let total = curso1 + curso2 + curso3 + curso4 + curso5 + curso6 + curso7
-                        + curso8 + curso9 + curso10 + curso11 + curso12 + curso13 + curso14;
+            let total = curso1 + curso2 + curso3 + curso4 + curso5 + curso6 + curso7 + curso8 + curso9
+                        + curso10 + curso11 + curso12 + curso13 + curso14 + curso15 + curso16;
 
             datosYCurso1.push(curso1);
             datosYCurso2.push(curso2);
@@ -294,6 +318,9 @@ function selecDistDetalle(distrito, semana) {
             datosYCurso12.push(curso12);
             datosYCurso13.push(curso13);
             datosYCurso14.push(curso14);
+            datosYCurso15.push(curso15);
+            datosYCurso16.push(curso16);
+
             titulo = "Total de cursos: " + total;
 
         }
@@ -301,14 +328,16 @@ function selecDistDetalle(distrito, semana) {
     }
 
     $("#labelDetalle").html("Cursos requeridos en la semana " + numSemana);
-    graficaDetalle("#grafDetalle", datosYCurso1, datosYCurso2, datosYCurso3, datosYCurso4, datosYCurso5, datosYCurso6, datosYCurso7,
-                        datosYCurso8, datosYCurso9, datosYCurso10, datosYCurso11, datosYCurso12, datosYCurso13, datosYCurso14, titulo);
+    graficaDetalle("#grafDetalle", datosYCurso1, datosYCurso2, datosYCurso3, datosYCurso4, datosYCurso5, datosYCurso6,
+                                    datosYCurso7, datosYCurso8, datosYCurso9, datosYCurso10, datosYCurso11, datosYCurso12,
+                                    datosYCurso13, datosYCurso14, datosYCurso15, datosYCurso16, titulo);
 
 }
 
 
 function graficaDetalle(idGrafica, datosCurso1, datosCurso2, datosCurso3, datosCurso4, datosCurso5, datosCurso6, datosCurso7,
-                            datosCurso8, datosCurso9, datosCurso10, datosCurso11, datosCurso12, datosCurso13, datosCurso14, titulo) {
+                        datosCurso8, datosCurso9, datosCurso10, datosCurso11, datosCurso12, datosCurso13, datosCurso14,
+                        datosCurso15, datosCurso16, titulo) {
 
     var chart = c3.generate({
         bindto: idGrafica,
@@ -327,7 +356,9 @@ function graficaDetalle(idGrafica, datosCurso1, datosCurso2, datosCurso3, datosC
                 datosCurso11,
                 datosCurso12,
                 datosCurso13,
-                datosCurso14
+                datosCurso14,
+                datosCurso15,
+                datosCurso16
             ],
             type: "donut",
             // onclick: function (d, i) { console.log("onclick", d, i); },
@@ -365,23 +396,27 @@ function graficaDetalle(idGrafica, datosCurso1, datosCurso2, datosCurso3, datosC
                 curso11: "#E8DB87",
                 curso12: "#993955",
                 curso13: "#AE76A6",
-                curso14: "#A3C3D9"
+                curso14: "#A3C3D9",
+                curso15: "#CCD6EB",
+                curso16: "#E8DB87"
             },
             names: {
                 curso1: "80-20",
                 curso2: "Armado de conectores Prepulidos",
                 curso3: "Armado de conectores RJ45",
-                curso4: "Servicio a Domicilio",
-                curso5: "Entrega de Servicios",
-                curso6: "Justificación de Materiales",
-                curso7: "Plan de Vida y Carrera",
-                curso8: "Proceso de instalación",
-                curso9: "Enfoque a Calidad",
-                curso10: "Productividad",
-                curso11: "Trayectoría, alturas y flejados",
-                curso12: "Trayectorías",
-                curso13: "Venta Técnico",
-                curso14: "Ventas"
+                curso4: "Como subir tu venta en FFM",
+                curso5: "Consumo de Materiales",
+                curso6: "Servicio a Domicilio",
+                curso7: "Entrega de Servicios",
+                curso8: "Justificación de Materiales",
+                curso9: "Plan de Vida y Carrera",
+                curso10: "Proceso de instalación",
+                curso11: "Enfoque a Calidad",
+                curso12: "Productividad",
+                curso13: "Trayectoría, alturas y flejados",
+                curso14: "Trayectorías",
+                curso15: "Venta Técnico",
+                curso16: "Ventas"
             }
         },
         legend: {
