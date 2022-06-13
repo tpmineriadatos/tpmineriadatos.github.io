@@ -6,7 +6,8 @@ var nacionalTarjTR = [],
     plazaTarjTR = [],
     distritoTarjTR = [];
 
-var semAnioTarjTR = [];
+var semAnioTarjTR = [],
+    totalTecnicosTarjetas = [];
 
 
 
@@ -93,6 +94,8 @@ function selecDirecTarjTR(direccion) {
         datosYRojas = ["rojas"],
         datosYTR = ["numTR"];
 
+    // totalTecnicosTarjetas = [];
+
     for (let i = 0; i < direccionTarjTR.length; i++) {
 
         const element = direccionTarjTR[i];
@@ -102,17 +105,21 @@ function selecDirecTarjTR(direccion) {
             let amarillas = parseInt(element[1]),
                 naranjas = parseInt(element[2]),
                 moradas = parseInt(element[3]),
-                rojas = parseInt(element[4]);
+                rojas = parseInt(element[4]),
+                total = amarillas + naranjas + moradas + rojas;
             
             datosYAmarillas.push(amarillas);
             datosYNaranjas.push(naranjas);
             datosYMoradas.push(moradas);
             datosYRojas.push(rojas);
             datosYTR.push(element[5]);
+            // totalTecnicosTarjetas.push(total);
 
         }
 
     }
+
+    // console.log(totalTecnicosTarjetas);
 
     graficaTarjetaTR("#grafTarjetas", datosYAmarillas, datosYNaranjas, datosYMoradas, datosYRojas, datosYTR);
 
@@ -127,6 +134,8 @@ function selecPlazaTarjTR(plaza) {
         datosYRojas = ["rojas"],
         datosYTR = ["numTR"];
 
+    // totalTecnicosTarjetas = [];
+
     for (let i = 0; i < plazaTarjTR.length; i++) {
 
         const element = plazaTarjTR[i];
@@ -136,13 +145,15 @@ function selecPlazaTarjTR(plaza) {
             let amarillas = parseInt(element[1]),
                 naranjas = parseInt(element[2]),
                 moradas = parseInt(element[3]),
-                rojas = parseInt(element[4]);
+                rojas = parseInt(element[4]),
+                total = amarillas + naranjas + moradas + rojas;
 
             datosYAmarillas.push(amarillas);
             datosYNaranjas.push(naranjas);
             datosYMoradas.push(moradas);
             datosYRojas.push(rojas);
             datosYTR.push(element[5]);
+            // totalTecnicosTarjetas.push(total);
 
         }
 
@@ -161,6 +172,8 @@ function selecDistTarjTR(distrito) {
         datosYRojas = ["rojas"],
         datosYTR = ["numTR"];
 
+    // totalTecnicosTarjetas = [];
+
     for (let i = 0; i < distritoTarjTR.length; i++) {
 
         const element = distritoTarjTR[i];
@@ -170,13 +183,15 @@ function selecDistTarjTR(distrito) {
             let amarillas = parseInt(element[1]),
                 naranjas = parseInt(element[2]),
                 moradas = parseInt(element[3]),
-                rojas = parseInt(element[4]);
+                rojas = parseInt(element[4]),
+                total = amarillas + naranjas + moradas + rojas;
 
             datosYAmarillas.push(amarillas);
             datosYNaranjas.push(naranjas);
             datosYMoradas.push(moradas);
             datosYRojas.push(rojas);
             datosYTR.push(element[5]);
+            // totalTecnicosTarjetas.push(total);
 
         }
 

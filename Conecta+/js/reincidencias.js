@@ -416,7 +416,7 @@ function pintaTabla() {
     
     let thInicial = "<tr class='thead-active'>"
                     + "<th scope='col' class='w-dist align-middle' rowspan='2'>DISTRITO</th>"
-                    + "<th scope='col' class='w-tt' rowspan='2'>TOTAL DE TÉCNICOS SEMENA " + semanas[0] + "</th>"
+                    + "<th scope='col' class='w-tt' rowspan='2'>TOTAL DE TÉCNICOS SEMANA " + semanas[0] + "</th>"
                     + "<th scope='col' colspan='" + (maxIncid - 1) + "'>TÉCNICOS CON REINCIDENCIAS</th>"
                     + "<th scope='col' class='w-tt' rowspan='2'>TOTAL TÉCNICOS REINCIDENTES</th>"
                     + "<th scope='col' class='align-middle' rowspan='2'>%</th></tr>";

@@ -63,13 +63,13 @@ function llenaInfoRetro(segmento, seleccion) {
 
         if (element[0] == "NACIONAL") {
             // nacionalRetro.push([element[1], element[4], element[6]]);
-            direccionRetro.push([element[1], element[4], element[5], element[6], element[7], element[8], element[9]]);
+            direccionRetro.push([element[1], element[4], element[5], element[6], element[7], element[8], element[9], element[11]]);
         } else if (element[0] == "DIRECCION") {
-            direccionRetro.push([element[1], element[4], element[5], element[6], element[7], element[8], element[9]]);
+            direccionRetro.push([element[1], element[4], element[5], element[6], element[7], element[8], element[9], element[11]]);
         } else if (element[0] == "PLAZA") {
-            plazaRetro.push([element[1], element[4], element[5], element[6], element[7], element[8], element[9]]);
+            plazaRetro.push([element[1], element[4], element[5], element[6], element[7], element[8], element[9], element[11]]);
         } else if (element[0] == "DISTRITO") {
-            distritoRetro.push([element[1], element[4], element[5], element[6], element[7], element[8], element[9]]);
+            distritoRetro.push([element[1], element[4], element[5], element[6], element[7], element[8], element[9], element[11]]);
         }
 
     }
@@ -92,7 +92,7 @@ function selecDirecRetro(direccion) {
         datosYProductividad = ["productividad"],
         datosYMateriales = ["materiales"],
         datosYPositiva = ["positiva"],
-        datosYTotTecnicos = ["totalTecnicos"],
+        datosYTotTecnicos = [],
         datosYPorcTarjeta = ["porcTarjeta"];
 
     for (let i = 0; i < direccionRetro.length; i++) {
@@ -103,9 +103,10 @@ function selecDirecRetro(direccion) {
             productividad = parseInt(element[3]),
             materiales = parseInt(element[4]),
             positiva = parseInt(element[5]),
-            totalTecnicos = parseInt(element[6]);
+            totalTecnicos = parseInt(element[6]),
+            total = parseInt(element[7]);
         
-        let total = reincidencia + vtaTecnico + productividad + materiales + positiva;
+        // let total = reincidencia + vtaTecnico + productividad + materiales + positiva;
 
         if (element[0] == direccion) {
 
@@ -134,7 +135,7 @@ function selecPlazaRetro(plaza) {
         datosYProductividad = ["productividad"],
         datosYMateriales = ["materiales"],
         datosYPositiva = ["positiva"],
-        datosYTotTecnicos = ["totalTecnicos"],
+        datosYTotTecnicos = [],
         datosYPorcTarjeta = ["porcTarjeta"];
 
     for (let i = 0; i < plazaRetro.length; i++) {
@@ -145,9 +146,10 @@ function selecPlazaRetro(plaza) {
             productividad = parseInt(element[3]),
             materiales = parseInt(element[4]),
             positiva = parseInt(element[5]),
-            totalTecnicos = parseInt(element[6]);
+            totalTecnicos = parseInt(element[6]),
+            total = parseInt(element[7]);
 
-        let total = reincidencia + vtaTecnico + productividad + materiales + positiva;
+        // let total = reincidencia + vtaTecnico + productividad + materiales + positiva;
 
         if (element[0] == plaza) {
 
@@ -176,7 +178,7 @@ function selecDistRetro(distrito) {
         datosYProductividad = ["productividad"],
         datosYMateriales = ["materiales"],
         datosYPositiva = ["positiva"],
-        datosYTotTecnicos = ["totalTecnicos"],
+        datosYTotTecnicos = [],
         datosYPorcTarjeta = ["porcTarjeta"];
 
     for (let i = 0; i < distritoRetro.length; i++) {
@@ -187,9 +189,10 @@ function selecDistRetro(distrito) {
             productividad = parseInt(element[3]),
             materiales = parseInt(element[4]),
             positiva = parseInt(element[5]),
-            totalTecnicos = parseInt(element[6]);
+            totalTecnicos = parseInt(element[6]),
+            total = parseInt(element[7]);
 
-        let total = reincidencia + vtaTecnico + productividad + materiales + positiva;
+        // let total = reincidencia + vtaTecnico + productividad + materiales + positiva;
 
         if (element[0] == distrito) {
 
@@ -213,6 +216,12 @@ function selecDistRetro(distrito) {
 
 function graficaRetro(idGrafica, datosReincidencias, datosVtaTecnico, datosProductividad, datosMateriales, datosPositiva, datosTotTecnicos, datosPorcTarjeta) {
 
+    let maximo = datosReincidencias[datosReincidencias.length - 1] + datosVtaTecnico[datosVtaTecnico.length - 1]
+                    + datosProductividad[datosProductividad.length - 1] + datosMateriales[datosMateriales.length - 1]
+                    + datosPositiva[datosPositiva.length - 1];
+
+    let maximoEje = maximo * 1.2;
+
     var chart = c3.generate({
         bindto: idGrafica,
         data: {
@@ -222,7 +231,7 @@ function graficaRetro(idGrafica, datosReincidencias, datosVtaTecnico, datosProdu
                 datosProductividad,
                 datosMateriales,
                 datosPositiva,
-                datosTotTecnicos,
+                // datosTotTecnicos,
                 datosPorcTarjeta
             ],
             type: "bar",
@@ -236,7 +245,7 @@ function graficaRetro(idGrafica, datosReincidencias, datosVtaTecnico, datosProdu
                         return (datosReincidencias[i + 1] + datosVtaTecnico[i + 1] + datosProductividad[i + 1]
                                     + datosMateriales[i + 1] + datosPositiva[i + 1]);
                     },
-                    totalTecnicos: d3.format(","),
+                    // totalTecnicos: d3.format(","),
                     porcTarjeta: d3.format(",.2%")
                 }
             },
@@ -246,7 +255,7 @@ function graficaRetro(idGrafica, datosReincidencias, datosVtaTecnico, datosProdu
                 productividad: "y",
                 materiales: "y",
                 positiva: "y",
-                totalTecnicos: "y",
+                // totalTecnicos: "y",
                 porcTarjeta: "y2",
             },
             groups: [
@@ -259,7 +268,7 @@ function graficaRetro(idGrafica, datosReincidencias, datosVtaTecnico, datosProdu
                 productividad: "#9BA0BC",
                 materiales: "#C1B8C8",
                 positiva: "#20BF55",
-                totalTecnicos: "#BFAB25",
+                // totalTecnicos: "#BFAB25",
                 porcTarjeta: "#000000"
             },
             names: {
@@ -268,7 +277,7 @@ function graficaRetro(idGrafica, datosReincidencias, datosVtaTecnico, datosProdu
                 productividad: "Productividad",
                 materiales: "Consumo de Materiales",
                 positiva: "Positiva",
-                totalTecnicos: "Técnicos con Tarjeta",
+                // totalTecnicos: "Técnicos con Tarjeta",
                 porcTarjeta: "% Retroalimentación por Tarjeta"
             }
         },
@@ -291,9 +300,9 @@ function graficaRetro(idGrafica, datosReincidencias, datosVtaTecnico, datosProdu
                 },
                 height: 80
             },
-            // y: {
-            //     max: 55 // Moverlo con los datos reales
-            // },
+            y: {
+                max: maximoEje
+            },
             y2: {
                 tick: {
                     format: d3.format(",.2%")
@@ -313,6 +322,112 @@ function graficaRetro(idGrafica, datosReincidencias, datosVtaTecnico, datosProdu
         //         show: true
         //     }
         // },
+        tooltip: {
+            // format: {
+
+            //     title: function (d) {
+
+            //         let fechaHora = fechasBacklogNacional[d] + " 00:00:00",
+            //             auxFecha = new Date(fechaHora),
+            //             diaSemana = auxFecha.getDay();
+            //         return (fechasBacklogNacional[d] + " - " + diasSemana[diaSemana]);
+
+            //     }
+
+            // },
+            contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
+
+                let d2 = [],
+                    idx = 0;
+
+                var $$ = this,
+                    config = $$.config,
+                    titleFormat = config.tooltip_format_title || defaultTitleFormat,
+                    nameFormat = config.tooltip_format_name || function (name) {
+                        return name;
+                    },
+                    valueFormat = config.tooltip_format_value || defaultValueFormat,
+                    text, i, title, value, name, bgcolor, clase;
+
+                d.sort(function (a, b) {
+                    return b.value - a.value;
+                });
+
+                function key_for_sum(arr) {
+                    let valor = (arr.id == "porcTarjeta") ? 0 : arr.value;
+                    return valor; //value is the key
+                }
+
+                function sum(prev, next) {
+                    return prev + next;
+                }
+
+                for (let i = 0; i < d.length; i++) {
+
+                    let name = nameFormat(d[i].name);
+
+                    if ((d[i].value != 0) && (name != "% Retroalimentación por Tarjeta")) {
+                        d2.push(d[i]);
+                    }
+
+                    if (name == "% Retroalimentación por Tarjeta") {
+                        idx = i;
+                    }
+
+                }
+
+                var totals_object = {};
+                totals_object.x = d[0]['x'];
+                totals_object.value = d.map(key_for_sum).reduce(sum);// sum func
+                totals_object.name = "Total de retroalimentaciones";//total will be shown in tooltip
+                totals_object.index = d[0]['index'];
+                totals_object.id = 'total';//c3 will use this
+                d2.push(totals_object);
+
+                var totals_object2 = {};
+                totals_object2.x = d[0]['x'];
+                totals_object2.value = datosTotTecnicos[totals_object2.x];
+                totals_object2.name = "Retroalimentaciones con tarjeta";
+                totals_object2.index = d[0]['index'];
+                totals_object2.id = "retro";
+                d2.push(totals_object2);
+                d2.push(d[idx]);
+
+
+                for (i = 0; i < d2.length; i++) {
+
+                    if (!(d2[i] && (d2[i].value || d2[i].value == 0))) {
+                        continue;
+                    }
+
+                    if (!text) {
+                        title = titleFormat ? titleFormat(d2[i].x) : d2[i].x;
+                        text = "<table class='" + $$.CLASS.tooltip + "'>" + (title || title === 0 ? "<tr><th colspan='2'>" + title + "</th></tr>" : "");
+                    }
+
+                    name = nameFormat(d2[i].name);
+                    value = valueFormat(d2[i].value, d2[i].ratio, d2[i].id, d2[i].index);
+                    bgcolor = $$.levelColor ? $$.levelColor(d2[i].value) : color(d2[i].id);
+
+                    if (name == "Total de retroalimentaciones") {
+                        bgcolor = "#FFFFFF";
+                    } else if (name == "Retroalimentaciones con tarjeta") {
+                        bgcolor = "#BFAB25";
+                    }
+
+                    clase = (name == "Total de retroalimentaciones") ? "class='name'" : "";
+                    text += "<tr class='" + $$.CLASS.tooltipName + "-" + d2[i].id + "'>";
+                    text += "<td " + clase + "><span style='background-color:" + bgcolor + "'></span>" + name + "</td>";
+                    text += "<td " + clase + ">" + value + "</td>";
+                    text += "</tr>";
+
+                }
+
+                return text + "</table>";
+
+            }
+
+        },
         zoom: {
             enabled: true
         }
