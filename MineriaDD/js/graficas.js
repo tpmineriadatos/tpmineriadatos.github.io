@@ -743,6 +743,7 @@ function llenadoInfo() {
             let nreincidencias = parseFloat(element[10]);
             let nordenes = parseFloat(element[15]);
             let porcreincidencias = 0;
+            let cal = parseFloat(element[13]) * 100;
 
             if (nordenes > 0) {
                 porcreincidencias = (nreincidencias / nordenes) * 100;
@@ -764,7 +765,7 @@ function llenadoInfo() {
             row["porcreincidencias"] = porcreincidencias;
             row["diastrabajados"] = element[11];
             row["ventatecnico"] = element[12];
-            row["calificacion"] = parseFloat(element[13]) * 100;
+            row["calificacion"] = (cal < 0) ? 0 : cal;
 
             row["addon"] = element[16];
             row["cddInstalaciones"] = element[17];
