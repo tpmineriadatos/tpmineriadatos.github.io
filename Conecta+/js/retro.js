@@ -216,11 +216,18 @@ function selecDistRetro(distrito) {
 
 function graficaRetro(idGrafica, datosReincidencias, datosVtaTecnico, datosProductividad, datosMateriales, datosPositiva, datosTotTecnicos, datosPorcTarjeta) {
 
-    let maximo = datosReincidencias[datosReincidencias.length - 1] + datosVtaTecnico[datosVtaTecnico.length - 1]
-                    + datosProductividad[datosProductividad.length - 1] + datosMateriales[datosMateriales.length - 1]
-                    + datosPositiva[datosPositiva.length - 1];
+    // let maximo = datosReincidencias[datosReincidencias.length - 1] + datosVtaTecnico[datosVtaTecnico.length - 1]
+    //                 + datosProductividad[datosProductividad.length - 1] + datosMateriales[datosMateriales.length - 1]
+    //                 + datosPositiva[datosPositiva.length - 1];
 
-    let maximoEje = maximo * 1.2;
+    let aux1 = datosReincidencias.filter((e, i) => i > 0),
+        aux2 = datosVtaTecnico.filter((e, i) => i > 0),
+        aux3 = datosProductividad.filter((e, i) => i > 0),
+        aux4 = datosMateriales.filter((e, i) => i > 0),
+        aux5 = datosPositiva.filter((e, i) => i > 0);
+
+    let maximo = Math.max(...aux1) + Math.max(...aux2) + Math.max(...aux3) + Math.max(...aux4) + Math.max(...aux5);
+    let maximoEje = parseInt(maximo) * 1.2;
 
     var chart = c3.generate({
         bindto: idGrafica,
