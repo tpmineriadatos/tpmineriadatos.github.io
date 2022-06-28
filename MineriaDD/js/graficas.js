@@ -2632,6 +2632,7 @@ function kpiProductividad2(datos, semana, nivel, opcSeleccionada) {
                     prod += element.empresarialHS * pesosRelativos.empHS;
                     prod += element.soporteProactiva * pesosRelativos.soporProac;
                     prod += element.recolecciones * pesosRelativos.recol;
+                    prod += element.hallazgos * pesosRelativos.hallazgos;
 
                     prodAcum += prod;
                     diasAcum += parseFloat(element.diastrabajados);
@@ -2668,6 +2669,7 @@ function kpiProductividad2(datos, semana, nivel, opcSeleccionada) {
                     prod += element.empresarialHS * pesosRelativos.empHS;
                     prod += element.soporteProactiva * pesosRelativos.soporProac;
                     prod += element.recolecciones * pesosRelativos.recol;
+                    prod += element.hallazgos * pesosRelativos.hallazgos;
 
                     prodAcum += prod;
                     diasAcum += parseFloat(element.diastrabajados);
@@ -2704,6 +2706,7 @@ function kpiProductividad2(datos, semana, nivel, opcSeleccionada) {
                     prod += element.empresarialHS * pesosRelativos.empHS;
                     prod += element.soporteProactiva * pesosRelativos.soporProac;
                     prod += element.recolecciones * pesosRelativos.recol;
+                    prod += element.hallazgos * pesosRelativos.hallazgos;
 
                     prodAcum += prod;
                     diasAcum += parseFloat(element.diastrabajados);
@@ -2740,6 +2743,7 @@ function kpiProductividad2(datos, semana, nivel, opcSeleccionada) {
                     prod += element.empresarialHS * pesosRelativos.empHS;
                     prod += element.soporteProactiva * pesosRelativos.soporProac;
                     prod += element.recolecciones * pesosRelativos.recol;
+                    prod += element.hallazgos * pesosRelativos.hallazgos;
 
                     prodAcum += prod;
                     diasAcum += parseFloat(element.diastrabajados);
