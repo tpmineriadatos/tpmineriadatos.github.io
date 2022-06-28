@@ -49,7 +49,7 @@ var datosCompleto = [],
     listaSupervisor = [],
     semanasReporte = [];
 
-var pesosRelativos = { "addon": 1, "instCDD": 1.5, "empHS": 3, "soporProac": 1, "recol": 0.5 },
+var pesosRelativos = { "addon": 1, "instCDD": 1.5, "empHS": 3, "soporProac": 1, "recol": 0.5, "hallazgos": 1 },
     diasSemana = { 0: "domingo", 1: "lunes", 2: "martes", 3: "miércoles", 4: "jueves", 5: "viernes", 6: "sábado" };
 
 var btnAplicado = 1,
@@ -783,6 +783,8 @@ function llenadoInfo() {
             row["utp"] = element[27];
             row["promutp"] = element[28];
 
+            row["hallazgos"] = element[29];
+
             datosCompleto.push(row);
 
         } else {
@@ -860,6 +862,8 @@ function mostrarTablaCompleta() {
             row["promfibra"] = element.promfibra;
             row["utp"] = element.utp;
             row["promutp"] = element.promutp;
+            
+            row["hallazgos"] = element.hallazgos;
     
             // datosImprimir.push(row);
             datosNacionalFijos.push(row);
@@ -938,6 +942,8 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["utp"] = element.utp;
                 row["promutp"] = element.promutp;
 
+                row["hallazgos"] = element.hallazgos;
+
                 // datosImprimir.push(row);
                 datosFiltroDireccion.push(row);
 
@@ -1002,6 +1008,8 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["promfibra"] = element.promfibra;
                 row["utp"] = element.utp;
                 row["promutp"] = element.promutp;
+
+                row["hallazgos"] = element.hallazgos;
 
                 // datosImprimir.push(row);
                 datosFiltroRegion.push(row);
@@ -1068,6 +1076,8 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["utp"] = element.utp;
                 row["promutp"] = element.promutp;
 
+                row["hallazgos"] = element.hallazgos;
+
                 // datosImprimir.push(row);
                 datosFiltroDistrito.push(row);
 
@@ -1132,6 +1142,8 @@ function mostrarTablaFiltro(filtro, combo) {
                 row["promfibra"] = element.promfibra;
                 row["utp"] = element.utp;
                 row["promutp"] = element.promutp;
+
+                row["hallazgos"] = element.hallazgos;
 
                 // datosImprimir.push(row);
                 datosFiltroSupervisor.push(row);
@@ -1202,7 +1214,9 @@ function imprimeTabla(datos, combo) {
                 { name: "fibra", type: "number" },
                 { name: "promfibra", type: "number" },
                 { name: "utp", type: "number" },
-                { name: "promutp", type: "number" }
+                { name: "promutp", type: "number" },
+
+                { name: "hallazgos", type: "number" }
 
             ]//,
         // sortcolumn: 'calificacion',
@@ -1296,6 +1310,9 @@ function imprimeTabla(datos, combo) {
             { text: "ADDON", dataField: "addon", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass },
             { text: "Instalaciones + CDD", dataField: "cddInstalaciones", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass },
             { text: "Empresarial + Hogar Seguro", dataField: "empresarialHS", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass },
+            
+            { text: "Hallazgos (solo híbridas)", dataField: "hallazgos", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass },
+            
             { text: "Soportes + Órdenes Proactivas", dataField: "soporteProactiva", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass },
             { text: "Recolecciones", dataField: "recolecciones", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass }
         ],
