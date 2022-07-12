@@ -80,12 +80,18 @@
 
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="nombreMenu" id="seguimiento">
                                 <strong class="textoMenu">Seguimiento</strong>
                             </div>
                         </a>
+
+                        <ul class="dropdown-menu listaRein" aria-labelledby="navbarDarkDropdownMenuLink">
+                            <li><a class="dropdown-item" href="#" id="segIndicadores">Indicadores</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" id="segCosecha">Por cosecha</a></li>
+                        </ul>
                     </li>
                 </ul>
                 <form class="d-flex">
@@ -284,6 +290,40 @@
         </div>
     </div>
 
+    <div id="combosCosecha" class="row">
+    
+        <div class="col-md-4 col-sm-12">
+            <div class="row">
+                <div class="col-md-3 col-sm-12 ">
+                    <label for="opcSemana">&nbsp;&nbsp;&nbsp;Semana</label>
+                </div>
+                <div class="col-md-9 col-sm-12">
+                    <form>
+                        <select name="opcSemana" id="opcSemana" class="form-control-select" style="width: 300px; margin-right: 20px;">
+                            
+                        </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+    
+        <div class="col-md-4 col-sm-12">
+            <div class="row">
+                <div class="col-md-3 col-sm-12 ">
+                    <label for="opcTecnico">&nbsp;&nbsp;&nbsp;Tecnico</label>
+                </div>
+                <div class="col-md-9 col-sm-12">
+                    <form>
+                        <select name="opcTecnico" id="opcTecnico" class="form-control-select" style="width: 300px; margin-right: 20px;">
+                            <option selected>Todos</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
     <hr>
     
     <div class="col-lg-12 col-md-12 col-sm-6" id="divTabla">
@@ -461,7 +501,7 @@
 
             <div class="row mb-3">
                 <div class="col-lg-12 col-md-12 col-sm-6 text-center">
-                    <label class="tituloGris" style="font-size: large;">Retroalimentación de Supervisores - Mayo</label>
+                    <label class="tituloGris" style="font-size: large;">Retroalimentación de Supervisores - Junio</label>
                 </div>
             </div>
         
@@ -534,6 +574,34 @@
         
         </div> -->
     
+    </div>
+
+    <div id="divCosecha" class="col-md-12 col-sm-12">
+        <div id="graficasCosecha" class="row">
+        
+            <div class="col-md-6 col-sm-12" style="text-align: center;">
+                <div class="row mb-3">
+                    <div class="col-lg-12 col-md-12 col-sm-6 text-center">
+                        <label class="tituloGris" style="font-size: large;">Reincidencias</label>
+                    </div>
+                </div>
+                <div id="grafica4" class="tamanhoGrafica2">
+        
+                </div>
+            </div>
+        
+            <div class="col-md-6 col-sm-12" style="text-align: center;">
+                <div class="row mb-3">
+                    <div class="col-lg-12 col-md-12 col-sm-6 text-center">
+                        <label class="tituloGris" style="font-size: large;">Tarjetas</label>
+                    </div>
+                </div>
+                <div id="grafica5" class="tamanhoGrafica2">
+        
+                </div>
+            </div>
+        
+        </div>
     </div>
     
     <br>
