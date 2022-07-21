@@ -79,6 +79,7 @@ $(document).ready(function () {
     document.getElementById("mas72hrs").style.backgroundColor = "rgb(63, 124, 191)";
 
     $("#divGrafica").hide();
+    $("#divTemporalidad").hide();
     $("#divTabla").show();
     $("#tablaReincidencias").hide();
     $("#divReinTitulo").hide();
@@ -107,6 +108,7 @@ $(document).ready(function () {
         }
 
         $("#divGrafica").hide();
+        $("#divTemporalidad").hide();
         $("#divTabla").show();
         $("#divAct").show();
         $("#imgConecta").show();
@@ -207,6 +209,7 @@ $(document).ready(function () {
                                         + "</div></div>");
 
         $("#divGrafica").show();
+        $("#divTemporalidad").hide();
         $("#tablaReincidencias").hide();
         $("#divReinTitulo").hide();
         $("#divGrafReincidencias").hide();
@@ -291,6 +294,7 @@ $(document).ready(function () {
         }
 
         $("#divGrafica").show();
+        $("#divTemporalidad").hide();
         $("#tablaReincidencias").hide();
         $("#divReinTitulo").hide();
         $("#divGrafReincidencias").hide();
@@ -373,6 +377,7 @@ $(document).ready(function () {
                                         + "</div></div>");
 
         $("#divGrafica").show();
+        $("#divTemporalidad").hide();
         $("#tablaReincidencias").hide();
         $("#divReinTitulo").hide();
         $("#divGrafReincidencias").hide();
@@ -447,8 +452,8 @@ $(document).ready(function () {
                 $("#desPlaza").hide();
                 $("#desDistrito").hide();
 
-                $("#grafica1").html("");
-                lecturaCSV("fuentes/Nacional_incumplimientos.csv", "NACIONAL");
+                // $("#grafica1").html("");
+                // lecturaCSV("fuentes/Nacional_incumplimientos.csv", "NACIONAL");
 
             } else {
 
@@ -459,9 +464,12 @@ $(document).ready(function () {
 
                 $("#desPlaza").show();
                 $("#desDistrito").hide();
-                $("#grafica1").html("");
+                // $("#grafica1").html("");
 
             }
+
+            $("#grafica1").html("");
+            incumDireccion(valor);
 
         } else if (selecTop == 1) {
 
@@ -591,7 +599,8 @@ $(document).ready(function () {
                 lecturaCSV("fuentes/Backlog_Plazas.csv", valor);
             } else if (selecIncumplimiento == 1) {
                 $("#grafica1").html("");
-                lecturaCSV("fuentes/Plaza_incumplimientos.csv", valor);
+                incumPlaza(valor);
+                // lecturaCSV("fuentes/Plaza_incumplimientos.csv", valor);
             } else if (selecReincidencias == 1) {
 
                 $("#grafica2").html("");
@@ -638,7 +647,8 @@ $(document).ready(function () {
                 lecturaCSV("fuentes/Backlog_Distritos.csv", valor);
             } else if (selecIncumplimiento == 1) {
                 $("#grafica1").html("");
-                lecturaCSV("fuentes/Distritos_incumplimientos.csv", valor);
+                incumDistrito(valor);
+                // lecturaCSV("fuentes/Distritos_incumplimientos.csv", valor);
             } else if (selecReincidencias == 1) {
 
                 $("#grafica2").html("");

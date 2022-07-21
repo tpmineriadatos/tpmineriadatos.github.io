@@ -66,6 +66,7 @@ $(document).ready(function() {
         }
 
         $("#divGrafica").hide();
+        $("#divTemporalidad").hide();
         $("#divTabla").hide();
         $("#divAct").hide();
         $("#desDireccion").hide();
@@ -123,6 +124,7 @@ $(document).ready(function() {
         }
 
         $("#divGrafica").hide();
+        $("#divTemporalidad").hide();
         $("#divTabla").hide();
         $("#divAct").hide();
         $("#desDireccion").show();
