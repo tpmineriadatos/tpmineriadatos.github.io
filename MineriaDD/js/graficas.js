@@ -204,7 +204,7 @@ $(document).ready(function () {
 
         }
 
-        $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
+        $("#graficas").empty().append("<div class='col-md-11 col-sm-12'>"
                                         + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
                                         + "</div></div>");
 
@@ -372,7 +372,7 @@ $(document).ready(function () {
 
         }
 
-        $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
+        $("#graficas").empty().append("<div class='col-md-11 col-sm-12'>"
                                         + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
                                         + "</div></div>");
 
