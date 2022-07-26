@@ -1,7 +1,8 @@
-var selecProductividad = 1, // Agregarlo y considerarlo
+var selecProductividad = 1,
     selecReincidencias = 0,
     selecTR = 0,
-    seguimiento = 0;
+    seguimiento = 0,
+    cosecha = 0;
 
 var Fecha_Descarga = [],
     CDD = [],
@@ -80,6 +81,9 @@ $(document).ready(function () {
     $("#desDistrito").hide();
     $("#divSeguimiento").hide();
 
+    $("#combosCosecha").hide();
+    $("#divCosecha").hide();
+
     obtieneDatos();
     obtieneFechas("fuentes/Backlog_Nacional.csv");
 
@@ -99,12 +103,15 @@ $(document).ready(function () {
         $("#desSupervisor").hide();
         $("#kpiSegundoNivel").hide();
         $("#divSeguimiento").hide();
+        $("#combosCosecha").hide();
+        $("#divCosecha").hide();
 
         // Coloca bandera de locación
         selecProductividad = 1;
         selecReincidencias = 0;
         selecTR = 0;
         seguimiento = 0;
+        cosecha = 0;
 
         document.getElementById("productividad").style.backgroundColor = "rgb(31, 77, 155)";
         document.getElementById("reincidencias").style.backgroundColor = "rgb(63, 124, 191)";

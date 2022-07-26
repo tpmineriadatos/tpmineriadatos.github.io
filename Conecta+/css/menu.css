@@ -34,7 +34,7 @@
 
 .tamanhoGrafica {
     height: 500px;
-    width: 1500px;
+    /* width: 1500px; */
 }
 
 .tamanhoGrafica2 {
@@ -280,4 +280,10 @@ input[type="search"]::-webkit-search-results-decoration {
 .name {
     font-weight: bold;
     font-size: 11px;
+}
+
+.c3-circles-Evento circle {
+    stroke: #ff0000;
+    stroke-width: 5px;
+    fill: #ff0000 !important;
 }

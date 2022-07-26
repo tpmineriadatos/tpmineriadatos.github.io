@@ -66,12 +66,15 @@ $(document).ready(function() {
         $("#divReinTitulo").show();
         $("#divGrafReincidencias").hide();
         $("#tituloReincidencias").html("Reincidencias por Técnico");
+        $("#combosCosecha").hide();
+        $("#divCosecha").hide();
 
         // Coloca bandera de locación
         selecProductividad = 0;
         selecReincidencias = 1;
         selecTR = 0;
         seguimiento = 0;
+        cosecha = 0;
 
         lecturaTG("fuentes/ReincSem_Actual.csv");
 
@@ -110,12 +113,15 @@ $(document).ready(function() {
         $("#tablaReincidencias").hide();
         $("#divGrafReincidencias").show();
         $("#divReinTitulo").hide();
+        $("#combosCosecha").hide();
+        $("#divCosecha").hide();
 
         // Coloca bandera de locación
         selecProductividad = 0;
         selecReincidencias = 1;
         selecTR = 1;
         seguimiento = 0;
+        cosecha = 0;
 
         $("#grafica22").html("");
         $("#grafica3").html("");

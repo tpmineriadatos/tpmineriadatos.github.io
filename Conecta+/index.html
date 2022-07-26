@@ -87,11 +87,11 @@
                             </div>
                         </a>
 
-                        <!-- <ul class="dropdown-menu listaRein" aria-labelledby="navbarDarkDropdownMenuLink">
+                        <ul class="dropdown-menu listaRein" aria-labelledby="navbarDarkDropdownMenuLink">
                             <li><a class="dropdown-item" href="#" id="segIndicadores">Indicadores</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#" id="segCosecha">Por cosecha</a></li>
-                        </ul> -->
+                            <li><a class="dropdown-item" href="#" id="segCosecha">Cosecha por tarjetas</a></li>
+                        </ul>
                     </li>
                 </ul>
                 <form class="d-flex">
@@ -290,7 +290,7 @@
         </div>
     </div>
 
-    <!-- <div id="combosCosecha" class="row">
+    <div id="combosCosecha" class="row">
     
         <div class="col-md-4 col-sm-12">
             <div class="row">
@@ -310,19 +310,34 @@
         <div class="col-md-4 col-sm-12">
             <div class="row">
                 <div class="col-md-3 col-sm-12 ">
-                    <label for="opcTecnico">&nbsp;&nbsp;&nbsp;Tecnico</label>
+                    <label for="opcDistritoCos">&nbsp;&nbsp;&nbsp;Distrito</label>
+                </div>
+                <div class="col-md-9 col-sm-12">
+                    <form>
+                        <select name="opcTecnicoCos" id="opcDistritoCos" class="form-control-select" style="width: 300px; margin-right: 20px;">
+                            
+                        </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-12">
+            <div class="row">
+                <div class="col-md-3 col-sm-12 ">
+                    <label for="opcTecnico">&nbsp;&nbsp;&nbsp;Técnico</label>
                 </div>
                 <div class="col-md-9 col-sm-12">
                     <form>
                         <select name="opcTecnico" id="opcTecnico" class="form-control-select" style="width: 300px; margin-right: 20px;">
-                            <option selected>Todos</option>
+                            
                         </select>
                     </form>
                 </div>
             </div>
         </div>
     
-    </div> -->
+    </div>
 
     <hr>
     
@@ -576,13 +591,14 @@
     
     </div>
 
-    <!-- <div id="divCosecha" class="col-md-12 col-sm-12">
+    <div id="divCosecha" class="col-md-12 col-sm-12">
+
         <div id="graficasCosecha" class="row">
         
             <div class="col-md-6 col-sm-12" style="text-align: center;">
                 <div class="row mb-3">
                     <div class="col-lg-12 col-md-12 col-sm-6 text-center">
-                        <label class="tituloGris" style="font-size: large;">Reincidencias</label>
+                        <label class="tituloGris" style="font-size: large;">Reincidencias provocadas por los técnicos amonestados</label>
                     </div>
                 </div>
                 <div id="grafica4" class="tamanhoGrafica2">
@@ -593,7 +609,7 @@
             <div class="col-md-6 col-sm-12" style="text-align: center;">
                 <div class="row mb-3">
                     <div class="col-lg-12 col-md-12 col-sm-6 text-center">
-                        <label class="tituloGris" style="font-size: large;">Tarjetas</label>
+                        <label class="tituloGris" style="font-size: large;">Tarjetas obtenidas por los técnicos amonestados</label>
                     </div>
                 </div>
                 <div id="grafica5" class="tamanhoGrafica2">
@@ -602,7 +618,23 @@
             </div>
         
         </div>
-    </div> -->
+
+        <div id="graficasTecnicos" class="row">
+        
+            <div class="col-md-12 col-sm-12" style="text-align: center;">
+                <div class="row mb-3">
+                    <div class="col-lg-12 col-md-12 col-sm-6 text-center">
+                        <label id="datosTecnico" class="tituloGris" style="font-size: large;">Técnico</label>
+                    </div>
+                </div>
+                <div id="grafica6" class="tamanhoGrafica2">
+        
+                </div>
+            </div>
+        
+        </div>
+
+    </div>
     
     <br>
     
@@ -679,6 +711,43 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-bs-toggle="modal"
                         data-bs-target="#listaTecnicos">Regresar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Evento Técnico-->
+    <div class="modal fade" id="eventoTecnico" tabindex="-1" aria-labelledby="eventoTecnicoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eventoTecnicoLabel">Nombre técnico</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="modal-title" id="eventoLabel">Retroalimentación</h6>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-10 col-md-10 col-sm-6">
+                            <div>
+                                <table class="table table-hover table-sm table-bordered" style="font-size: small;">
+                                    <thead>
+                                        <tr class='thead-active'>
+                                            <th scope="col" style="width: 100px;" class='align-middle'>Concepto</th>
+                                            <th scope="col" style="width: 100px;" class='align-middle'>Valor</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="eventTecnico">
+    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
