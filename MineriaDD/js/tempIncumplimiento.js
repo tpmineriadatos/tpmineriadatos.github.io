@@ -96,25 +96,25 @@ function llenaInfoTempIncump() {
         if (element[0] == "DIARIA") {
 
             if (element[1] == "NACIONAL") {
-                diarioDireccionTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8]]);
+                diarioDireccionTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
             } else if (element[1] == "DIRECCION") {
-                diarioDireccionTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8]]);
+                diarioDireccionTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
             } else if (element[1] == "PLAZA") {
-                diarioPlazaTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8]]);
+                diarioPlazaTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
             } else if (element[1] == "DISTRITO") {
-                diarioDistritoTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8]]);
+                diarioDistritoTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
             }
 
         } else {
 
             if (element[1] == "NACIONAL") {
-                semanalDireccionTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8]]);
+                semanalDireccionTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
             } else if (element[1] == "DIRECCION") {
-                semanalDireccionTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8]]);
+                semanalDireccionTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
             } else if (element[1] == "PLAZA") {
-                semanalPlazaTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8]]);
+                semanalPlazaTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
             } else if (element[1] == "DISTRITO") {
-                semanalDistritoTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8]]);
+                semanalDistritoTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
             }
 
         }
@@ -171,7 +171,9 @@ function incumDireccion(direccion) {
 
     if ($("#diaria").prop("checked")) {
 
-        datosEjeX = diasTempIncum;
+        // datosEjeX = diasTempIncum;
+
+        console.log(datosEjeX);
 
         for (let i = 0; i < diarioDireccionTempIncum.length; i++) {
 
@@ -184,6 +186,7 @@ function incumDireccion(direccion) {
                 datosYPorcConfirmacion.push(element[3]);
                 datosYPorcIncumplimientos.push(element[4]);
                 datosYPorcTotal.push(element[5]);
+                datosEjeX.push(element[6]);
 
             }
 
@@ -191,7 +194,7 @@ function incumDireccion(direccion) {
 
     } else {
 
-        datosEjeX = semanasTempIncum;
+        // datosEjeX = semanasTempIncum;
 
         for (let i = 0; i < semanalDireccionTempIncum.length; i++) {
 
@@ -204,6 +207,7 @@ function incumDireccion(direccion) {
                 datosYPorcConfirmacion.push(element[3]);
                 datosYPorcIncumplimientos.push(element[4]);
                 datosYPorcTotal.push(element[5]);
+                datosEjeX.push(element[6]);
 
             }
 
@@ -284,12 +288,13 @@ function incumPlaza(plaza) {
                 datosYPorcConfirmacion.push(element[3]);
                 datosYPorcIncumplimientos.push(element[4]);
                 datosYPorcTotal.push(element[5]);
+                datosEjeX.push(element[6]);
 
             }
 
         }
 
-        datosEjeX = diasTempIncum;
+        // datosEjeX = diasTempIncum;
 
     } else {
 
@@ -304,12 +309,13 @@ function incumPlaza(plaza) {
                 datosYPorcConfirmacion.push(element[3]);
                 datosYPorcIncumplimientos.push(element[4]);
                 datosYPorcTotal.push(element[5]);
+                datosEjeX.push(element[6]);
 
             }
 
         }
 
-        datosEjeX = semanasTempIncum;
+        // datosEjeX = semanasTempIncum;
 
     }
 
@@ -386,12 +392,13 @@ function incumDistrito(distrito) {
                 datosYPorcConfirmacion.push(element[3]);
                 datosYPorcIncumplimientos.push(element[4]);
                 datosYPorcTotal.push(element[5]);
+                datosEjeX.push(element[6]);
 
             }
 
         }
 
-        datosEjeX = diasTempIncum;
+        // datosEjeX = diasTempIncum;
         
     } else {
 
@@ -406,12 +413,13 @@ function incumDistrito(distrito) {
                 datosYPorcConfirmacion.push(element[3]);
                 datosYPorcIncumplimientos.push(element[4]);
                 datosYPorcTotal.push(element[5]);
+                datosEjeX.push(element[6]);
 
             }
 
         }
 
-        datosEjeX = semanasTempIncum;
+        // datosEjeX = semanasTempIncum;
         
     }
 
