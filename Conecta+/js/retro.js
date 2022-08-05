@@ -104,7 +104,8 @@ function selecDirecRetro(direccion) {
             materiales = parseInt(element[4]),
             positiva = parseInt(element[5]),
             totalTecnicos = parseInt(element[6]),
-            total = parseInt(element[7]);
+            totalaux = parseInt(element[7]),
+            total = (totalaux == 0) ? 0 : (totalTecnicos / totalaux);
         
         // let total = reincidencia + vtaTecnico + productividad + materiales + positiva;
 
@@ -116,7 +117,7 @@ function selecDirecRetro(direccion) {
             datosYMateriales.push(materiales);
             datosYPositiva.push(positiva);
             datosYTotTecnicos.push(totalTecnicos);
-            datosYPorcTarjeta.push(totalTecnicos / total);
+            datosYPorcTarjeta.push(total);
 
         }
 
@@ -147,7 +148,8 @@ function selecPlazaRetro(plaza) {
             materiales = parseInt(element[4]),
             positiva = parseInt(element[5]),
             totalTecnicos = parseInt(element[6]),
-            total = parseInt(element[7]);
+            totalaux = parseInt(element[7]),
+            total = (totalaux == 0) ? 0 : (totalTecnicos / totalaux);
 
         // let total = reincidencia + vtaTecnico + productividad + materiales + positiva;
 
@@ -159,7 +161,7 @@ function selecPlazaRetro(plaza) {
             datosYMateriales.push(materiales);
             datosYPositiva.push(positiva);
             datosYTotTecnicos.push(totalTecnicos);
-            datosYPorcTarjeta.push(totalTecnicos / total);
+            datosYPorcTarjeta.push(total);
 
         }
 
@@ -190,7 +192,8 @@ function selecDistRetro(distrito) {
             materiales = parseInt(element[4]),
             positiva = parseInt(element[5]),
             totalTecnicos = parseInt(element[6]),
-            total = parseInt(element[7]);
+            totalaux = parseInt(element[7]),
+            total = (totalaux == 0) ? 0 : (totalTecnicos / totalaux);
 
         // let total = reincidencia + vtaTecnico + productividad + materiales + positiva;
 
@@ -202,7 +205,7 @@ function selecDistRetro(distrito) {
             datosYMateriales.push(materiales);
             datosYPositiva.push(positiva);
             datosYTotTecnicos.push(totalTecnicos);
-            datosYPorcTarjeta.push(totalTecnicos / total);
+            datosYPorcTarjeta.push(total);
 
         }
 
