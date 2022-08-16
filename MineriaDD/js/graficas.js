@@ -2123,7 +2123,7 @@ function dibujaGraficaBarraTop(idGrafica, Fecha_Descarga, Instalaciones, ADDON, 
 }
 
 
-function dibujaGraficaBarraTopIncum(idGrafica, fecha_apertura, confirmacionVisita, incumplimientoFueraTiempo, clienteReagenda, splitter) {
+function dibujaGraficaBarraTopIncum(idGrafica, fecha_apertura, confirmacionVisita, incumplimientoFueraTiempo, incumplimientoAgenda) {
 
     var chart = c3.generate({
         bindto: idGrafica,
@@ -2131,8 +2131,6 @@ function dibujaGraficaBarraTopIncum(idGrafica, fecha_apertura, confirmacionVisit
             columns: [
                 confirmacionVisita,
                 incumplimientoFueraTiempo,
-                clienteReagenda,
-                splitter,
                 incumplimientoAgenda
             ],
             type: "bar",
@@ -2142,34 +2140,21 @@ function dibujaGraficaBarraTopIncum(idGrafica, fecha_apertura, confirmacionVisit
             axes: {
                 confirmacionVisita: "y",
                 incumplimientoFueraTiempo: "y",
-                clienteReagenda: "y",
-                splitter: "y",
                 incumplimientoAgenda: "y2",
             },
-            // labels: {
-            //     format: {
-            //         incumplimientoAgenda: function (v, id, i, j) {
-            //             return ((incumplimientoAgenda[i + 1] * 100) + "%");
-            //         },
-            //     }
-            // },
             groups: [
-                ["confirmacionVisita", "incumplimientoFueraTiempo", "clienteReagenda", "splitter"]
+                ["confirmacionVisita", "incumplimientoFueraTiempo"]
             ],
             order: null,
             colors: {
                 confirmacionVisita: "#1E78B6",
                 incumplimientoFueraTiempo: "#FF7E10",
-                clienteReagenda: "#43933E",
-                splitter: "#C72C30",
                 incumplimientoAgenda: "#3D3B3B"
             },
             names: {
                 confirmacionVisita: "Confirmación de visita",
-                incumplimientoFueraTiempo: "Incumplimiento fuera de tiempo",
-                clienteReagenda: "Cliente reagenda",
-                splitter: "Splitter",
-                incumplimientoAgenda: "% Incumplimiento sobre total agendado"
+                incumplimientoFueraTiempo: "Incumplimientos",
+                incumplimientoAgenda: "% Incum. total sobre total agendado"
             }
         },
         bar: {
@@ -2334,16 +2319,16 @@ function datosDIreccionSeleccionada(direccionSeleccionada) {
 
             fecha_apertura.length = 0;
             incumplimientoAgenda.length = 0;
-            splitter.length = 0;
-            clienteReagenda.length = 0;
+            // splitter.length = 0;
+            // clienteReagenda.length = 0;
             incumplimientoFueraTiempo.length = 0;
             confirmacionVisita.length = 0;
 
             confirmacionVisita.push("confirmacionVisita");
             incumplimientoFueraTiempo.push("incumplimientoFueraTiempo");
             incumplimientoAgenda.push("incumplimientoAgenda");
-            splitter.push("splitter");
-            clienteReagenda.push("clienteReagenda");
+            // splitter.push("splitter");
+            // clienteReagenda.push("clienteReagenda");
 
             for (let i = 1; i < renglones.length; i++) {
 
@@ -2352,17 +2337,18 @@ function datosDIreccionSeleccionada(direccionSeleccionada) {
                 if (element[0] == valor) {
 
                     fecha_apertura.push(element[1]);
-                    confirmacionVisita.push(parseFloat(element[3]));
-                    incumplimientoFueraTiempo.push(parseFloat(element[4]));
-                    incumplimientoAgenda.push(parseFloat(element[6]) / 100);
-                    splitter.push(parseFloat(element[5]));
-                    clienteReagenda.push(parseFloat(element[2]));
+                    confirmacionVisita.push(parseFloat(element[2]));
+                    incumplimientoFueraTiempo.push(parseFloat(element[3]));
+                    incumplimientoAgenda.push(parseFloat(element[4]) / 100);
+                    // splitter.push(parseFloat(element[5]));
+                    // clienteReagenda.push(parseFloat(element[2]));
 
                 }
 
             }
 
-            dibujaGraficaBarraTopIncum("#grafica2", fecha_apertura, confirmacionVisita, incumplimientoFueraTiempo, clienteReagenda, splitter);
+            // dibujaGraficaBarraTopIncum("#grafica2", fecha_apertura, confirmacionVisita, incumplimientoFueraTiempo, clienteReagenda, splitter);
+            dibujaGraficaBarraTopIncum("#grafica2", fecha_apertura, confirmacionVisita, incumplimientoFueraTiempo, incumplimientoAgenda);
 
         } else if (direccionSeleccionada == "DISTRITOS") {
 
@@ -2398,16 +2384,16 @@ function datosDIreccionSeleccionada(direccionSeleccionada) {
 
             fecha_apertura.length = 0;
             incumplimientoAgenda.length = 0;
-            splitter.length = 0;
-            clienteReagenda.length = 0;
+            // splitter.length = 0;
+            // clienteReagenda.length = 0;
             incumplimientoFueraTiempo.length = 0;
             confirmacionVisita.length = 0;
 
             confirmacionVisita.push("confirmacionVisita");
             incumplimientoFueraTiempo.push("incumplimientoFueraTiempo");
             incumplimientoAgenda.push("incumplimientoAgenda");
-            splitter.push("splitter");
-            clienteReagenda.push("clienteReagenda");
+            // splitter.push("splitter");
+            // clienteReagenda.push("clienteReagenda");
 
             for (let i = 1; i < renglones.length; i++) {
 
@@ -2416,17 +2402,18 @@ function datosDIreccionSeleccionada(direccionSeleccionada) {
                 if (element[0] == valor) {
 
                     fecha_apertura.push(element[1]);
-                    confirmacionVisita.push(parseFloat(element[3]));
-                    incumplimientoFueraTiempo.push(parseFloat(element[4]));
-                    incumplimientoAgenda.push(parseFloat(element[6]) / 100);
-                    splitter.push(parseFloat(element[5]));
-                    clienteReagenda.push(parseFloat(element[2]));
+                    confirmacionVisita.push(parseFloat(element[2]));
+                    incumplimientoFueraTiempo.push(parseFloat(element[3]));
+                    incumplimientoAgenda.push(parseFloat(element[4]) / 100);
+                    // splitter.push(parseFloat(element[5]));
+                    // clienteReagenda.push(parseFloat(element[2]));
 
                 }
 
             }
 
-            dibujaGraficaBarraTopIncum("#grafica2", fecha_apertura, confirmacionVisita, incumplimientoFueraTiempo, clienteReagenda, splitter);
+            // dibujaGraficaBarraTopIncum("#grafica2", fecha_apertura, confirmacionVisita, incumplimientoFueraTiempo, clienteReagenda, splitter);
+            dibujaGraficaBarraTopIncum("#grafica2", fecha_apertura, confirmacionVisita, incumplimientoFueraTiempo, incumplimientoAgenda);
 
         } else if (direccionSeleccionada == "TOPD") {
 

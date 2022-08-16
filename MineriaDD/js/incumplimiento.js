@@ -96,7 +96,7 @@ $(document).ready(function() {
         // document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
         // document.getElementById("mas72hrs").style.backgroundColor = "rgb(63, 124, 191)";
 
-        lecturaCSVTempIncump("fuentes/IncumplimientosFull.csv")
+        lecturaCSVTempIncump("fuentes/IncumplimientosFull.csv");
 
         // if ($("#desDistrito").is(":visible")) {
 
