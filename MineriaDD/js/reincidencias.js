@@ -306,6 +306,9 @@ function lecturaTGAnterior(documento, k) {
                 tablaGeneralAnt.push(element);
             }
 
+            // Llenado del número de semanas
+            semanas[k + 1] = ("0" + tablaGeneralAnt[0][13]).slice(-2);
+
             datosAnteriores[k] = [];
             datosAnteriores[k] = tablaGeneralAnt;
 
@@ -347,6 +350,8 @@ function segmentacion() {
     distritos = [...listDist];
     distritos.sort();
     tablaGeneralAct.sort();
+
+    semanas[0] = ("0" + tablaGeneralAct[0][13]).slice(-2);
 
     /**
      * Llenado por Distrito
@@ -437,14 +442,11 @@ function pintaTabla() {
         cabecera = "",
         cuerpo = "";
     
-    /**
-     * Llenado del número de semanas
-     */
-    semanas[0] = ("0" + tablaGeneralAct[0][13]).slice(-2);
-    semanas[1] = ("0" + datosAnteriores[0][0][13]).slice(-2);
-    semanas[2] = ("0" + datosAnteriores[1][0][13]).slice(-2);
-    semanas[3] = ("0" + datosAnteriores[2][0][13]).slice(-2);
-    semanas[4] = ("0" + datosAnteriores[3][0][13]).slice(-2);
+    // semanas[0] = ("0" + tablaGeneralAct[0][13]).slice(-2);
+    // semanas[1] = ("0" + datosAnteriores[0][0][13]).slice(-2);
+    // semanas[2] = ("0" + datosAnteriores[1][0][13]).slice(-2);
+    // semanas[3] = ("0" + datosAnteriores[2][0][13]).slice(-2);
+    // semanas[4] = ("0" + datosAnteriores[3][0][13]).slice(-2);
     
     let thInicial = "<tr class='thead-active'>"
                     + "<th scope='col' class='w-dist align-middle' rowspan='2'>DISTRITO</th>"
