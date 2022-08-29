@@ -43,7 +43,7 @@ $(document).ready(function() {
                 // $("#divGrafica").show();
                 $("#divTabla").hide();
                 $("#divAct").hide();
-                $("#imgConecta").hide();
+                // $("#imgConecta").hide();
                 $("#lblOpcPlaza").html("Plaza");
                 $("#desPlaza").hide();
                 $("#desDistrito").hide();
@@ -78,6 +78,7 @@ $(document).ready(function() {
         $("#tablaReincidencias").hide();
         $("#divReinTitulo").hide();
         $("#divGrafReincidencias").hide();
+        $("#imgConecta").hide();
 
         // Coloca bandera de locación
         selecProductividad = 0;

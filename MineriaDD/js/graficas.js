@@ -178,7 +178,7 @@ $(document).ready(function () {
                 // $("#divGrafica").show();
                 $("#divTabla").hide();
                 $("#divAct").hide();
-                $("#imgConecta").hide();
+                // $("#imgConecta").hide();
                 $("#lblOpcPlaza").html("Plaza");
                 $("#desPlaza").hide();
                 $("#desDistrito").hide();
@@ -213,6 +213,7 @@ $(document).ready(function () {
         $("#tablaReincidencias").hide();
         $("#divReinTitulo").hide();
         $("#divGrafReincidencias").hide();
+        $("#imgConecta").hide();
 
         // Coloca bandera de locación
         selecProductividad = 0;
@@ -284,7 +285,7 @@ $(document).ready(function () {
             // $("#divGrafica").show();
             $("#divTabla").hide();
             $("#divAct").hide();
-            $("#imgConecta").hide();
+            // $("#imgConecta").hide();
             $("#desPlaza").hide();
             $("#desDistrito").hide();
             $("#kpiTodos").hide();
@@ -298,6 +299,7 @@ $(document).ready(function () {
         $("#tablaReincidencias").hide();
         $("#divReinTitulo").hide();
         $("#divGrafReincidencias").hide();
+        $("#imgConecta").hide();
 
         $("#graficas").empty().append("<div class='col-md-6 col-sm-12' style='text-align: center;'><strong>"
                                         + "<label id='lblgrafica1' for='grafica1'></label></strong><hr>"
@@ -351,7 +353,7 @@ $(document).ready(function () {
             // $("#divGrafica").show();
             $("#divTabla").hide();
             $("#divAct").hide();
-            $("#imgConecta").hide();
+            // $("#imgConecta").hide();
             $("#kpiTodos").hide();
             $("#segundoNivel").hide();
             $("#kpiSegundoNivel").hide();
@@ -381,6 +383,7 @@ $(document).ready(function () {
         $("#tablaReincidencias").hide();
         $("#divReinTitulo").hide();
         $("#divGrafReincidencias").hide();
+        $("#imgConecta").hide();
 
         // Coloca bandera de locación
         selecProductividad = 0;
