@@ -2342,7 +2342,8 @@ function datosDIreccionSeleccionada(direccionSeleccionada) {
                     fecha_apertura.push(element[1]);
                     confirmacionVisita.push(parseFloat(element[2]));
                     incumplimientoFueraTiempo.push(parseFloat(element[3]));
-                    incumplimientoAgenda.push(parseFloat(element[4]) / 100);
+                    incumplimientoAgenda.push(parseFloat(element[4]));
+                    // incumplimientoAgenda.push(parseFloat(element[4]) / 100);
                     // splitter.push(parseFloat(element[5]));
                     // clienteReagenda.push(parseFloat(element[2]));
 
@@ -2407,7 +2408,8 @@ function datosDIreccionSeleccionada(direccionSeleccionada) {
                     fecha_apertura.push(element[1]);
                     confirmacionVisita.push(parseFloat(element[2]));
                     incumplimientoFueraTiempo.push(parseFloat(element[3]));
-                    incumplimientoAgenda.push(parseFloat(element[4]) / 100);
+                    incumplimientoAgenda.push(parseFloat(element[4]));
+                    // incumplimientoAgenda.push(parseFloat(element[4]) / 100);
                     // splitter.push(parseFloat(element[5]));
                     // clienteReagenda.push(parseFloat(element[2]));
 
