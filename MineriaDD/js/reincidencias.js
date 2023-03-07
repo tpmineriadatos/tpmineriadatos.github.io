@@ -748,7 +748,7 @@ function llenaArreglosTR() {
         
         const element = datosCompletosTR[i];
 
-        if (element[0] == "Nacional") {
+        if (element[0] == "NACIONAL") {
             nacionalTR.push([element[1], element[2], element[3], element[5]]);
         } else if (element[0] == "DIRECCION") {
             direccionTR.push([element[1], element[2], element[3], element[5]]);
@@ -965,7 +965,7 @@ function llenaArreglosIDR() {
         ids = ids.toFixed(4);
         ids = parseFloat(ids);
 
-        ejeXMeses.push(element[2]);
+        ejeXMeses.push(element[2].substr(0, 3) + " '" + element[11].substr(2, 4));
 
         if (element[0] == "NACIONAL") {
             nacionalIDR.push([element[1], rss, ids, idr]);
