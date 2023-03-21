@@ -16,7 +16,7 @@ var direccionTempIncum = [],
     distritoTempIncum = [];
 
 var checks = 2;
-
+var aux100 = "";
 
 $(document).on("input", "input[name=temporalidad]", function () {
     muestraIncumplimiento();
@@ -215,7 +215,7 @@ function incumDireccion(direccion) {
 
     }
 
-    graficaIncumplimiento("#grafica1", datosYConfirmacion, datosYIncumplimientos, datosYPorcTotal, datosEjeX);
+    graficaIncumplimiento("#grafica3Incum", datosYConfirmacion, datosYIncumplimientos, datosYPorcTotal, datosEjeX);
 
     if (!($("#inputIncumplimientos").prop("checked"))) {
 
@@ -319,7 +319,7 @@ function incumPlaza(plaza) {
 
     }
 
-    graficaIncumplimiento("#grafica1", datosYConfirmacion, datosYIncumplimientos, datosYPorcTotal, datosEjeX);
+    graficaIncumplimiento("#grafica3Incum", datosYConfirmacion, datosYIncumplimientos, datosYPorcTotal, datosEjeX);
 
     if (!($("#inputIncumplimientos").prop("checked"))) {
 
@@ -423,7 +423,7 @@ function incumDistrito(distrito) {
         
     }
 
-    graficaIncumplimiento("#grafica1", datosYConfirmacion, datosYIncumplimientos, datosYPorcTotal, datosEjeX);
+    graficaIncumplimiento("#grafica3Incum", datosYConfirmacion, datosYIncumplimientos, datosYPorcTotal, datosEjeX);
 
     if (!($("#inputIncumplimientos").prop("checked"))) {
 
@@ -541,10 +541,14 @@ function graficaIncumplimiento(idGrafica, datosYConfirmacion, datosIncumplimient
 
                 title: function (d) {
 
+                    aux100 = ejeX[d];
+
                     let fechaHora = ejeX[d] + " 00:00:00",
                         auxFecha = new Date(fechaHora),
                         diaSemana = auxFecha.getDay(),
                         fechaFinal = "";
+                    
+                    // console.log(auxFecha);
                     // console.log(diasSemana[diaSemana]);
 
                     if ($("#diaria").prop("checked")) {

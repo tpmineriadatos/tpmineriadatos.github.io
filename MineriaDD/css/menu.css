@@ -48,6 +48,11 @@
     max-width: 1500px;
 }
 
+.tamanhoGrafica4 {
+    height: 350px;
+    max-width: 750px;
+}
+
 .form-control-select {
     width: 100%;
     height: calc(1.60rem + 2px);

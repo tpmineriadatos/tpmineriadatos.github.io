@@ -58,6 +58,48 @@
 
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">
+                            <div class="nombreMenu" id="mas72hrs">
+                                <strong class="textoMenu">Indicadores de Operación</strong>
+                            </div>
+                        </a>
+                    </li>
+
+                    <!-- <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">
+                            <div class="nombreMenu" id="backlog">
+                                <strong class="textoMenu">Backlog</strong>
+                            </div>
+                        </a>
+                    </li> -->
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="nombreMenu" id="incumplimiento">
+                                <strong class="textoMenu">Top Incumplimiento</strong>
+                            </div>
+                        </a>
+
+                        <!-- <ul class="dropdown-menu listaRein" aria-labelledby="navbarDarkDropdownMenuLink">
+                            <li><a class="dropdown-item" href="#" id="incumIndicador">Indicador</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#" id="incumTop">Top Semanal</a></li>
+                        </ul> -->
+
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">
+                            <div class="nombreMenu" id="top">
+                                <strong class="textoMenu">Top del día</strong>
+                            </div>
+                        </a>
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">
                             <div class="nombreMenu" id="productividad">
@@ -66,60 +108,29 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown">
+
                         <a class="nav-link active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="nombreMenu" id="reincidencias">
                                 <strong class="textoMenu">Reincidencias</strong>
                             </div>
                         </a>
-
+                    
                         <ul class="dropdown-menu listaRein" aria-labelledby="navbarDarkDropdownMenuLink">
                             <li><a class="dropdown-item" href="#" id="porTecnico">Por técnico</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#" id="ticketRep">Indicador</a></li>
-                        </ul>
-
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">
-                            <div class="nombreMenu" id="backlog">
-                                <strong class="textoMenu">Backlog</strong>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <div class="nombreMenu" id="incumplimiento">
-                                <strong class="textoMenu">Incumplimiento</strong>
-                            </div>
-                        </a>
-
-                        <ul class="dropdown-menu listaRein" aria-labelledby="navbarDarkDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#" id="incumIndicador">Indicador</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#" id="incumTop">Top Semanal</a></li>
+                            <li><a class="dropdown-item" href="#" id="ticketRep">Indicador</a></li>
                         </ul>
+                    
+                    </li>
 
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">
-                            <div class="nombreMenu" id="top">
-                                <strong class="textoMenu">Top del día</strong>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">
-                            <div class="nombreMenu" id="mas72hrs">
-                                <strong class="textoMenu">Más de 72 hrs</strong>
-                            </div>
-                        </a>
-                    </li>
                 </ul>
+
                 <form class="d-flex">
                     <img src="img/CONECTA_MAS.png" alt="conecta_mas" style="height: 70px;" id="imgConecta">
                 </form>
+
             </div>
 
         </div>
@@ -312,43 +323,29 @@
         </div>
     </div>
 
+    <!-- <div class="row mt-3" id="nivelPeriodicidad">
+    
+        <div id="periodicidad" class="col-md-4 col-sm-12">
+            <div class="row">
+                <div class="col-md-3 col-sm-12 ">
+                    <label for="opcPeriodicidad">&nbsp;&nbsp;&nbsp;Periodicidad</label>
+                </div>
+                <div class="col-md-9 col-sm-12">
+                    <form>
+                        <select name="opcPeriodicidad" id="opcPeriodicidad" class="form-control-select" style="width: 300px; margin-right: 20px;">
+                            <option value="general" selected>General</option>
+                            <option value="pasado">Pasado</option>
+                            <option value="presente">Hoy</option>
+                            <option value="futuro">Futuro</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+    
+    </div> -->
+
     <hr>
-
-    <div id="divTemporalidad" class="row">
-    
-        <div class="col-md-2 col-sm-12" style="margin-left: 10px;">
-            <fieldset>
-    
-                <legend>Temporalidad</legend>
-    
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="temporalidad" id="semanal" value="semanal">
-                    <label class="form-check-label etiqueta" for="semanal">Semanal</label>
-                </div>
-    
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="temporalidad" id="diaria" value="diaria" checked>
-                    <label class="form-check-label etiqueta" for="diaria">Diaria</label>
-                </div>
-    
-            </fieldset>
-        </div>
-    
-        <div class="col-md-4 col-sm-12">
-
-            <div class="form-check form-switch form-check-inline" style="margin-top: 15px;">
-                <input class="form-check-input" type="checkbox" id="inputConfirmacion" checked>
-                <label class="form-check-label" for="inputConfirmacion">Confirmación de visita</label>
-            </div>
-    
-            <div class="form-check form-switch form-check-inline">
-                <input class="form-check-input" type="checkbox" id="inputIncumplimientos" checked>
-                <label class="form-check-label" for="inputIncumplimientos">Incumplimientos</label>
-            </div>
-
-        </div>
-    
-    </div>
 
     <div class="col-md-12 col-sm-12" id="divGrafica">
         <div id="graficas" class="row">
@@ -443,6 +440,115 @@
             </div>
         </div>
 
+    </div>
+
+    <div class="col-md-12 col-sm-12" id="divIndicadoresOperacion">
+        <div id="graficasAutomatica" class="row">
+
+            <div class="col-md-6 col-sm-12" style="text-align: center;"">
+                <strong>
+                    <label id="lblgrafica1BL" for="grafica1BL">Backlog</label>
+                </strong>
+            
+                <hr>
+            
+                <div id="grafica1BL" class="tamanhoGrafica2">
+
+                </div>
+
+            </div>
+
+            <div class="col-md-6 col-sm-12" style="text-align: center;">
+                <strong>
+                    <label id="lblgrafica272" for="grafica272">Tickets más de 72 horas</label>
+                </strong>
+
+                <hr>
+                <div id="grafica272" class="tamanhoGrafica2">
+
+                </div>
+
+            </div>
+
+            <div class="col-md-12 col-sm-12 mt-5" style="text-align: center;">
+
+                <strong>
+                    <label id="lblgrafica3Incum" for="grafica3Incum">Incumplimientos</label>
+                </strong>
+
+                <hr>
+
+                <div id="divTemporalidad" class="row">
+                
+                    <div class="col-md-2 col-sm-12" style="margin-left: 10px;">
+                        <fieldset>
+                
+                            <legend>Temporalidad</legend>
+                
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="temporalidad" id="semanal" value="semanal">
+                                <label class="form-check-label etiqueta" for="semanal">Semanal</label>
+                            </div>
+                
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="temporalidad" id="diaria" value="diaria" checked>
+                                <label class="form-check-label etiqueta" for="diaria">Diaria</label>
+                            </div>
+                
+                        </fieldset>
+                    </div>
+                
+                    <div class="col-md-4 col-sm-12">
+                
+                        <div class="form-check form-switch form-check-inline" style="margin-top: 15px;">
+                            <input class="form-check-input" type="checkbox" id="inputConfirmacion" checked>
+                            <label class="form-check-label" for="inputConfirmacion">Confirmación de visita</label>
+                        </div>
+                
+                        <div class="form-check form-switch form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inputIncumplimientos" checked>
+                            <label class="form-check-label" for="inputIncumplimientos">Incumplimientos</label>
+                        </div>
+                
+                    </div>
+                
+                </div>
+
+                <div id="grafica3Incum" style="text-align: center; height: 400px; margin-right: 20px;">
+        
+                </div>
+
+            </div>
+
+            <div class="col-md-6 col-sm-12 mt-5" style="text-align: center;"">
+
+                <strong>
+                    <label id=" lblgrafica4AA" for="grafica4AA">Asignación Automática</label>
+                </strong>
+            
+                <hr>
+            
+                <div id="grafica4AA" class="tamanhoGrafica4">
+            
+                </div>
+            
+            </div>
+            
+            <div class="col-md-6 col-sm-12 mt-5" style="text-align: center;">
+
+                <strong>
+                    <label id="lblgrafica5AM" for="grafica5AM">Activación Manual</label>
+                </strong>
+            
+                <hr>
+                <div id="grafica5AM" class="tamanhoGrafica4">
+            
+                </div>
+            
+            </div>
+    
+        </div>
+    
     </div>
     
     <br>

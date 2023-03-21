@@ -48,7 +48,7 @@ $(document).ready(function() {
 
         document.getElementById("productividad").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("reincidencias").style.backgroundColor = "rgb(31, 77, 155)";
-        document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
+        // document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("incumplimiento").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("mas72hrs").style.backgroundColor = "rgb(63, 124, 191)";
@@ -80,6 +80,8 @@ $(document).ready(function() {
         $("#tablaReincidencias").show();
         $("#divReinTitulo").show();
         $("#divGrafReincidencias").hide();
+        $("#nivelPeriodicidad").hide();
+        $("#divIndicadoresOperacion").hide();
 
         $("#tituloReincidencias").html("Reincidencias por Técnico");
 
@@ -131,10 +133,12 @@ $(document).ready(function() {
         $("#kpiTodos").hide();
         $("#segundoNivel").hide();
         $("#kpiSegundoNivel").hide();
+        $("#nivelPeriodicidad").hide();
 
         $("#imgConecta").show();
         $("#tablaReincidencias").hide();
         $("#divGrafReincidencias").show();
+        $("#divIndicadoresOperacion").hide();
 
         $("#divReinTitulo").hide();
         $("#lblOpcPlaza").html("Plaza");

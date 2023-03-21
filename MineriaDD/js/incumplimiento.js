@@ -19,130 +19,138 @@ var aux3;
 $(document).ready(function() {
 
     // Seleccionar menú Incumplimiento
+    // $("#incumplimiento").click(function () {
+
+    //     document.getElementById("productividad").style.backgroundColor = "rgb(63, 124, 191)";
+    //     document.getElementById("reincidencias").style.backgroundColor = "rgb(63, 124, 191)";
+    //     // document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
+    //     document.getElementById("incumplimiento").style.backgroundColor = "rgb(31, 77, 155)";
+    //     document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
+    //     document.getElementById("mas72hrs").style.backgroundColor = "rgb(63, 124, 191)";
+
+    //     // $("#desDireccion").show();
+
+    // });
+
+    // $("#incumIndicador").click(function () {
+
+    //     $("#desDireccion").show();
+
+    //     if ((selecBacklog != 1) && (selecTR != 1)) {
+
+    //         if ((selecProductividad == 1) || (selecReincidencias == 1)) {
+
+    //             // $("#divGrafica").show();
+    //             $("#divTabla").hide();
+    //             $("#divAct").hide();
+    //             // $("#imgConecta").hide();
+    //             $("#lblOpcPlaza").html("Plaza");
+    //             $("#desPlaza").hide();
+    //             $("#desDistrito").hide();
+    //             $("#kpiTodos").hide();
+    //             $("#segundoNivel").hide();
+    //             $("#kpiSegundoNivel").hide();
+
+    //         }
+
+    //         valor = $("#opcDireccion option:selected").val();
+
+    //         if (valor != "NACIONAL") {
+
+    //             $("#desPlaza").show();
+    //             $("#desDistrito").hide();
+
+    //             $("#opcPlaza").empty();
+    //             $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
+
+    //             llenaListasPlaza(valor);
+
+    //         }
+
+    //     }
+
+    //     $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
+    //                                     + "<div id='grafica1' class='tamanhoGrafica3' style='text-align: center;'>"
+    //                                     + "</div></div>");
+
+    //     $("#divGrafica").show();
+    //     $("#divTemporalidad").show();
+    //     $("#tablaReincidencias").hide();
+    //     $("#divReinTitulo").hide();
+    //     $("#divGrafReincidencias").hide();
+    //     $("#imgConecta").hide();
+    //     $("#nivelPeriodicidad").hide();
+
+    //     // Coloca bandera de locación
+    //     selecProductividad = 0;
+    //     selecReincidencias = 0;
+    //     selecTR = 0;
+    //     selecBacklog = 0;
+    //     selecIncumplimiento = 1;
+    //     selecTopIncumplimiento = 0;
+    //     selecTop = 0;
+    //     selec72hrs = 0;
+
+    //     // document.getElementById("productividad").style.backgroundColor = "rgb(63, 124, 191)";
+    //     // document.getElementById("reincidencias").style.backgroundColor = "rgb(63, 124, 191)";
+    //     // document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
+    //     // document.getElementById("incumplimiento").style.backgroundColor = "rgb(31, 77, 155)";
+    //     // document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
+    //     // document.getElementById("mas72hrs").style.backgroundColor = "rgb(63, 124, 191)";
+
+    //     lecturaCSVTempIncump("fuentes/IncumplimientosFull.csv");
+
+    //     // if ($("#desDistrito").is(":visible")) {
+
+    //     //     valor = $("#opcDistrito option:selected").val();
+
+    //     //     if (valor != "Seleccionar") {
+    //     //         lecturaCSV("fuentes/Distritos_incumplimientos.csv", valor);
+    //     //     } else {
+    //     //         valor = $("#opcPlaza option:selected").val();
+    //     //         lecturaCSV("fuentes/Plaza_incumplimientos.csv", valor);
+    //     //     }
+
+    //     // } else if ($("#desPlaza").is(":visible")) {
+
+    //     //     valor = $("#opcPlaza option:selected").val();
+
+    //     //     if (valor != "Seleccionar") {
+    //     //         lecturaCSV("fuentes/Plaza_incumplimientos.csv", valor);
+    //     //     } else {
+
+    //     //         valor = $("#opcDireccion option:selected").val();
+
+    //     //         if (valor == "NACIONAL") {
+    //     //             lecturaCSV("fuentes/Nacional_incumplimientos.csv", "NACIONAL");
+    //     //         } else {
+    //     //             $("#grafica1").html("");
+    //     //         }
+
+    //     //     }
+
+    //     // } else {
+
+    //     //     valor = $("#opcDireccion option:selected").val();
+
+    //     //     if (valor == "NACIONAL") {
+    //     //         lecturaCSV("fuentes/Nacional_incumplimientos.csv", "NACIONAL");
+    //     //     } else {
+    //     //         $("#grafica1").html("");
+    //     //     }
+
+    //     // }
+
+    // });
+
     $("#incumplimiento").click(function () {
 
         document.getElementById("productividad").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("reincidencias").style.backgroundColor = "rgb(63, 124, 191)";
-        document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
+        // document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("incumplimiento").style.backgroundColor = "rgb(31, 77, 155)";
         document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("mas72hrs").style.backgroundColor = "rgb(63, 124, 191)";
-
-        // $("#desDireccion").show();
-
-    });
-
-    $("#incumIndicador").click(function () {
-
-        $("#desDireccion").show();
-
-        if ((selecBacklog != 1) && (selecTR != 1)) {
-
-            if ((selecProductividad == 1) || (selecReincidencias == 1)) {
-
-                // $("#divGrafica").show();
-                $("#divTabla").hide();
-                $("#divAct").hide();
-                // $("#imgConecta").hide();
-                $("#lblOpcPlaza").html("Plaza");
-                $("#desPlaza").hide();
-                $("#desDistrito").hide();
-                $("#kpiTodos").hide();
-                $("#segundoNivel").hide();
-                $("#kpiSegundoNivel").hide();
-
-            }
-
-            valor = $("#opcDireccion option:selected").val();
-
-            if (valor != "NACIONAL") {
-
-                $("#desPlaza").show();
-                $("#desDistrito").hide();
-
-                $("#opcPlaza").empty();
-                $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
-
-                llenaListasPlaza(valor);
-
-            }
-
-        }
-
-        $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
-                                        + "<div id='grafica1' class='tamanhoGrafica3' style='text-align: center;'>"
-                                        + "</div></div>");
-
-        $("#divGrafica").show();
-        $("#divTemporalidad").show();
-        $("#tablaReincidencias").hide();
-        $("#divReinTitulo").hide();
-        $("#divGrafReincidencias").hide();
-        $("#imgConecta").hide();
-
-        // Coloca bandera de locación
-        selecProductividad = 0;
-        selecReincidencias = 0;
-        selecTR = 0;
-        selecBacklog = 0;
-        selecIncumplimiento = 1;
-        selecTopIncumplimiento = 0;
-        selecTop = 0;
-        selec72hrs = 0;
-
-        // document.getElementById("productividad").style.backgroundColor = "rgb(63, 124, 191)";
-        // document.getElementById("reincidencias").style.backgroundColor = "rgb(63, 124, 191)";
-        // document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
-        // document.getElementById("incumplimiento").style.backgroundColor = "rgb(31, 77, 155)";
-        // document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
-        // document.getElementById("mas72hrs").style.backgroundColor = "rgb(63, 124, 191)";
-
-        lecturaCSVTempIncump("fuentes/IncumplimientosFull.csv");
-
-        // if ($("#desDistrito").is(":visible")) {
-
-        //     valor = $("#opcDistrito option:selected").val();
-
-        //     if (valor != "Seleccionar") {
-        //         lecturaCSV("fuentes/Distritos_incumplimientos.csv", valor);
-        //     } else {
-        //         valor = $("#opcPlaza option:selected").val();
-        //         lecturaCSV("fuentes/Plaza_incumplimientos.csv", valor);
-        //     }
-
-        // } else if ($("#desPlaza").is(":visible")) {
-
-        //     valor = $("#opcPlaza option:selected").val();
-
-        //     if (valor != "Seleccionar") {
-        //         lecturaCSV("fuentes/Plaza_incumplimientos.csv", valor);
-        //     } else {
-
-        //         valor = $("#opcDireccion option:selected").val();
-
-        //         if (valor == "NACIONAL") {
-        //             lecturaCSV("fuentes/Nacional_incumplimientos.csv", "NACIONAL");
-        //         } else {
-        //             $("#grafica1").html("");
-        //         }
-
-        //     }
-
-        // } else {
-
-        //     valor = $("#opcDireccion option:selected").val();
-
-        //     if (valor == "NACIONAL") {
-        //         lecturaCSV("fuentes/Nacional_incumplimientos.csv", "NACIONAL");
-        //     } else {
-        //         $("#grafica1").html("");
-        //     }
-
-        // }
-
-    });
-
-    $("#incumTop").click(function () {
 
         $("#divTabla").hide();
         $("#divAct").hide();
@@ -159,6 +167,8 @@ $(document).ready(function() {
         $("#desDireccion").show();
         $("#divGrafica").show();
         $("#divTemporalidad").hide();
+        $("#nivelPeriodicidad").hide();
+        $("#divIndicadoresOperacion").hide();
 
         $("#graficas").empty().append("<div class='col-md-6 col-sm-12' style='text-align: center;'><strong>"
                                         + "<label id='lblgrafica1' for='grafica1'>Top 10 BackLog - Plazas</label></strong><hr>"

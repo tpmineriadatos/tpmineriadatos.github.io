@@ -1,11 +1,11 @@
 var selecBacklog = 0,
     selecIncumplimiento = 0,
     selecTopIncumplimiento = 0, // Agregarlo en todos los cambios de vista
-    selecProductividad = 1, // Agregarlo y considerarlo
+    selecProductividad = 0, // Agregarlo y considerarlo
     selecReincidencias = 0,
     selecTR = 0,
     selecTop = 0,
-    selec72hrs = 0;
+    selec72hrs = 1;
 
 var Fecha_Descarga = [],
     CDD = [],
@@ -35,7 +35,7 @@ var renglones = [],
     renglones3 = [],
     titulos3 = [];
 
-var listaBacklog = ["NACIONAL", "CENTRO", "NORTE-NORESTE", "OCCIDENTE-BAJIO","ORIENTE-SUR"],
+var listaBacklog = ["NACIONAL", "CENTRO", "NORTE-NORESTE", "OCCIDENTE-BAJIO", "ORIENTE-SUR"],
     listaPlazas = [];
 
 var renglonesTabla = [],
@@ -63,6 +63,15 @@ var datosFiltroNacional = [],
     datosFiltroSupervisor = [],
     tablaActual = []; // revisar si vale la pena
 
+var asigTotales = [],
+    asigAut = [],
+    porcAA = [],
+    inst = [],
+    activManuales = [],
+    porcAM = [],
+    fechaAA = [],
+    fechaAM = [];
+
 var aux, aux2;
 
 
@@ -71,41 +80,55 @@ $(document).ready(function () {
     let valor = "";
 
     // Primera ejecución
-    document.getElementById("productividad").style.backgroundColor = "rgb(31, 77, 155)";
+    document.getElementById("productividad").style.backgroundColor = "rgb(63, 124, 191)";
     document.getElementById("reincidencias").style.backgroundColor = "rgb(63, 124, 191)";
-    document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
+    // document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
     document.getElementById("incumplimiento").style.backgroundColor = "rgb(63, 124, 191)";
     document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
-    document.getElementById("mas72hrs").style.backgroundColor = "rgb(63, 124, 191)";
+    document.getElementById("mas72hrs").style.backgroundColor = "rgb(31, 77, 155)";
 
     $("#divGrafica").hide();
-    $("#divTemporalidad").hide();
-    $("#divTabla").show();
+    $("#divTemporalidad").show();
+    $("#divTabla").hide();
     $("#tablaReincidencias").hide();
     $("#divReinTitulo").hide();
     $("#divGrafReincidencias").hide();
-    $("#segundoNivel").show();
+    $("#segundoNivel").hide();
     $("#desSupervisor").hide();
     $("#kpiSegundoNivel").hide();
+    $("#kpiTodos").hide();
+    $("#divAct").hide();
+    $("#imgConecta").hide();
+    $("#divIndicadoresOperacion").show();
 
     // selecProductividad = 1;
 
     $("#desPlaza").hide();
     $("#desDistrito").hide();
 
-    obtieneDatos();
     obtieneFechas("fuentes/Backlog_Nacional.csv");
     lecturaBacklogNacional();
-    // dibujaGrafica("fuentes/Backlog_Nacional.csv", "#grafica1", "Fecha_Descarga");
+    // obtieneDatos();
+
+    // Gráficas de BL y 72hrs
+    dibujaGrafica("fuentes/Backlog_Nacional.csv", "#grafica1BL", "Fecha_Descarga");
+    dibujaGrafica("fuentes/Backlog_72hrs_Nacional.csv", "#grafica272", "Fecha");
+    // Gráfica Incumplimientos
+    lecturaCSVTempIncump("fuentes/IncumplimientosFull.csv");
+    // Gráficas AA y AM
+    lecturaCSV("fuentes/AA_Nacional.csv", "NACIONAL");
+    lecturaCSV("fuentes/AM_Nacional.csv", "NACIONAL");
 
     // Seleccionar menú Desempeño
     $("#productividad").click(function () {
 
-        if (selecTop == 1) {
-            $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
-                                            + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
-                                            + "</div></div>");
-        }
+        obtieneDatos();
+
+        // if (selecTop == 1) {
+        //     $("#graficas").empty().append("<div class='col-md-12 col-sm-12'>"
+        //         + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
+        //         + "</div></div>");
+        // }
 
         $("#divGrafica").hide();
         $("#divTemporalidad").hide();
@@ -121,6 +144,7 @@ $(document).ready(function () {
         $("#segundoNivel").show();
         $("#desSupervisor").hide();
         $("#kpiSegundoNivel").hide();
+        $("#divIndicadoresOperacion").hide();
 
         // Coloca bandera de locación
         selecProductividad = 1;
@@ -134,30 +158,35 @@ $(document).ready(function () {
 
         document.getElementById("productividad").style.backgroundColor = "rgb(31, 77, 155)";
         document.getElementById("reincidencias").style.backgroundColor = "rgb(63, 124, 191)";
-        document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
+        // document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("incumplimiento").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("mas72hrs").style.backgroundColor = "rgb(63, 124, 191)";
 
-        valor = $("#opcDireccion option:selected").val();
+        $("#opcDireccion").val("NACIONAL");
 
-        if (valor == "NACIONAL") {
-            $("#desPlaza").hide();
-            $("#desDistrito").hide();
-            mostrarTablaCompleta();
-        } else {
+        $("#desPlaza").hide();
+        $("#desDistrito").hide();
 
-            mostrarTablaFiltro(valor, "direccion");
+        // valor = $("#opcDireccion option:selected").val();
 
-            $("#desDistrito").hide();
-            $("#desPlaza").show();
-            $("#lblOpcPlaza").html("&nbsp;&nbsp;&nbsp;Región");
-            $("#opcPlaza").empty();
-            $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
+        // if (valor == "NACIONAL") {
+        //     $("#desPlaza").hide();
+        //     $("#desDistrito").hide();
+        //     mostrarTablaCompleta();
+        // } else {
 
-            listasComboRegion(valor);
+        //     mostrarTablaFiltro(valor, "direccion");
 
-        }
+        //     $("#desDistrito").hide();
+        //     $("#desPlaza").show();
+        //     $("#lblOpcPlaza").html("&nbsp;&nbsp;&nbsp;Región");
+        //     $("#opcPlaza").empty();
+        //     $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
+
+        //     listasComboRegion(valor);
+
+        // }
 
         $("#kpiRegion").html("");
         $("#kpiDistrito").html("");
@@ -204,9 +233,15 @@ $(document).ready(function () {
 
         }
 
-        $("#graficas").empty().append("<div class='col-md-11 col-sm-12'>"
-                                        + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
-                                        + "</div></div>");
+        $("#graficas").empty().append("<div class='col-md-6 col-sm-12' style='text-align: center;'><strong>"
+                                        + "<label id='lblgrafica1' for='grafica1'></label></strong><hr>"
+                                        + "<div id='grafica1' class='tamanhoGrafica2'></div></div>"
+                                        + "<div class='col-md-6 col-sm-12' style='text-align: center;'><strong>"
+                                        + "<label id='lblgrafica2' for='grafica2'></label></strong><hr>"
+                                        + "<div id='grafica2' class='tamanhoGrafica2'></div></div>");
+
+        $("#lblgrafica1").html("Backlog");
+        $("#lblgrafica2").html("Tickets más de 72 horas");
 
         $("#divGrafica").show();
         $("#divTemporalidad").hide();
@@ -257,8 +292,10 @@ $(document).ready(function () {
 
                 if (valor == "NACIONAL") {
                     dibujaGrafica("fuentes/Backlog_Nacional.csv", "#grafica1", "Fecha_Descarga");
+                    dibujaGrafica("fuentes/Backlog_72hrs_Nacional.csv", "#grafica2", "Fecha");
                 } else {
                     lecturaCSV("fuentes/Backlog_Direcciones.csv", valor);
+                    lecturaCSV("fuentes/Backlog_72hs_Direcciones.csv", valor);
                 }
 
             }
@@ -269,8 +306,10 @@ $(document).ready(function () {
 
             if (valor == "NACIONAL") {
                 dibujaGrafica("fuentes/Backlog_Nacional.csv", "#grafica1", "Fecha_Descarga");
+                dibujaGrafica("fuentes/Backlog_72hrs_Nacional.csv", "#grafica2", "Fecha");
             } else {
                 lecturaCSV("fuentes/Backlog_Direcciones.csv", valor);
+                lecturaCSV("fuentes/Backlog_72hs_Direcciones.csv", valor);
             }
 
         }
@@ -300,6 +339,7 @@ $(document).ready(function () {
         $("#divReinTitulo").hide();
         $("#divGrafReincidencias").hide();
         $("#imgConecta").hide();
+        $("#divIndicadoresOperacion").hide();
 
         $("#graficas").empty().append("<div class='col-md-6 col-sm-12' style='text-align: center;'><strong>"
                                         + "<label id='lblgrafica1' for='grafica1'></label></strong><hr>"
@@ -323,7 +363,7 @@ $(document).ready(function () {
 
         document.getElementById("productividad").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("reincidencias").style.backgroundColor = "rgb(63, 124, 191)";
-        document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
+        // document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("incumplimiento").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("top").style.backgroundColor = "rgb(31, 77, 155)";
         document.getElementById("mas72hrs").style.backgroundColor = "rgb(63, 124, 191)";
@@ -357,6 +397,7 @@ $(document).ready(function () {
             $("#kpiTodos").hide();
             $("#segundoNivel").hide();
             $("#kpiSegundoNivel").hide();
+            $("#desDireccion").show();
 
             valor = $("#opcDireccion option:selected").val();
 
@@ -374,16 +415,17 @@ $(document).ready(function () {
 
         }
 
-        $("#graficas").empty().append("<div class='col-md-11 col-sm-12'>"
-                                        + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
-                                        + "</div></div>");
+        // $("#graficas").empty().append("<div class='col-md-11 col-sm-12'>"
+        //                                 + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
+        //                                 + "</div></div>");
 
-        $("#divGrafica").show();
-        $("#divTemporalidad").hide();
+        $("#divGrafica").hide();
+        $("#divTemporalidad").show();
         $("#tablaReincidencias").hide();
         $("#divReinTitulo").hide();
         $("#divGrafReincidencias").hide();
         $("#imgConecta").hide();
+        $("#divIndicadoresOperacion").show();
 
         // Coloca bandera de locación
         selecProductividad = 0;
@@ -397,21 +439,145 @@ $(document).ready(function () {
 
         document.getElementById("productividad").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("reincidencias").style.backgroundColor = "rgb(63, 124, 191)";
-        document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
+        // document.getElementById("backlog").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("incumplimiento").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("mas72hrs").style.backgroundColor = "rgb(31, 77, 155)";
 
-        $("#desDireccion").show();
-        $("#desPlaza").hide();
-        $("#desDistrito").hide();
+        if ($("#desDistrito").is(":visible")) {
 
-        valor = $("#opcDireccion option:selected").val();
+            valor = $("#opcDistrito option:selected").val();
 
-        if (valor == "NACIONAL") {
-            dibujaGrafica("fuentes/Backlog_72hrs_Nacional.csv", "#grafica1", "Fecha");
+            if (valor != "Seleccionar") {
+
+                $("#grafica1BL").html("");
+                // $("#grafica272").html("");
+                $("#grafica3Incum").html("");
+                $("#grafica4AA").html("");
+                $("#grafica5AM").html("");
+
+                // Gráficas de BL y 72hrs
+                lecturaCSV("fuentes/Backlog_Distritos.csv", valor);
+                // Gráfica Incumplimientos
+                incumDistrito(valor);
+                // Gráficas AA y AM
+                lecturaCSV("fuentes/AA_Distritos.csv", valor);
+                lecturaCSV("fuentes/AM_Distritos.csv", valor);
+                
+            } else {
+
+                valor = $("#opcPlaza option:selected").val();
+
+                $("#grafica1BL").html("");
+                // $("#grafica272").html("");
+                $("#grafica3Incum").html("");
+                $("#grafica4AA").html("");
+                $("#grafica5AM").html("");
+
+                // Gráficas de BL y 72hrs
+                lecturaCSV("fuentes/Backlog_Plazas.csv", valor);
+                // Gráfica Incumplimientos
+                incumPlaza(valor);
+                // Gráficas AA y AM
+                lecturaCSV("fuentes/AA_Plaza.csv", valor);
+                lecturaCSV("fuentes/AM_Plaza.csv", valor);
+
+            }
+
+        } else if ($("#desPlaza").is(":visible")) {
+
+            valor = $("#opcPlaza option:selected").val();
+
+            if (valor != "Seleccionar") {
+                
+                $("#grafica1BL").html("");
+                // $("#grafica272").html("");
+                $("#grafica3Incum").html("");
+                $("#grafica4AA").html("");
+                $("#grafica5AM").html("");
+
+                // Gráficas de BL y 72hrs
+                lecturaCSV("fuentes/Backlog_Plazas.csv", valor);
+                // Gráfica Incumplimientos
+                incumPlaza(valor);
+                // Gráficas AA y AM
+                lecturaCSV("fuentes/AA_Plaza.csv", valor);
+                lecturaCSV("fuentes/AM_Plaza.csv", valor);
+
+            } else {
+
+                valor = $("#opcDireccion option:selected").val();
+
+                $("#grafica1BL").html("");
+                $("#grafica272").html("");
+                $("#grafica3Incum").html("");
+                $("#grafica4AA").html("");
+                $("#grafica5AM").html("");
+
+                $("#desPlaza").show();
+                $("#desDistrito").hide();
+
+                // Gráficas de BL y 72hrs
+                lecturaCSV("fuentes/Backlog_Direcciones.csv", valor);
+                lecturaCSV("fuentes/Backlog_72hs_Direcciones.csv", valor);
+                // Gráfica Incumplimientos
+                incumDireccion(valor);
+                // Gráficas AA y AM
+                lecturaCSV("fuentes/AA_Direccion.csv", valor);
+                lecturaCSV("fuentes/AM_Direccion.csv", valor);
+
+                $("#opcPlaza").empty();
+                $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
+
+                llenaListasPlaza(valor);
+
+            }
+
         } else {
-            lecturaCSV("fuentes/Backlog_72hs_Direcciones.csv", valor);
+
+            valor = $("#opcDireccion option:selected").val();
+
+            $("#grafica1BL").html("");
+            $("#grafica272").html("");
+            $("#grafica3Incum").html("");
+            $("#grafica4AA").html("");
+            $("#grafica5AM").html("");
+
+            if (valor == "NACIONAL") {
+
+                $("#desPlaza").hide();
+                $("#desDistrito").hide();
+
+                // Gráficas de BL y 72hrs
+                dibujaGrafica("fuentes/Backlog_Nacional.csv", "#grafica1BL", "Fecha_Descarga");
+                dibujaGrafica("fuentes/Backlog_72hrs_Nacional.csv", "#grafica272", "Fecha");
+                // Gráfica Incumplimientos
+                incumDireccion(valor);
+                // Gráficas AA y AM
+                lecturaCSV("fuentes/AA_Nacional.csv", "NACIONAL");
+                lecturaCSV("fuentes/AM_Nacional.csv", "NACIONAL");
+
+            } else {
+
+                $("#desPlaza").show();
+                $("#desDistrito").hide();
+
+                // Gráficas de BL y 72hrs
+                lecturaCSV("fuentes/Backlog_Direcciones.csv", valor);
+                lecturaCSV("fuentes/Backlog_72hs_Direcciones.csv", valor);
+                // Gráfica Incumplimientos
+                incumDireccion(valor);
+                // Gráficas AA y AM
+                lecturaCSV("fuentes/AA_Direccion.csv", valor);
+                lecturaCSV("fuentes/AM_Direccion.csv", valor);
+
+                $("#opcPlaza").empty();
+                $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
+
+                llenaListasPlaza(valor);
+
+            }
+
         }
 
     });
@@ -432,6 +598,7 @@ $(document).ready(function () {
 
                 $("#grafica1").html("");
                 dibujaGrafica("fuentes/Backlog_Nacional.csv", "#grafica1", "Fecha_Descarga");
+                dibujaGrafica("fuentes/Backlog_72hrs_Nacional.csv", "#grafica2", "Fecha");
 
             } else {
 
@@ -440,6 +607,7 @@ $(document).ready(function () {
 
                 $("#grafica1").html("");
                 lecturaCSV("fuentes/Backlog_Direcciones.csv", valor);
+                lecturaCSV("fuentes/Backlog_72hs_Direcciones.csv", valor);
 
                 $("#opcPlaza").empty();
                 $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
@@ -495,14 +663,45 @@ $(document).ready(function () {
 
         } else if (selec72hrs == 1) {
 
-            $("#desPlaza").hide();
-            $("#desDistrito").hide();
-            $("#grafica1").html("");
+            $("#grafica1BL").html("");
+            $("#grafica272").html("");
+            $("#grafica3Incum").html("");
+            $("#grafica4AA").html("");
+            $("#grafica5AM").html("");
 
             if (valor == "NACIONAL") {
-                dibujaGrafica("fuentes/Backlog_72hrs_Nacional.csv", "#grafica1", "Fecha");
+
+                $("#desPlaza").hide();
+                $("#desDistrito").hide();
+
+                // Gráficas de BL y 72hrs
+                dibujaGrafica("fuentes/Backlog_Nacional.csv", "#grafica1BL", "Fecha_Descarga");
+                dibujaGrafica("fuentes/Backlog_72hrs_Nacional.csv", "#grafica272", "Fecha");
+                // Gráfica Incumplimientos
+                lecturaCSVTempIncump("fuentes/IncumplimientosFull.csv");
+                // Gráficas AA y AM
+                lecturaCSV("fuentes/AA_Nacional.csv", "NACIONAL");
+                lecturaCSV("fuentes/AM_Nacional.csv", "NACIONAL");
+
             } else {
+
+                $("#desPlaza").show();
+                $("#desDistrito").hide();
+
+                // Gráficas de BL y 72hrs
+                lecturaCSV("fuentes/Backlog_Direcciones.csv", valor);
                 lecturaCSV("fuentes/Backlog_72hs_Direcciones.csv", valor);
+                // Gráfica Incumplimientos
+                incumDireccion(valor);
+                // Gráficas AA y AM
+                lecturaCSV("fuentes/AA_Direccion.csv", valor);
+                lecturaCSV("fuentes/AM_Direccion.csv", valor);
+
+                $("#opcPlaza").empty();
+                $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
+
+                llenaListasPlaza(valor);
+
             }
 
         } else if (selecProductividad == 1) {
@@ -594,7 +793,7 @@ $(document).ready(function () {
         $("#desDistrito").show();
         $("#desSupervisor").hide();
         $("#kpiSegundoNivel").hide();
-        
+
         if (selecProductividad != 1) {
 
             if (selecBacklog == 1) {
@@ -611,6 +810,22 @@ $(document).ready(function () {
 
                 pintaGraficaIDRPlaza(valor);
                 pintaGraficaTRPlaza(valor);
+
+            } else if (selec72hrs == 1) {
+
+                $("#grafica1BL").html("");
+                // $("#grafica272").html("");
+                $("#grafica3Incum").html("");
+                $("#grafica4AA").html("");
+                $("#grafica5AM").html("");
+                
+                // Gráficas de BL y 72hrs
+                lecturaCSV("fuentes/Backlog_Plazas.csv", valor);
+                // Gráfica Incumplimientos
+                incumPlaza(valor);
+                // Gráficas AA y AM
+                lecturaCSV("fuentes/AA_Plaza.csv", valor);
+                lecturaCSV("fuentes/AM_Plaza.csv", valor);
 
             }
 
@@ -660,6 +875,22 @@ $(document).ready(function () {
                 pintaGraficaIDRDis(valor);
                 pintaGraficaTRDis(valor);
 
+            } else if (selec72hrs == 1) {
+
+                $("#grafica1BL").html("");
+                // $("#grafica272").html("");
+                $("#grafica3Incum").html("");
+                $("#grafica4AA").html("");
+                $("#grafica5AM").html("");
+
+                // Gráficas de BL y 72hrs
+                lecturaCSV("fuentes/Backlog_Distritos.csv", valor);
+                // Gráfica Incumplimientos
+                incumDistrito(valor);
+                // Gráficas AA y AM
+                lecturaCSV("fuentes/AA_Distritos.csv", valor);
+                lecturaCSV("fuentes/AM_Distritos.csv", valor);
+
             }
 
         } else {
@@ -689,11 +920,11 @@ $(document).ready(function () {
     });
 
     // Checkbox de semanas
-    $("#semM2").change(function() {
+    $("#semM2").change(function () {
         datosSemM2(this.checked);
     });
 
-    $("#semM3").change(function() {
+    $("#semM3").change(function () {
         datosSemM3(this.checked);
     });
 
@@ -842,7 +1073,7 @@ function mostrarTablaCompleta() {
         var row = {};
 
         if (element.semana == semanasReporte[0]) {
-            
+
             row["semana"] = element.semana;
             row["direccion"] = element.direccion;
             row["region"] = element.region;
@@ -859,13 +1090,13 @@ function mostrarTablaCompleta() {
             row["diastrabajados"] = element.diastrabajados;
             row["ventatecnico"] = element.ventatecnico;
             row["calificacion"] = element.calificacion;
-    
+
             row["addon"] = element.addon;
             row["cddInstalaciones"] = element.cddInstalaciones;
             row["empresarialHS"] = element.empresarialHS;
             row["soporteProactiva"] = element.soporteProactiva;
             row["recolecciones"] = element.recolecciones;
-    
+
             row["tarjetaamarilla"] = element.tarjetaamarilla;
             row["fechaultcurso"] = element.fechaultcurso;
             row["curso"] = element.curso;
@@ -875,9 +1106,9 @@ function mostrarTablaCompleta() {
             row["promfibra"] = element.promfibra;
             row["utp"] = element.utp;
             row["promutp"] = element.promutp;
-            
+
             row["hallazgos"] = element.hallazgos;
-    
+
             // datosImprimir.push(row);
             datosNacionalFijos.push(row);
             datosFiltroNacional.push(row);
@@ -1323,9 +1554,9 @@ function imprimeTabla(datos, combo) {
             { text: "ADDON", dataField: "addon", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass },
             { text: "Instalaciones + CDD", dataField: "cddInstalaciones", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass },
             { text: "Empresarial + Hogar Seguro", dataField: "empresarialHS", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass },
-            
+
             { text: "Hallazgos (solo híbridas)", dataField: "hallazgos", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass },
-            
+
             { text: "Soportes + Órdenes Proactivas", dataField: "soporteProactiva", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass },
             { text: "Recolecciones", dataField: "recolecciones", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass }
         ],
@@ -2215,7 +2446,7 @@ function lecturaCSV(documento, direccion) {
             if (selecTopIncumplimiento == 1) {
                 datosTopIncumplimiento(direccion);
             } else {
-                datosDIreccionSeleccionada(direccion);
+                datosDIreccionSeleccionada(direccion, documento);
             }
 
         }
@@ -2224,7 +2455,7 @@ function lecturaCSV(documento, direccion) {
 }
 
 
-function datosDIreccionSeleccionada(direccionSeleccionada) {
+function datosDIreccionSeleccionada(direccionSeleccionada, documento) {
 
     // Limpian los arreglos lineales
     Fecha_Descarga.length = 0;
@@ -2233,7 +2464,6 @@ function datosDIreccionSeleccionada(direccionSeleccionada) {
     Soportes.length = 0;
     Instalaciones.length = 0;
     Recolecciones.length = 0;
-
 
     // Limpian los arreglos incumplimiento
     if (selecTop != 1) {
@@ -2249,24 +2479,48 @@ function datosDIreccionSeleccionada(direccionSeleccionada) {
 
     if (selecBacklog == 1) {
 
-        for (let i = 1; i < renglones.length; i++) {
+        if (documento != "fuentes/Backlog_72hs_Direcciones.csv") {
+            
+            for (let i = 1; i < renglones.length; i++) {
+    
+                const element = renglones[i].split(",");
+    
+                if (element[0] == direccionSeleccionada) {
+    
+                    Fecha_Descarga.push(element[1]);
+                    CDD.push(parseFloat(element[2]));
+                    ADDON.push(parseFloat(element[3]));
+                    Soportes.push(parseFloat(element[4]));
+                    Instalaciones.push(parseFloat(element[5]));
+                    Recolecciones.push(parseFloat(element[6]));
+    
+                }
+    
+            }
+    
+            dibujaGraficaJSON("#grafica1", "Fecha_Descarga");
 
-            const element = renglones[i].split(",");
+        } else {
+            
+            for (let i = 1; i < renglones.length; i++) {
 
-            if (element[0] == direccionSeleccionada) {
+                const element = renglones[i].split(",");
 
-                Fecha_Descarga.push(element[1]);
-                CDD.push(parseFloat(element[2]));
-                ADDON.push(parseFloat(element[3]));
-                Soportes.push(parseFloat(element[4]));
-                Instalaciones.push(parseFloat(element[5]));
-                Recolecciones.push(parseFloat(element[6]));
+                if (element[0] == direccionSeleccionada) {
+
+                    Fecha_Descarga.push(element[1]);
+                    Soportes.push(parseFloat(element[2]));
+                    ADDON.push(parseFloat(element[3]));
+                    CDD.push(parseFloat(element[4]));
+
+                }
 
             }
 
+            dibujaGraficaJSON72hrs("#grafica2", "Fecha");
+
         }
 
-        dibujaGraficaJSON("#grafica1", "Fecha_Descarga");
 
     } else if (selecIncumplimiento == 1) {
 
@@ -2458,17 +2712,152 @@ function datosDIreccionSeleccionada(direccionSeleccionada) {
 
     } else if (selec72hrs == 1) {
 
-        for (let i = 1; i < renglones.length; i++) {
+        if (documento == "fuentes/AA_Nacional.csv") {
 
-            const element = renglones[i].split(",");
+            fechaAA.length = 0;
+            asigTotales = ["AsignacionesTotales"];
+            asigAut = ["AsignacionesAutomaticas"];
+            porcAA = ["PorcTotalAA"];
 
-            if (element[0] == direccionSeleccionada) {
+            for (let i = 1; i < renglones.length; i++) {
 
-                Fecha_Descarga.push(element[1]);
-                Soportes.push(parseFloat(element[2]));
-                ADDON.push(parseFloat(element[3]));
-                CDD.push(parseFloat(element[4]));
+                const element = renglones[i].split(",");
 
+                fechaAA.push(element[0]);
+                asigTotales.push(parseInt(element[1]) - parseInt(element[2]));
+                asigAut.push(parseInt(element[2]));
+                porcAA.push(parseFloat(element[4]));
+
+            }
+
+            graficaAA("#grafica4AA", asigTotales, asigAut, porcAA, fechaAA);
+            
+        } else if (documento == "fuentes/AM_Nacional.csv") {
+
+            fechaAM.length = 0;
+            inst = ["Instalaciones"];
+            activManuales = ["ActivacionesManuales"];
+            porcAM = ["PorcTotalAM"];
+
+            for (let i = 1; i < renglones.length; i++) {
+
+                const element = renglones[i].split(",");
+
+                fechaAM.push(element[0]);
+                inst.push(parseInt(element[1]) - parseInt(element[3]));
+                activManuales.push(parseInt(element[3]));
+                porcAM.push(parseFloat(element[4]));
+
+            }
+
+            graficaAM("#grafica5AM", inst, activManuales, porcAM, fechaAM);
+
+        } else if ((documento == "fuentes/Backlog_Direcciones.csv") || (documento == "fuentes/Backlog_Plazas.csv")
+                    || (documento == "fuentes/Backlog_Distritos.csv")) {
+
+            for (let i = 1; i < renglones.length; i++) {
+
+                const element = renglones[i].split(",");
+
+                if (element[0] == direccionSeleccionada) {
+
+                    Fecha_Descarga.push(element[1]);
+                    CDD.push(parseFloat(element[2]));
+                    ADDON.push(parseFloat(element[3]));
+                    Soportes.push(parseFloat(element[4]));
+                    Instalaciones.push(parseFloat(element[5]));
+                    Recolecciones.push(parseFloat(element[6]));
+
+                }
+
+            }
+
+            dibujaGraficaJSON("#grafica1BL", "Fecha_Descarga");
+
+        } else if (documento == "fuentes/Backlog_72hs_Direcciones.csv") {
+
+            for (let i = 1; i < renglones.length; i++) {
+
+                const element = renglones[i].split(",");
+
+                if (element[0] == direccionSeleccionada) {
+
+                    Fecha_Descarga.push(element[1]);
+                    Soportes.push(parseFloat(element[2]));
+                    ADDON.push(parseFloat(element[3]));
+                    CDD.push(parseFloat(element[4]));
+
+                }
+
+            }
+
+            dibujaGraficaJSON72hrs("#grafica272", "Fecha");
+
+        } else if ((documento == "fuentes/AA_Direccion.csv") || (documento == "fuentes/AA_Plaza.csv")
+                    || (documento == "fuentes/AA_Distritos.csv")) {
+
+            fechaAA.length = 0;
+            asigTotales = ["AsignacionesTotales"];
+            asigAut = ["AsignacionesAutomaticas"];
+            porcAA = ["PorcTotalAA"];
+
+            for (let i = 1; i < renglones.length; i++) {
+
+                const element = renglones[i].split(",");
+
+                if (element[1] == direccionSeleccionada) {
+                    
+                    fechaAA.push(element[2]);
+                    asigTotales.push(parseInt(element[3]) - parseInt(element[4]));
+                    asigAut.push(parseInt(element[4]));
+                    porcAA.push(parseFloat(element[6]));
+
+                }
+
+            }
+
+            graficaAA("#grafica4AA", asigTotales, asigAut, porcAA, fechaAA);
+
+        } else if ((documento == "fuentes/AM_Direccion.csv") || (documento == "fuentes/AM_Plaza.csv")
+                    || (documento == "fuentes/AM_Distritos.csv")) {
+
+            fechaAM.length = 0;
+            inst = ["Instalaciones"];
+            activManuales = ["ActivacionesManuales"];
+            porcAM = ["PorcTotalAM"];
+
+            for (let i = 1; i < renglones.length; i++) {
+
+                const element = renglones[i].split(",");
+
+                if (element[0] == direccionSeleccionada) {
+
+                    fechaAM.push(element[1]);
+                    inst.push(parseInt(element[2]) - parseInt(element[4]));
+                    activManuales.push(parseInt(element[4]));
+                    porcAM.push(parseFloat(element[5]));
+
+                }
+
+            }
+
+            graficaAM("#grafica5AM", inst, activManuales, porcAM, fechaAM);
+
+        } else {
+            
+            for (let i = 1; i < renglones.length; i++) {
+    
+                const element = renglones[i].split(",");
+    
+                if (element[0] == direccionSeleccionada) {
+    
+                    Fecha_Descarga.push(element[1]);
+                    Soportes.push(parseFloat(element[2]));
+                    ADDON.push(parseFloat(element[3]));
+                    CDD.push(parseFloat(element[4]));
+    
+                }
+    
             }
 
         }
@@ -2624,7 +3013,7 @@ function kpiProductividad2(datos, semana, nivel, opcSeleccionada) {
             for (let i = 0; i < datos.length; i++) {
 
                 const element = datos[i];
-                
+
                 if ((element.semana == semana) && (element.direccion == opcSeleccionada)) {
 
                     let prod = 0;
@@ -2640,7 +3029,7 @@ function kpiProductividad2(datos, semana, nivel, opcSeleccionada) {
                     diasAcum += parseFloat(element.diastrabajados);
 
                 }
-                
+
             }
 
             kpiProd = (diasAcum == 0) ? 0 : (prodAcum / diasAcum).toFixed(2);
@@ -2821,5 +3210,241 @@ function lecturaBacklogNacional() {
 
         }
     });
+
+}
+
+
+function graficaAA(idGrafica, datosAT, datosAA, datosPorcAA, ejeX) {
+
+    chart = c3.generate({
+        bindto: idGrafica,
+        data: {
+            columns: [
+                datosAT,
+                datosAA,
+                datosPorcAA
+            ],
+            type: "bar",
+            types: {
+                PorcTotalAA: 'line',
+            },
+            axes: {
+                AsignacionesTotales: "y",
+                AsignacionesAutomaticas: "y",
+                PorcTotalAA: "y2",
+            },
+            groups: [
+                ["AsignacionesTotales", "AsignacionesAutomaticas"]
+            ],
+            order: 'asc',
+            colors: {
+                AsignacionesTotales: "#B0DBEA",
+                AsignacionesAutomaticas: "#3D7EA6",
+                PorcTotalAA: "#3D7EA6"
+            },
+            names: {
+                AsignacionesTotales: "Asignaciones Totales",
+                AsignacionesAutomaticas: "Asignaciones Automaticas",
+                PorcTotalAA: "% Asignaciones Automáticas"
+            }
+        },
+        bar: {
+            with: {
+                ratio: 0.5
+            }
+        },
+        axis: {
+            x: {
+                type: 'category',
+                categories: ejeX,
+                tick: {
+                    rotate: -90,
+                    multiline: false,
+                    culling: {
+                        max: 20
+                    }
+                },
+                height: 80
+            },
+            y2: {
+                max: 1,
+                min: 0,
+                padding: {top: 0 , bottom: 0},
+                show: true,
+                tick: {
+                    format: d3.format(",.0%")
+                }
+            }
+        },
+        zoom: {
+            enabled: true
+        },
+        tooltip: {
+            format: {
+
+                title: function (d) {
+
+                    // if (d == 0) {
+                    //     d = 1;
+                    // }
+
+                    aux100 = ejeX[d];
+
+                    let fechaHora = ejeX[d] + " 00:00:00",
+                        auxFecha = new Date(fechaHora),
+                        diaSemana = auxFecha.getDay(),
+                        fechaFinal = "";
+
+                    fechaFinal = ejeX[d] + " - " + diasSemana[diaSemana];
+
+                    // console.log(auxFecha);
+                    // console.log(diasSemana[diaSemana]);
+
+                    return (fechaFinal);
+
+                },
+
+                value: function (value, ratio, id, index) {
+                    
+                    var format = id == 'PorcTotalAA' ? d3.format(",.0%") : d3.format(',');
+
+                    // console.log(asigTotales[index + 1]);
+                    // console.log(asigAut[index + 1]);
+
+                    // console.log(asigTotales[index + 1] + asigAut[index + 1]);
+
+                    if (id == 'AsignacionesTotales') {
+                        value = asigTotales[index + 1] + asigAut[index + 1];
+                    }
+
+                    return format(value);
+
+                }
+
+            }
+
+        }
+
+    });
+
+    setTimeout(function () {
+        chart.resize();
+    }, 2000);
+
+}
+
+
+function graficaAM(idGrafica, datosAT, datosAA, datosPorcAA, ejeX) {
+
+    chart = c3.generate({
+        bindto: idGrafica,
+        data: {
+            columns: [
+                datosAT,
+                datosAA,
+                datosPorcAA
+            ],
+            type: "bar",
+            types: {
+                PorcTotalAM: 'line',
+            },
+            axes: {
+                Instalaciones: "y",
+                ActivacionesManuales: "y",
+                PorcTotalAM: "y2",
+            },
+            groups: [
+                ["Instalaciones", "ActivacionesManuales"]
+            ],
+            order: 'asc',
+            colors: {
+                Instalaciones: "#3494BA",
+                ActivacionesManuales: "#F897C1",
+                PorcTotalAM: "#7F7F7F"
+            },
+            names: {
+                Instalaciones: "Instalaciones",
+                ActivacionesManuales: "Activaciones Manuales",
+                PorcTotalAM: "% Activaciones Manuales"
+            }
+        },
+        bar: {
+            with: {
+                ratio: 0.5
+            }
+        },
+        axis: {
+            x: {
+                type: 'category',
+                categories: ejeX,
+                tick: {
+                    rotate: -90,
+                    multiline: false,
+                    culling: {
+                        max: 20
+                    }
+                },
+                height: 80
+            },
+            y2: {
+                max: 1,
+                min: 0,
+                padding: { top: 0, bottom: 0 },
+                show: true,
+                tick: {
+                    format: d3.format(",.0%")
+                }
+            }
+        },
+        zoom: {
+            enabled: true
+        },
+        tooltip: {
+            format: {
+
+                title: function (d) {
+
+                    aux100 = ejeX[d];
+
+                    let fechaHora = ejeX[d] + " 00:00:00",
+                        auxFecha = new Date(fechaHora),
+                        diaSemana = auxFecha.getDay(),
+                        fechaFinal = "";
+
+                    fechaFinal = ejeX[d] + " - " + diasSemana[diaSemana];
+
+                    // console.log(auxFecha);
+                    // console.log(diasSemana[diaSemana]);
+
+                    return (fechaFinal);
+
+                },
+
+                value: function (value, ratio, id, index) {
+
+                    var format = id == 'PorcTotalAM' ? d3.format(",.0%") : d3.format(',');
+
+                    // console.log(asigTotales[index + 1]);
+                    // console.log(asigAut[index + 1]);
+
+                    // console.log(asigTotales[index + 1] + asigAut[index + 1]);
+
+                    if (id == 'Instalaciones') {
+                        value = inst[index + 1] + activManuales[index + 1];
+                    }
+
+                    return format(value);
+
+                }
+
+            }
+
+        }
+
+    });
+
+    setTimeout(function () {
+        chart.resize();
+    }, 2000);
 
 }
