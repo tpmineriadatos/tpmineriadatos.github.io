@@ -8,6 +8,7 @@ var selecBacklog = 0,
     selec72hrs = 1;
 
 var Fecha_Descarga = [],
+    Fecha_Descarga_BL = [],
     CDD = [],
     ADDON = [],
     Soportes = [],
@@ -1877,7 +1878,7 @@ function dibujaGraficaJSON(idGrafica, valorX) {
         data: {
             x: valorX,
             json: {
-                Fecha_Descarga: Fecha_Descarga,
+                Fecha_Descarga: Fecha_Descarga_BL,
                 CDD: CDD,
                 ADDON: ADDON,
                 Soportes: Soportes,
@@ -1917,11 +1918,11 @@ function dibujaGraficaJSON(idGrafica, valorX) {
 
                 title: function (d) {
 
-                    let fechaHora = Fecha_Descarga[d] + " 00:00:00",
+                    let fechaHora = Fecha_Descarga_BL[d] + " 00:00:00",
                         auxFecha = new Date(fechaHora),
                         diaSemana = auxFecha.getDay();
                     // console.log(diasSemana[diaSemana]);
-                    return (Fecha_Descarga[d] + " - " + diasSemana[diaSemana]);
+                    return (Fecha_Descarga_BL[d] + " - " + diasSemana[diaSemana]);
 
                 }
 
@@ -2032,6 +2033,9 @@ function dibujaGraficaJSON72hrs(idGrafica, valorX) {
                 height: 80
             }
         },
+        zoom: {
+            enabled: true
+        },
         tooltip: {
             format: {
 
@@ -2045,25 +2049,20 @@ function dibujaGraficaJSON72hrs(idGrafica, valorX) {
 
                 }
 
-            }
-        },
-        zoom: {
-            enabled: true
-        },
-        tooltip: {
-            format: {
-
-                title: function (d) {
-
-                    let fechaHora = fechasBacklogNacional[d] + " 00:00:00",
-                        auxFecha = new Date(fechaHora),
-                        diaSemana = auxFecha.getDay();
-                    // console.log(diasSemana[diaSemana]);
-                    return (fechasBacklogNacional[d] + " - " + diasSemana[diaSemana]);
-
-                }
-
             },
+            // format: {
+
+            //     title: function (d) {
+
+            //         let fechaHora = fechasBacklogNacional[d] + " 00:00:00",
+            //             auxFecha = new Date(fechaHora),
+            //             diaSemana = auxFecha.getDay();
+            //         // console.log(diasSemana[diaSemana]);
+            //         return (fechasBacklogNacional[d] + " - " + diasSemana[diaSemana]);
+
+            //     }
+
+            // },
             contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
 
                 d.sort(function (a, b) {
@@ -2458,7 +2457,7 @@ function lecturaCSV(documento, direccion) {
 function datosDIreccionSeleccionada(direccionSeleccionada, documento) {
 
     // Limpian los arreglos lineales
-    Fecha_Descarga.length = 0;
+    // Fecha_Descarga.length = 0;
     CDD.length = 0;
     ADDON.length = 0;
     Soportes.length = 0;
@@ -2754,6 +2753,8 @@ function datosDIreccionSeleccionada(direccionSeleccionada, documento) {
 
         } else if ((documento == "fuentes/Backlog_Direcciones.csv") || (documento == "fuentes/Backlog_Plazas.csv")
                     || (documento == "fuentes/Backlog_Distritos.csv")) {
+            
+            Fecha_Descarga_BL.length = 0;
 
             for (let i = 1; i < renglones.length; i++) {
 
@@ -2761,7 +2762,7 @@ function datosDIreccionSeleccionada(direccionSeleccionada, documento) {
 
                 if (element[0] == direccionSeleccionada) {
 
-                    Fecha_Descarga.push(element[1]);
+                    Fecha_Descarga_BL.push(element[1]);
                     CDD.push(parseFloat(element[2]));
                     ADDON.push(parseFloat(element[3]));
                     Soportes.push(parseFloat(element[4]));
@@ -2775,6 +2776,8 @@ function datosDIreccionSeleccionada(direccionSeleccionada, documento) {
             dibujaGraficaJSON("#grafica1BL", "Fecha_Descarga");
 
         } else if (documento == "fuentes/Backlog_72hs_Direcciones.csv") {
+
+            Fecha_Descarga.length = 0;
 
             for (let i = 1; i < renglones.length; i++) {
 
