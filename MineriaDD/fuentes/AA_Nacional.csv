@@ -1,4 +1,4 @@
-FechaF,Asignaciones_totales,Asignaciones_automaticas,Asigmacion_manual,%AA
+FechaF,Asignaciones_totales,Asignaciones_automaticas,Asignaciones_manuales,PorcAA
 2023-01-01,3308,2914,394,0.88089
 2023-01-02,12910,11224,1686,0.8694
 2023-01-03,14390,12526,1864,0.87047
@@ -133,3 +133,4 @@ FechaF,Asignaciones_totales,Asignaciones_automaticas,Asigmacion_manual,%AA
 2023-05-12,12730,11557,1173,0.90786
 2023-05-13,11916,10802,1114,0.90651
 2023-05-14,10101,9342,759,0.92486
+2023-05-15,13922,12753,1169,0.91603
