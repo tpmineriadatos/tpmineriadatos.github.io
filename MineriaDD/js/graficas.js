@@ -1020,6 +1020,8 @@ function llenadoInfo() {
 
             row["tarjetaamarilla"] = element[21];
             row["fechaultcurso"] = element[22];
+            // console.log(element[23]);
+            // console.log(i);
             row["curso"] = element[23].toUpperCase();
 
             // row["cmcumplimiento"] = parseFloat(element[24]) * 100;
@@ -2385,7 +2387,7 @@ function dibujaGraficaBarraTopIncum(idGrafica, fecha_apertura, confirmacionVisit
                 incumplimientoAgenda: "#3D3B3B"
             },
             names: {
-                confirmacionVisita: "Confirmación de visita",
+                confirmacionVisita: "Llamadas administrativas",
                 incumplimientoFueraTiempo: "Incumplimientos",
                 incumplimientoAgenda: "% Incum. total sobre total agendado"
             }

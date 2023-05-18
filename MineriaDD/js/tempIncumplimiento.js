@@ -503,7 +503,7 @@ function graficaIncumplimiento(idGrafica, datosYConfirmacion, datosIncumplimient
                 PorcTotal: "#3D3B3B"
             },
             names: {
-                Confirmacion: "Confirmación de visita",
+                Confirmacion: "Llamadas administrativas",
                 Incumplimientos: "Incumplimientos",
                 PorcTotal: "% Incum. total sobre total agendado"
             }
