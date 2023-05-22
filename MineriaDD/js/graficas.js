@@ -1558,7 +1558,7 @@ function imprimeTabla(datos, combo) {
             { text: "Instalaciones + CDD", dataField: "cddInstalaciones", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass },
             { text: "Empresarial + Hogar Seguro", dataField: "empresarialHS", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass },
 
-            { text: "Hallazgos (solo híbridas)", dataField: "hallazgos", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass },
+            { text: "Factibilidad", dataField: "hallazgos", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass },
 
             { text: "Soportes + Órdenes Proactivas", dataField: "soporteProactiva", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass },
             { text: "Recolecciones", dataField: "recolecciones", width: 65, cellsAlign: "center", align: "center", cellclassname: cellclass }
