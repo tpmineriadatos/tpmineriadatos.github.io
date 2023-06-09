@@ -121,7 +121,7 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#" id="ticketRep">Indicador</a></li>
+                            <li><a class="dropdown-item" href="#" id="ticketRep">Indicador Mensual</a></li>
                         </ul>
                     
                     </li>
@@ -384,33 +384,35 @@
     <div class="col-md-12 col-sm-12" id="divGrafReincidencias">
         <div id="graficasReincidencias" class="row">
 
-            <div class="col-md-7 col-sm-12" style="text-align: center;">
-
-                <div class="row mb-3">
-                    <div class="col-lg-12 col-md-12 col-sm-6 text-center">
-                        <label class="tituloGris" style="font-size: large;">Índice de Reincidencias</label>
-                    </div>
-                </div>
-                <div id="grafica22" class="tamanhoGrafica2">
-
-                </div>
-            </div>
-
-            <div class="col-md-5 col-sm-12" style="text-align: center;">
+            <!-- Gráfica TR Mensual -->
+            <div class="col-md-12 col-sm-12" style="text-align: center;">
 
                 <div class="row mb-3">
                     <div class="col-lg-12 col-md-12 col-sm-6 text-center">
                         <label class="tituloGris" style="font-size: large;">Ticket Repetido</label>
                     </div>
                 </div>
-                <div id="grafica3" class="tamanhoGrafica2">
+                <div id="grafica3" class="tamanhoGrafica">
+
+                </div>
+            </div>
+
+            <!-- Gráfica IDR Mensual -->
+            <div class="col-md-12 col-sm-12 mt-4" style="text-align: center;">
+
+                <div class="row mb-3">
+                    <div class="col-lg-12 col-md-12 col-sm-6 text-center">
+                        <label class="tituloGris" style="font-size: large;">Índice de Reincidencias</label>
+                    </div>
+                </div>
+                <div id="grafica22" class="tamanhoGrafica">
 
                 </div>
             </div>
 
         </div>
 
-        <br>
+        <!-- <br> -->
 
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6 text-center">
@@ -425,7 +427,8 @@
     <div class="col-md-12 col-sm-12" id="divIndicadoresOperacion">
         <div id="graficasAutomatica" class="row">
 
-            <div class="col-md-6 col-sm-12" style="text-align: center;">
+            <!-- Gráfica BL -->
+            <div class="col-md-12 col-sm-12" style="text-align: center;">
                 <strong>
                     <label id="lblgrafica1BL" for="grafica1BL">Backlog</label>
                 </strong>
@@ -454,25 +457,27 @@
                 
                 </div>-->
             
-                <div id="grafica1BL" class="tamanhoGrafica2">
+                <div id="grafica1BL" class="tamanhoGrafica">
 
                 </div>
 
             </div>
 
-            <div class="col-md-6 col-sm-12" style="text-align: center;">
+            <!-- Gráfica 72hrs -->
+            <div class="col-md-12 col-sm-12 mt-5" style="text-align: center;">
                 <strong>
                     <label id="lblgrafica272" for="grafica272">Tickets más de 72 horas</label>
                 </strong>
 
                 <hr>
                 <!-- style="height: 478px;"-->
-                <div id="grafica272" class="tamanhoGrafica2">
+                <div id="grafica272" class="tamanhoGrafica">
 
                 </div>
 
             </div>
 
+            <!-- Gráfica Incumplimientos -->
             <div class="col-md-12 col-sm-12 mt-5" style="text-align: center;">
 
                 <strong>
@@ -523,7 +528,8 @@
 
             </div>
 
-            <div class="col-md-6 col-sm-12 mt-5" style="text-align: center;"">
+            <!-- Gráfica AA -->
+            <div class="col-md-12 col-sm-12 mt-5" style="text-align: center;"">
 
                 <strong>
                     <label id=" lblgrafica4AA" for="grafica4AA">Asignación Automática</label>
@@ -531,20 +537,21 @@
             
                 <hr>
             
-                <div id="grafica4AA" class="tamanhoGrafica4">
+                <div id="grafica4AA" class="tamanhoGrafica">
             
                 </div>
             
             </div>
             
-            <div class="col-md-6 col-sm-12 mt-5" style="text-align: center;">
+            <!-- Gráfica AM -->
+            <div class="col-md-12 col-sm-12 mt-5" style="text-align: center;">
 
                 <strong>
                     <label id="lblgrafica5AM" for="grafica5AM">Activación Manual</label>
                 </strong>
             
                 <hr>
-                <div id="grafica5AM" class="tamanhoGrafica4">
+                <div id="grafica5AM" class="tamanhoGrafica">
             
                 </div>
             
