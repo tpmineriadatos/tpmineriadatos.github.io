@@ -2364,7 +2364,7 @@ function dibujaGraficaBarraTopIncum(idGrafica, fecha_apertura, confirmacionVisit
         bindto: idGrafica,
         data: {
             columns: [
-                confirmacionVisita,
+                // confirmacionVisita,
                 incumplimientoFueraTiempo,
                 incumplimientoAgenda
             ],
@@ -2373,21 +2373,22 @@ function dibujaGraficaBarraTopIncum(idGrafica, fecha_apertura, confirmacionVisit
                 incumplimientoAgenda: 'line',
             },
             axes: {
-                confirmacionVisita: "y",
+                // confirmacionVisita: "y",
                 incumplimientoFueraTiempo: "y",
                 incumplimientoAgenda: "y2",
             },
             groups: [
-                ["confirmacionVisita", "incumplimientoFueraTiempo"]
+                // ["confirmacionVisita", "incumplimientoFueraTiempo"]
+                ["incumplimientoFueraTiempo"]
             ],
             order: null,
             colors: {
-                confirmacionVisita: "#1E78B6",
+                // confirmacionVisita: "#1E78B6",
                 incumplimientoFueraTiempo: "#FF7E10",
                 incumplimientoAgenda: "#3D3B3B"
             },
             names: {
-                confirmacionVisita: "Llamadas administrativas",
+                // confirmacionVisita: "Llamadas administrativas",
                 incumplimientoFueraTiempo: "Incumplimientos",
                 incumplimientoAgenda: "% Incum. total sobre total agendado"
             }

@@ -480,7 +480,7 @@ function graficaIncumplimiento(idGrafica, datosYConfirmacion, datosIncumplimient
         bindto: idGrafica,
         data: {
             columns: [
-                datosYConfirmacion,
+                // datosYConfirmacion,
                 datosIncumplimientos,
                 datosPorcTotal
             ],
@@ -489,21 +489,22 @@ function graficaIncumplimiento(idGrafica, datosYConfirmacion, datosIncumplimient
                 PorcTotal: 'line',
             },
             axes: {
-                Confirmacion: "y",
+                // Confirmacion: "y",
                 Incumplimientos: "y",
                 PorcTotal: "y2",
             },
             groups: [
-                ["Confirmacion", "Incumplimientos"]
+                // ["Confirmacion", "Incumplimientos"]
+                ["Incumplimientos"]
             ],
             order: null,
             colors: {
-                Confirmacion: "#1E78B6",
+                // Confirmacion: "#1E78B6",
                 Incumplimientos: "#FF7E10",
                 PorcTotal: "#3D3B3B"
             },
             names: {
-                Confirmacion: "Llamadas administrativas",
+                // Confirmacion: "Llamadas administrativas",
                 Incumplimientos: "Incumplimientos",
                 PorcTotal: "% Incum. total sobre total agendado"
             }
