@@ -71,6 +71,7 @@ $(document).ready(function() {
         $("#divAct").hide();
         $("#desDireccion").hide();
         $("#desPlaza").hide();
+        $("#desRegionPlaza").hide();
         $("#desDistrito").hide();
         $("#kpiTodos").hide();
         $("#segundoNivel").hide();
@@ -107,23 +108,24 @@ $(document).ready(function() {
                                             + "</div></div>");
         }
 
-        if ((selecBacklog != 1) && (selecIncumplimiento != 1)) {
+        // if ((selecBacklog != 1) && (selecIncumplimiento != 1)) {
             
-            valor = $("#opcDireccion option:selected").val();
+        //     valor = $("#opcDireccion option:selected").val();
 
-            if (valor != "NACIONAL") {
+        //     if (valor != "NACIONAL") {
 
-                $("#desPlaza").show();
-                $("#desDistrito").hide();
+        //         $("#desPlaza").show();
+        //         $("#desRegionPlaza").hide();
+        //         $("#desDistrito").hide();
 
-                $("#opcPlaza").empty();
-                $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
+        //         $("#opcPlaza").empty();
+        //         $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
 
-                llenaListasPlaza(valor);
+        //         llenaListasSoloPlaza(valor);
 
-            }
+        //     }
 
-        }
+        // }
 
         $("#divGrafica").hide();
         $("#divTemporalidad").hide();
@@ -142,7 +144,8 @@ $(document).ready(function() {
 
         $("#divReinTitulo").hide();
         $("#lblOpcPlaza").html("Plaza");
-
+        $("#desDistrito").hide();
+        
         // Coloca bandera de locación
         selecProductividad = 0;
         selecReincidencias = 1;
@@ -152,59 +155,98 @@ $(document).ready(function() {
         selecTopIncumplimiento = 0;
         selecTop = 0;
         selec72hrs = 0;
-
+        
         $("#grafica22").html("");
         $("#grafica3").html("");
+        
+        valor = $("#opcDireccion option:selected").val();
 
-        if ($("#desDistrito").is(":visible")) {
+        if (valor == "NACIONAL") {
 
-            valor = $("#opcDistrito option:selected").val();
+            $("#desPlaza").hide();
+            $("#desRegionPlaza").hide();
 
-            if (valor != "Seleccionar") {
-                pintaGraficaIDRDis(valor);
-                pintaGraficaTRDis(valor);
-            } else {
-                valor = $("#opcPlaza option:selected").val();
-                pintaGraficaIDRPlaza(valor);
-                pintaGraficaTRPlaza(valor);
-            }
-
-        } else if ($("#desPlaza").is(":visible")) {
-
-            valor = $("#opcPlaza option:selected").val();
-
-            if (valor != "Seleccionar") {
-                pintaGraficaIDRPlaza(valor);
-                pintaGraficaTRPlaza(valor);
-            } else {
-
-                valor = $("#opcDireccion option:selected").val();
-
-                if (valor == "NACIONAL") {
-                    graficaBarraIDR("#grafica22", datosYIDR, datosYIDS, datosYRSS);
-                    graficaBarraTR("#grafica3", datosYOrdenes, datosYTicketRep);
-                    $(".c3-text").removeAttr("style");
-                } else {
-                    pintaGraficaIDRDir(valor);
-                    pintaGraficaTRDir(valor);
-                }
-
-            }
+            graficaBarraIDR("#grafica22", datosYIDR, datosYIDS, datosYRSS);
+            graficaBarraTR("#grafica3", datosYOrdenes, datosYTicketRep);
+            $(".c3-text").removeAttr("style");
 
         } else {
 
-            valor = $("#opcDireccion option:selected").val();
+            $("#desPlaza").show();
+            $("#desRegionPlaza").hide();
 
-            if (valor == "NACIONAL") {
-                graficaBarraIDR("#grafica22", datosYIDR, datosYIDS, datosYRSS);
-                graficaBarraTR("#grafica3", datosYOrdenes, datosYTicketRep);
-                $(".c3-text").removeAttr("style");
-            } else {
-                pintaGraficaIDRDir(valor);
-                pintaGraficaTRDir(valor);
-            }
+            pintaGraficaIDRDir(valor);
+            pintaGraficaTRDir(valor);
+
+            $("#opcPlaza").empty();
+            $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
+
+            llenaListasSoloPlaza(valor);
 
         }
+        
+
+        // if ($("#desDistrito").is(":visible")) {
+
+        //     valor = $("#opcDistrito option:selected").val();
+
+        //     if (valor != "Seleccionar") {
+        //         pintaGraficaIDRDis(valor);
+        //         pintaGraficaTRDis(valor);
+        //     } else {
+        //         valor = $("#opcPlaza option:selected").val();
+        //         pintaGraficaIDRPlaza(valor);
+        //         pintaGraficaTRPlaza(valor);
+        //     }
+
+        // } else if ($("#desPlaza").is(":visible")) {
+
+        //     valor = $("#opcPlaza option:selected").val();
+
+        //     if (valor != "Seleccionar") {
+        //         pintaGraficaIDRPlaza(valor);
+        //         pintaGraficaTRPlaza(valor);
+        //     } else {
+
+        //         valor = $("#opcDireccion option:selected").val();
+
+        //         if (valor == "NACIONAL") {
+        //             graficaBarraIDR("#grafica22", datosYIDR, datosYIDS, datosYRSS);
+        //             graficaBarraTR("#grafica3", datosYOrdenes, datosYTicketRep);
+        //             $(".c3-text").removeAttr("style");
+        //         } else {
+        //             pintaGraficaIDRDir(valor);
+        //             pintaGraficaTRDir(valor);
+
+        //             $("#opcPlaza").empty();
+        //             $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
+
+        //             llenaListasSoloPlaza(valor);
+
+        //         }
+
+        //     }
+
+        // } else {
+
+        //     valor = $("#opcDireccion option:selected").val();
+
+        //     if (valor == "NACIONAL") {
+        //         graficaBarraIDR("#grafica22", datosYIDR, datosYIDS, datosYRSS);
+        //         graficaBarraTR("#grafica3", datosYOrdenes, datosYTicketRep);
+        //         $(".c3-text").removeAttr("style");
+        //     } else {
+        //         pintaGraficaIDRDir(valor);
+        //         pintaGraficaTRDir(valor);
+
+        //         $("#opcPlaza").empty();
+        //         $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
+
+        //         llenaListasSoloPlaza(valor);
+
+        //     }
+
+        // }
 
     });
 
@@ -1275,6 +1317,77 @@ function pintaGraficaIDRDis(valor) {
     }
 
     graficaBarraIDR("#grafica22", datosYIDRDis, datosYIDSDis, datosYRSSDis);
+
+}
+
+
+function llenaListasSoloPlaza(direccionSelec) {
+
+    $.ajax({
+        type: "GET",
+        url: "fuentes/Direccion.csv",
+        dataType: "text",
+        success: function (data) {
+            
+            renglones2 = data.split(/\r\n|\n/);
+            titulos2 = renglones2[0].split(",");
+            listasComboSoloPlaza(direccionSelec);
+
+        }
+    });
+
+}
+
+function listasComboSoloPlaza(direccionSelec) {
+
+    listaPlazas.length = 0;
+
+    for (let i = 1; i < renglones2.length; i++) {
+
+        const element = renglones2[i].split(",");
+
+        if (element[0] == direccionSelec) {
+
+            if ((listaPlazas.length == 0) || !(listaPlazas.includes(element[2]))) {
+                // datoRepetido = element[2];
+                listaPlazas.push(element[2]);
+                $("#opcPlaza").append($("<option>", { value: element[2], text: element[2] }));
+            }
+
+        }
+
+    }
+
+}
+
+
+function llenaListasSoloDIstrito(plazaSeleccionada) {
+
+    $.ajax({
+        type: "GET",
+        url: "fuentes/Direccion.csv",
+        dataType: "text",
+        success: function (data) {
+            renglones3 = data.split(/\r\n|\n/);
+            titulos3 = renglones2[0].split(",");
+            listasComboSoloDistrito(plazaSeleccionada);
+        }
+    });
+
+}
+
+
+function listasComboSoloDistrito(plazaSeleccionada) {
+
+    for (let i = 1; i < renglones3.length; i++) {
+
+        const element = renglones3[i].split(",");
+
+        if (element[2] == plazaSeleccionada) {
+            $("#opcDistrito").append($("<option>", { value: element[3], text: element[3] }));
+        }
+
+    }
 
 }
 

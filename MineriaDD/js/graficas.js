@@ -37,7 +37,8 @@ var renglones = [],
     titulos3 = [];
 
 var listaBacklog = ["NACIONAL", "CENTRO", "NORTE-NORESTE", "OCCIDENTE-BAJIO", "ORIENTE-SUR"],
-    listaPlazas = [];
+    listaPlazas = [],
+    listaRegiones = [];
 
 var renglonesTabla = [],
     titulosTabla = [],
@@ -105,6 +106,7 @@ $(document).ready(function () {
     // selecProductividad = 1;
 
     $("#desPlaza").hide();
+    $("#desRegionPlaza").hide();
     $("#desDistrito").hide();
 
     obtieneFechas("fuentes/Backlog_Nacional.csv");
@@ -139,6 +141,7 @@ $(document).ready(function () {
         $("#desDireccion").show();
         $("#kpiTodos").show();
         $("#desPlaza").hide();
+        $("#desRegionPlaza").hide();
         $("#tablaReincidencias").hide();
         $("#divReinTitulo").hide();
         $("#divGrafReincidencias").hide();
@@ -194,7 +197,7 @@ $(document).ready(function () {
 
     });
 
-    // Seleccionar menú Backlog
+    // Seleccionar menú Backlog (ya no aplica)
     $("#backlog").click(function () {
 
         // lecturaBacklogNacional();
@@ -211,6 +214,7 @@ $(document).ready(function () {
                 // $("#imgConecta").hide();
                 $("#lblOpcPlaza").html("Plaza");
                 $("#desPlaza").hide();
+                $("#desRegionPlaza").hide();
                 $("#desDistrito").hide();
                 $("#kpiTodos").hide();
                 $("#segundoNivel").hide();
@@ -222,9 +226,11 @@ $(document).ready(function () {
 
             if (valor != "NACIONAL") {
 
-                $("#desPlaza").show();
+                $("#desPlaza").hide();
+                $("#desRegionPlaza").show();
                 $("#desDistrito").hide();
 
+                // Modificar para el combo de plaza region
                 $("#opcPlaza").empty();
                 $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
 
@@ -327,6 +333,7 @@ $(document).ready(function () {
             $("#divAct").hide();
             // $("#imgConecta").hide();
             $("#desPlaza").hide();
+            $("#desRegionPlaza").hide();
             $("#desDistrito").hide();
             $("#kpiTodos").hide();
             $("#segundoNivel").hide();
@@ -371,6 +378,7 @@ $(document).ready(function () {
 
         $("#desDireccion").show();
         $("#desPlaza").hide();
+        $("#desRegionPlaza").hide();
         $("#desDistrito").hide();
 
         valor = $("#opcDireccion option:selected").val();
@@ -389,36 +397,47 @@ $(document).ready(function () {
     // Seleccionar menú Más de 72 hrs
     $("#mas72hrs").click(function () {
 
-        if ((selecProductividad == 1) || (selecReincidencias == 1)) {
+        // if ((selecProductividad == 1) || (selecReincidencias == 1)) {
 
-            // $("#divGrafica").show();
-            $("#divTabla").hide();
-            $("#divAct").hide();
-            // $("#imgConecta").hide();
-            $("#kpiTodos").hide();
-            $("#segundoNivel").hide();
-            $("#kpiSegundoNivel").hide();
-            $("#desDireccion").show();
+        //     // $("#divGrafica").show();
+        //     $("#divTabla").hide();
+        //     $("#divAct").hide();
+        //     // $("#imgConecta").hide();
+        //     $("#kpiTodos").hide();
+        //     $("#segundoNivel").hide();
+        //     $("#kpiSegundoNivel").hide();
+        //     $("#desDireccion").show();
+        //     $("#desPlaza").hide();
 
-            valor = $("#opcDireccion option:selected").val();
+        //     valor = $("#opcDireccion option:selected").val();
 
-            if (valor != "NACIONAL") {
+        //     if (valor != "NACIONAL") {
 
-                $("#desPlaza").show();
-                $("#desDistrito").hide();
+        //         $("#desPlaza").hide();
+        //         $("#desRegionPlaza").show();
+        //         $("#desDistrito").hide();
 
-                $("#opcPlaza").empty();
-                $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
+        //         // Modificar para la opción de plaza o región
+        //         $("#opcRegionPlaza").empty();
+        //         $("#opcRegionPlaza").append("<option disabled selected>Seleccionar</option>");
 
-                llenaListasPlaza(valor);
+        //         llenaListasPlaza(valor);
 
-            }
+        //     }
 
-        }
+        // }
 
         // $("#graficas").empty().append("<div class='col-md-11 col-sm-12'>"
         //                                 + "<div id='grafica1' class='tamanhoGrafica' style='text-align: center;'>"
         //                                 + "</div></div>");
+
+        $("#divTabla").hide();
+        $("#divAct").hide();
+        $("#kpiTodos").hide();
+        $("#segundoNivel").hide();
+        $("#kpiSegundoNivel").hide();
+        $("#desDireccion").show();
+        $("#desPlaza").hide();
 
         $("#divGrafica").hide();
         $("#divTemporalidad").show();
@@ -427,6 +446,7 @@ $(document).ready(function () {
         $("#divGrafReincidencias").hide();
         $("#imgConecta").hide();
         $("#divIndicadoresOperacion").show();
+        $("#desRegionPlaza").hide();
 
         // Coloca bandera de locación
         selecProductividad = 0;
@@ -445,141 +465,210 @@ $(document).ready(function () {
         document.getElementById("top").style.backgroundColor = "rgb(63, 124, 191)";
         document.getElementById("mas72hrs").style.backgroundColor = "rgb(31, 77, 155)";
 
-        if ($("#desDistrito").is(":visible")) {
+        valor = $("#opcDireccion option:selected").val();
 
-            valor = $("#opcDistrito option:selected").val();
+        $("#grafica1BL").html("");
+        $("#grafica272").html("");
+        $("#grafica3Incum").html("");
+        $("#grafica4AA").html("");
+        $("#grafica5AM").html("");
 
-            if (valor != "Seleccionar") {
+        if (valor == "NACIONAL") {
 
-                $("#grafica1BL").html("");
-                // $("#grafica272").html("");
-                $("#grafica3Incum").html("");
-                $("#grafica4AA").html("");
-                $("#grafica5AM").html("");
+            $("#desPlaza").hide();
+            $("#desRegionPlaza").hide();
+            $("#desDistrito").hide();
 
-                // Gráficas de BL y 72hrs
-                lecturaCSV("fuentes/Backlog_Distritos.csv", valor);
-                // Gráfica Incumplimientos
-                incumDistrito(valor);
-                // Gráficas AA y AM
-                lecturaCSV("fuentes/AA_Distritos.csv", valor);
-                lecturaCSV("fuentes/AM_Distritos.csv", valor);
-                
-            } else {
-
-                valor = $("#opcPlaza option:selected").val();
-
-                $("#grafica1BL").html("");
-                // $("#grafica272").html("");
-                $("#grafica3Incum").html("");
-                $("#grafica4AA").html("");
-                $("#grafica5AM").html("");
-
-                // Gráficas de BL y 72hrs
-                lecturaCSV("fuentes/Backlog_Plazas.csv", valor);
-                // Gráfica Incumplimientos
-                incumPlaza(valor);
-                // Gráficas AA y AM
-                lecturaCSV("fuentes/AA_Plaza.csv", valor);
-                lecturaCSV("fuentes/AM_Plaza.csv", valor);
-
-            }
-
-        } else if ($("#desPlaza").is(":visible")) {
-
-            valor = $("#opcPlaza option:selected").val();
-
-            if (valor != "Seleccionar") {
-                
-                $("#grafica1BL").html("");
-                // $("#grafica272").html("");
-                $("#grafica3Incum").html("");
-                $("#grafica4AA").html("");
-                $("#grafica5AM").html("");
-
-                // Gráficas de BL y 72hrs
-                lecturaCSV("fuentes/Backlog_Plazas.csv", valor);
-                // Gráfica Incumplimientos
-                incumPlaza(valor);
-                // Gráficas AA y AM
-                lecturaCSV("fuentes/AA_Plaza.csv", valor);
-                lecturaCSV("fuentes/AM_Plaza.csv", valor);
-
-            } else {
-
-                valor = $("#opcDireccion option:selected").val();
-
-                $("#grafica1BL").html("");
-                $("#grafica272").html("");
-                $("#grafica3Incum").html("");
-                $("#grafica4AA").html("");
-                $("#grafica5AM").html("");
-
-                $("#desPlaza").show();
-                $("#desDistrito").hide();
-
-                // Gráficas de BL y 72hrs
-                lecturaCSV("fuentes/Backlog_Direcciones.csv", valor);
-                lecturaCSV("fuentes/Backlog_72hs_Direcciones.csv", valor);
-                // Gráfica Incumplimientos
-                incumDireccion(valor);
-                // Gráficas AA y AM
-                lecturaCSV("fuentes/AA_Direccion.csv", valor);
-                lecturaCSV("fuentes/AM_Direccion.csv", valor);
-
-                $("#opcPlaza").empty();
-                $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
-
-                llenaListasPlaza(valor);
-
-            }
+            // Gráficas de BL y 72hrs
+            dibujaGrafica("fuentes/Backlog_Nacional.csv", "#grafica1BL", "Fecha_Descarga");
+            dibujaGrafica("fuentes/Backlog_72hrs_Nacional.csv", "#grafica272", "Fecha");
+            // Gráfica Incumplimientos
+            incumDireccion(valor);
+            // Gráficas AA y AM
+            lecturaCSV("fuentes/AA_Nacional.csv", "NACIONAL");
+            lecturaCSV("fuentes/AM_Nacional.csv", "NACIONAL");
 
         } else {
 
-            valor = $("#opcDireccion option:selected").val();
+            $("#desPlaza").hide();
+            $("#desRegionPlaza").show();
+            $("#desDistrito").hide();
 
-            $("#grafica1BL").html("");
-            $("#grafica272").html("");
-            $("#grafica3Incum").html("");
-            $("#grafica4AA").html("");
-            $("#grafica5AM").html("");
+            // Gráficas de BL y 72hrs
+            lecturaCSV("fuentes/Backlog_Direcciones.csv", valor);
+            lecturaCSV("fuentes/Backlog_72hs_Direcciones.csv", valor);
+            // Gráfica Incumplimientos
+            incumDireccion(valor);
+            // Gráficas AA y AM
+            lecturaCSV("fuentes/AA_Direccion.csv", valor);
+            lecturaCSV("fuentes/AM_Direccion.csv", valor);
 
-            if (valor == "NACIONAL") {
+            $("#opcRegionPlaza").empty();
+            $("#opcRegionPlaza").append("<option disabled selected>Seleccionar</option>");
 
-                $("#desPlaza").hide();
-                $("#desDistrito").hide();
-
-                // Gráficas de BL y 72hrs
-                dibujaGrafica("fuentes/Backlog_Nacional.csv", "#grafica1BL", "Fecha_Descarga");
-                dibujaGrafica("fuentes/Backlog_72hrs_Nacional.csv", "#grafica272", "Fecha");
-                // Gráfica Incumplimientos
-                incumDireccion(valor);
-                // Gráficas AA y AM
-                lecturaCSV("fuentes/AA_Nacional.csv", "NACIONAL");
-                lecturaCSV("fuentes/AM_Nacional.csv", "NACIONAL");
-
-            } else {
-
-                $("#desPlaza").show();
-                $("#desDistrito").hide();
-
-                // Gráficas de BL y 72hrs
-                lecturaCSV("fuentes/Backlog_Direcciones.csv", valor);
-                lecturaCSV("fuentes/Backlog_72hs_Direcciones.csv", valor);
-                // Gráfica Incumplimientos
-                incumDireccion(valor);
-                // Gráficas AA y AM
-                lecturaCSV("fuentes/AA_Direccion.csv", valor);
-                lecturaCSV("fuentes/AM_Direccion.csv", valor);
-
-                $("#opcPlaza").empty();
-                $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
-
-                llenaListasPlaza(valor);
-
-            }
+            llenaListasPlaza(valor);
 
         }
+
+        // if ($("#desDistrito").is(":visible")) {
+
+        //     valor = $("#opcDistrito option:selected").val();
+
+        //     if (valor != "Seleccionar") {
+
+        //         $("#grafica1BL").html("");
+        //         // $("#grafica272").html("");
+        //         $("#grafica3Incum").html("");
+        //         $("#grafica4AA").html("");
+        //         $("#grafica5AM").html("");
+
+        //         // Gráficas de BL y 72hrs
+        //         lecturaCSV("fuentes/Backlog_Distritos.csv", valor);
+        //         // Gráfica Incumplimientos
+        //         incumDistrito(valor);
+        //         // Gráficas AA y AM
+        //         lecturaCSV("fuentes/AA_Distritos.csv", valor);
+        //         lecturaCSV("fuentes/AM_Distritos.csv", valor);
+                
+        //     } else {
+
+        //         valor = $("#opcRegionPlaza option:selected").val();
+
+        //         $("#grafica1BL").html("");
+        //         // $("#grafica272").html("");
+        //         $("#grafica3Incum").html("");
+        //         $("#grafica4AA").html("");
+        //         $("#grafica5AM").html("");
+
+        //         if ($("#region").prop("checked")) {
+
+        //             // Se requieren las funciones para la lectura de los datos por región
+        //             // Gráficas de BL y 72hrs
+        //             lecturaCSV("fuentes/Backlog_Regiones.csv", valor);
+
+        //         } else {
+
+        //             // Gráficas de BL y 72hrs
+        //             lecturaCSV("fuentes/Backlog_Plazas.csv", valor);
+        //             // Gráfica Incumplimientos
+        //             incumPlaza(valor);
+        //             // Gráficas AA y AM
+        //             lecturaCSV("fuentes/AA_Plaza.csv", valor);
+        //             lecturaCSV("fuentes/AM_Plaza.csv", valor);
+
+        //         }
+
+        //     }
+
+        // } else if ($("#desRegionPlaza").is(":visible")) {
+
+        //     valor = $("#opcRegionPlaza option:selected").val();
+
+        //     if (valor != "Seleccionar") {
+                
+        //         $("#grafica1BL").html("");
+        //         // $("#grafica272").html("");
+        //         $("#grafica3Incum").html("");
+        //         $("#grafica4AA").html("");
+        //         $("#grafica5AM").html("");
+
+        //         if ($("#region").prop("checked")) {
+
+        //             // Se requieren las funciones para la lectura de los datos por región
+        //             // Gráficas de BL y 72hrs
+        //             lecturaCSV("fuentes/Backlog_Regiones.csv", valor);
+
+        //         } else {
+
+        //             // Gráficas de BL y 72hrs
+        //             lecturaCSV("fuentes/Backlog_Plazas.csv", valor);
+        //             // Gráfica Incumplimientos
+        //             incumPlaza(valor);
+        //             // Gráficas AA y AM
+        //             lecturaCSV("fuentes/AA_Plaza.csv", valor);
+        //             lecturaCSV("fuentes/AM_Plaza.csv", valor);
+
+        //         }
+
+        //     } else {
+
+        //         valor = $("#opcDireccion option:selected").val();
+
+        //         $("#grafica1BL").html("");
+        //         $("#grafica272").html("");
+        //         $("#grafica3Incum").html("");
+        //         $("#grafica4AA").html("");
+        //         $("#grafica5AM").html("");
+
+        //         $("#desPlaza").hide();
+        //         $("#desRegionPlaza").show();
+        //         $("#desDistrito").hide();
+
+        //         // Gráficas de BL y 72hrs
+        //         lecturaCSV("fuentes/Backlog_Direcciones.csv", valor);
+        //         lecturaCSV("fuentes/Backlog_72hs_Direcciones.csv", valor);
+        //         // Gráfica Incumplimientos
+        //         incumDireccion(valor);
+        //         // Gráficas AA y AM
+        //         lecturaCSV("fuentes/AA_Direccion.csv", valor);
+        //         lecturaCSV("fuentes/AM_Direccion.csv", valor);
+
+        //         // Modificar por la opción de plaza o region
+        //         $("#opcRegionPlaza").empty();
+        //         $("#opcRegionPlaza").append("<option disabled selected>Seleccionar</option>");
+
+        //         llenaListasPlaza(valor);
+
+        //     }
+
+        // } else {
+
+        //     valor = $("#opcDireccion option:selected").val();
+
+        //     $("#grafica1BL").html("");
+        //     $("#grafica272").html("");
+        //     $("#grafica3Incum").html("");
+        //     $("#grafica4AA").html("");
+        //     $("#grafica5AM").html("");
+
+        //     if (valor == "NACIONAL") {
+
+        //         $("#desPlaza").hide();
+        //         $("#desRegionPlaza").hide();
+        //         $("#desDistrito").hide();
+
+        //         // Gráficas de BL y 72hrs
+        //         dibujaGrafica("fuentes/Backlog_Nacional.csv", "#grafica1BL", "Fecha_Descarga");
+        //         dibujaGrafica("fuentes/Backlog_72hrs_Nacional.csv", "#grafica272", "Fecha");
+        //         // Gráfica Incumplimientos
+        //         incumDireccion(valor);
+        //         // Gráficas AA y AM
+        //         lecturaCSV("fuentes/AA_Nacional.csv", "NACIONAL");
+        //         lecturaCSV("fuentes/AM_Nacional.csv", "NACIONAL");
+
+        //     } else {
+
+        //         $("#desPlaza").hide();
+        //         $("#desRegionPlaza").show();
+        //         $("#desDistrito").hide();
+
+        //         // Gráficas de BL y 72hrs
+        //         lecturaCSV("fuentes/Backlog_Direcciones.csv", valor);
+        //         lecturaCSV("fuentes/Backlog_72hs_Direcciones.csv", valor);
+        //         // Gráfica Incumplimientos
+        //         incumDireccion(valor);
+        //         // Gráficas AA y AM
+        //         lecturaCSV("fuentes/AA_Direccion.csv", valor);
+        //         lecturaCSV("fuentes/AM_Direccion.csv", valor);
+
+        //         $("#opcRegionPlaza").empty();
+        //         $("#opcRegionPlaza").append("<option disabled selected>Seleccionar</option>");
+
+        //         llenaListasPlaza(valor);
+
+        //     }
+
+        // }
 
     });
 
@@ -595,6 +684,7 @@ $(document).ready(function () {
             if (valor == "NACIONAL") {
 
                 $("#desPlaza").hide();
+                $("#desRegionPlaza").hide();
                 $("#desDistrito").hide();
 
                 $("#grafica1").html("");
@@ -603,7 +693,8 @@ $(document).ready(function () {
 
             } else {
 
-                $("#desPlaza").show();
+                $("#desPlaza").hide();
+                $("#desRegionPlaza").show();
                 $("#desDistrito").hide();
 
                 $("#grafica1").html("");
@@ -622,6 +713,7 @@ $(document).ready(function () {
             if (valor == "NACIONAL") {
 
                 $("#desPlaza").hide();
+                $("#desRegionPlaza").hide();
                 $("#desDistrito").hide();
 
                 // $("#grafica1").html("");
@@ -646,6 +738,7 @@ $(document).ready(function () {
         } else if (selecTop == 1) {
 
             $("#desPlaza").hide();
+            $("#desRegionPlaza").hide();
             $("#desDistrito").hide();
 
             $("#grafica1").html("");
@@ -673,6 +766,7 @@ $(document).ready(function () {
             if (valor == "NACIONAL") {
 
                 $("#desPlaza").hide();
+                $("#desRegionPlaza").hide();
                 $("#desDistrito").hide();
 
                 // Gráficas de BL y 72hrs
@@ -686,7 +780,8 @@ $(document).ready(function () {
 
             } else {
 
-                $("#desPlaza").show();
+                $("#desPlaza").hide();
+                $("#desRegionPlaza").show();
                 $("#desDistrito").hide();
 
                 // Gráficas de BL y 72hrs
@@ -698,8 +793,7 @@ $(document).ready(function () {
                 lecturaCSV("fuentes/AA_Direccion.csv", valor);
                 lecturaCSV("fuentes/AM_Direccion.csv", valor);
 
-                $("#opcPlaza").empty();
-                $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
+                $("#opcRegionPlaza").empty().append("<option disabled selected>Seleccionar</option>");
 
                 llenaListasPlaza(valor);
 
@@ -710,6 +804,7 @@ $(document).ready(function () {
             if (valor == "NACIONAL") {
 
                 $("#desPlaza").hide();
+                $("#desRegionPlaza").hide();
                 $("#desDistrito").hide();
                 $("#desSupervisor").hide();
                 $("#kpiSegundoNivel").hide();
@@ -719,6 +814,7 @@ $(document).ready(function () {
 
                 mostrarTablaFiltro(valor, "direccion");
 
+                $("#desRegionPlaza").hide();
                 $("#desDistrito").hide();
                 $("#desSupervisor").hide();
                 $("#kpiSegundoNivel").hide();
@@ -739,6 +835,7 @@ $(document).ready(function () {
             if (valor == "NACIONAL") {
 
                 $("#desPlaza").hide();
+                $("#desRegionPlaza").hide();
                 $("#desDistrito").hide();
 
                 $("#grafica22").html("");
@@ -752,9 +849,10 @@ $(document).ready(function () {
                 $("#opcPlaza").empty();
                 $("#opcPlaza").append("<option disabled selected>Seleccionar</option>");
 
-                llenaListasPlaza(valor);
+                llenaListasSoloPlaza(valor);
 
                 $("#desPlaza").show();
+                $("#desRegionPlaza").hide();
                 $("#desDistrito").hide();
 
                 $("#grafica22").html("");
@@ -787,6 +885,89 @@ $(document).ready(function () {
 
     });
 
+    // Para la pestaña de indicadores
+    $("#opcRegionPlaza").on("change", function (event) {
+
+        valor = $("#opcRegionPlaza option:selected").val();
+
+        $("#desDistrito").show();
+        $("#desSupervisor").hide();
+        $("#kpiSegundoNivel").hide();
+
+        if (selecProductividad != 1) {
+
+            if (selecBacklog == 1) {
+                $("#grafica1").html("");
+                lecturaCSV("fuentes/Backlog_Plazas.csv", valor);
+            } else if (selecIncumplimiento == 1) {
+                $("#grafica1").html("");
+                incumPlaza(valor);
+                // lecturaCSV("fuentes/Plaza_incumplimientos.csv", valor);
+            } else if (selecReincidencias == 1) {
+
+                $("#grafica2").html("");
+                $("#grafica3").html("");
+
+                pintaGraficaIDRPlaza(valor);
+                pintaGraficaTRPlaza(valor);
+
+            } else if (selec72hrs == 1) {
+
+                $("#grafica1BL").html("");
+                // $("#grafica272").html("");
+                $("#grafica3Incum").html("");
+                $("#grafica4AA").html("");
+                $("#grafica5AM").html("");
+                
+                if ($("#region").prop("checked")) {
+
+                    // Se requieren las funciones para la lectura de los datos por región
+                    // Gráficas de BL y 72hrs
+                    lecturaCSV("fuentes/Backlog_Regiones.csv", valor);
+                    // Gráfica Incumplimientos
+                    incumPlaza(valor);
+                    // Gráficas AA y AM
+                    lecturaCSV("fuentes/AA_Region.csv", valor);
+                    lecturaCSV("fuentes/AM_Region.csv", valor);
+
+                } else {
+                    
+                    // Gráficas de BL y 72hrs
+                    lecturaCSV("fuentes/Backlog_Plazas.csv", valor);
+                    // Gráfica Incumplimientos
+                    incumPlaza(valor);
+                    // Gráficas AA y AM
+                    lecturaCSV("fuentes/AA_Plaza.csv", valor);
+                    lecturaCSV("fuentes/AM_Plaza.csv", valor);
+
+                }
+                
+
+            }
+
+            $("#opcDistrito").empty();
+            $("#opcDistrito").append("<option disabled selected>Seleccionar</option>");
+
+            llenaListasDIstrito(valor);
+
+        } else {
+
+            mostrarTablaFiltro(valor, "region");
+
+            $("#opcDistrito").empty();
+            $("#opcDistrito").append("<option disabled selected>Seleccionar</option>");
+
+            listasComboDistritoProd(valor);
+
+            $("#kpiDistrito").html("");
+            // $("#kpiSupervisor").html("");
+
+        }
+
+
+    });
+
+    // Se queda para la opción de la tabla desempeño y TR
     $("#opcPlaza").on("change", function (event) {
 
         valor = $("#opcPlaza option:selected").val();
@@ -819,7 +1000,7 @@ $(document).ready(function () {
                 $("#grafica3Incum").html("");
                 $("#grafica4AA").html("");
                 $("#grafica5AM").html("");
-                
+
                 // Gráficas de BL y 72hrs
                 lecturaCSV("fuentes/Backlog_Plazas.csv", valor);
                 // Gráfica Incumplimientos
@@ -833,7 +1014,7 @@ $(document).ready(function () {
             $("#opcDistrito").empty();
             $("#opcDistrito").append("<option disabled selected>Seleccionar</option>");
 
-            llenaListasDIstrito(valor);
+            llenaListasSoloDIstrito(valor);
 
         } else {
 
@@ -2755,7 +2936,7 @@ function datosDIreccionSeleccionada(direccionSeleccionada, documento) {
             graficaAM("#grafica5AM", inst, activManuales, porcAM, fechaAM);
 
         } else if ((documento == "fuentes/Backlog_Direcciones.csv") || (documento == "fuentes/Backlog_Plazas.csv")
-                    || (documento == "fuentes/Backlog_Distritos.csv")) {
+            || (documento == "fuentes/Backlog_Distritos.csv") || (documento == "fuentes/Backlog_Regiones.csv")) {
             
             Fecha_Descarga_BL.length = 0;
 
@@ -2800,7 +2981,7 @@ function datosDIreccionSeleccionada(direccionSeleccionada, documento) {
             dibujaGraficaJSON72hrs("#grafica272", "Fecha");
 
         } else if ((documento == "fuentes/AA_Direccion.csv") || (documento == "fuentes/AA_Plaza.csv")
-                    || (documento == "fuentes/AA_Distritos.csv")) {
+            || (documento == "fuentes/AA_Distritos.csv") || (documento == "fuentes/AA_Region.csv")) {
 
             fechaAA.length = 0;
             asigTotales = ["AsignacionesTotales"];
@@ -2825,7 +3006,7 @@ function datosDIreccionSeleccionada(direccionSeleccionada, documento) {
             graficaAA("#grafica4AA", asigTotales, asigAut, porcAA, fechaAA);
 
         } else if ((documento == "fuentes/AM_Direccion.csv") || (documento == "fuentes/AM_Plaza.csv")
-                    || (documento == "fuentes/AM_Distritos.csv")) {
+            || (documento == "fuentes/AM_Distritos.csv") || (documento == "fuentes/AM_Region.csv")) {
 
             fechaAM.length = 0;
             inst = ["Instalaciones"];
@@ -2884,7 +3065,13 @@ function llenaListasPlaza(direccionSelec) {
         success: function (data) {
             renglones2 = data.split(/\r\n|\n/);
             titulos2 = renglones2[0].split(",");
-            listasComboPlaza(direccionSelec);
+
+            if ($("#region").prop("checked")) {
+                listasRegion(direccionSelec);
+            } else {
+                listasComboPlaza(direccionSelec);
+            }
+
         }
     });
 
@@ -2892,8 +3079,6 @@ function llenaListasPlaza(direccionSelec) {
 
 
 function listasComboPlaza(direccionSelec) {
-
-    let datoRepetido = "";
 
     listaPlazas.length = 0;
 
@@ -2903,10 +3088,33 @@ function listasComboPlaza(direccionSelec) {
 
         if (element[0] == direccionSelec) {
 
-            if ((listaPlazas.length == 0) || (element[1] != datoRepetido)) {
-                datoRepetido = element[1];
-                listaPlazas.push(element[1]);
-                $("#opcPlaza").append($("<option>", { value: element[1], text: element[1] }));
+            if ((listaPlazas.length == 0) || !(listaPlazas.includes(element[2]))) {
+                // datoRepetido = element[2];
+                listaPlazas.push(element[2]);
+                $("#opcRegionPlaza").append($("<option>", { value: element[2], text: element[2] }));
+            }
+
+        }
+
+    }
+
+}
+
+
+function listasRegion(direccionSelec) {
+
+    listaRegiones.length = 0;
+
+    for (let i = 1; i < renglones2.length; i++) {
+
+        const element = renglones2[i].split(",");
+
+        if (element[0] == direccionSelec) {
+
+            if ((listaRegiones.length == 0) || !(listaRegiones.includes(element[1]))) {
+                // datoRepetido = element[1];
+                listaRegiones.push(element[1]);
+                $("#opcRegionPlaza").append($("<option>", { value: element[1], text: element[1] }));
             }
 
         }
@@ -2925,7 +3133,13 @@ function llenaListasDIstrito(plazaSeleccionada) {
         success: function (data) {
             renglones3 = data.split(/\r\n|\n/);
             titulos3 = renglones2[0].split(",");
-            listasComboDistrito(plazaSeleccionada);
+
+            if ($("#region").prop("checked")) {
+                listasComboDistritoRegion(plazaSeleccionada);
+            } else {
+                listasComboDistrito(plazaSeleccionada);
+            }
+            
         }
     });
 
@@ -2938,8 +3152,23 @@ function listasComboDistrito(plazaSeleccionada) {
 
         const element = renglones3[i].split(",");
 
+        if (element[2] == plazaSeleccionada) {
+            $("#opcDistrito").append($("<option>", { value: element[3], text: element[3] }));
+        }
+
+    }
+
+}
+
+
+function listasComboDistritoRegion(plazaSeleccionada) {
+
+    for (let i = 1; i < renglones3.length; i++) {
+
+        const element = renglones3[i].split(",");
+
         if (element[1] == plazaSeleccionada) {
-            $("#opcDistrito").append($("<option>", { value: element[2], text: element[2] }));
+            $("#opcDistrito").append($("<option>", { value: element[3], text: element[3] }));
         }
 
     }

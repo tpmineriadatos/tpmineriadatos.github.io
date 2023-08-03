@@ -156,6 +156,7 @@ $(document).ready(function() {
         $("#divAct").hide();
         $("#imgConecta").hide();
         $("#desPlaza").hide();
+        $("#desRegionPlaza").hide();
         $("#desDistrito").hide();
         $("#kpiTodos").hide();
         $("#segundoNivel").hide();

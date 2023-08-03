@@ -99,7 +99,7 @@ function llenaInfoTempIncump() {
                 diarioDireccionTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
             } else if (element[1] == "DIRECCION") {
                 diarioDireccionTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
-            } else if (element[1] == "PLAZA") {
+            } else if ((element[1] == "PLAZA") || (element[1] == "REGION")) {
                 diarioPlazaTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
             } else if (element[1] == "DISTRITO") {
                 diarioDistritoTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
@@ -111,7 +111,7 @@ function llenaInfoTempIncump() {
                 semanalDireccionTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
             } else if (element[1] == "DIRECCION") {
                 semanalDireccionTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
-            } else if (element[1] == "PLAZA") {
+            } else if ((element[1] == "PLAZA") || (element[1] == "REGION")) {
                 semanalPlazaTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
             } else if (element[1] == "DISTRITO") {
                 semanalDistritoTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
