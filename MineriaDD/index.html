@@ -156,7 +156,8 @@
                     <form>
                         <select name="opcDireccion" id="opcDireccion" class="form-control-select" style="width: 300px; margin-right: 20px;">
                             <option selected>NACIONAL</option>
-                            <option>CENTRO</option>
+                            <option>CENTRO 1</option>
+                            <option>CENTRO 2</option>
                             <option>NORESTE-FRONTERA</option>
                             <option>NORTE-PACIFICO</option>
                             <option>OCCIDENTE-BAJIO</option>
@@ -166,7 +167,32 @@
                 </div>
             </div>
         </div>
-        
+
+        <div id="desRegionPlaza" class="col-md-4 col-sm-12">
+            <div class="row ">
+                <div class="col-md-3 col-sm-12 text-center">
+                    <label>&nbsp;Seleccionar:</label>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="segmentacion" id="region" value="region" checked>
+                        <label class="form-check-label etiqueta" for="region">Región</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="segmentacion" id="plaza" value="plaza">
+                        <label class="form-check-label etiqueta" for="plaza">Plaza</label>
+                    </div>
+                </div>
+                <div class="col-md-5 col-sm-12">
+                    <form>
+                        <select name="opcRegionPlaza" id="opcRegionPlaza" class="form-control-select" style="width: 250px; margin-right: 20px;">
+                            <option selected disabled>Seleccionar</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <div id="desPlaza" class="col-md-4 col-sm-12">
             <div class="row">
                 <div class="col-md-3 col-sm-12 ">
@@ -180,8 +206,25 @@
                 </div>
             </div>
         </div>
-        
+
         <div id="desDistrito" class="col-md-4 col-sm-12">
+            <div class="row">
+                <div class="col-md-3 col-sm-12 text-center">
+                    <label for="opcDistrito">&nbsp;&nbsp;Distrito</label>
+                </div>
+                <div class="col-md-9 col-sm-12">
+                    <form>
+                        <select name="opcDistrito" id="opcDistrito" class="form-control-select">
+                            <option selected disabled>Seleccionar</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <!-- <div id="desDistrito" class="col-md-4 col-sm-12">
             <div class="row">
                 <div class="col-md-2 col-sm-12 ">
                     <label for="opcDistrito">&nbsp;&nbsp;&nbsp;Distrito</label>
@@ -194,7 +237,7 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div> -->
 
     </div>
 
@@ -642,6 +685,7 @@
     </div>
 
     <script src="js/desempenio.js"></script>
+    <script src="js/plazasRegiones.js"></script>
     <script src="js/graficas.js"></script>
     <script src="js/reincidencias.js"></script>
     <script src="js/tempIncumplimiento.js"></script>
