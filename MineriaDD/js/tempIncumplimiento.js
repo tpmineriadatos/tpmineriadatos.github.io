@@ -96,25 +96,25 @@ function llenaInfoTempIncump() {
         if (element[0] == "DIARIA") {
 
             if (element[1] == "NACIONAL") {
-                diarioDireccionTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
+                diarioDireccionTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[9], element[3]]);
             } else if (element[1] == "DIRECCION") {
-                diarioDireccionTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
+                diarioDireccionTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[9], element[3]]);
             } else if ((element[1] == "PLAZA") || (element[1] == "REGION")) {
-                diarioPlazaTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
+                diarioPlazaTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[9], element[3]]);
             } else if (element[1] == "DISTRITO") {
-                diarioDistritoTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
+                diarioDistritoTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[9], element[3]]);
             }
 
         } else {
 
             if (element[1] == "NACIONAL") {
-                semanalDireccionTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
+                semanalDireccionTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[9], element[3]]);
             } else if (element[1] == "DIRECCION") {
-                semanalDireccionTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
+                semanalDireccionTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[9], element[3]]);
             } else if ((element[1] == "PLAZA") || (element[1] == "REGION")) {
-                semanalPlazaTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
+                semanalPlazaTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[9], element[3]]);
             } else if (element[1] == "DISTRITO") {
-                semanalDistritoTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[3]]);
+                semanalDistritoTempIncum.push([element[2], element[4], element[5], element[6], element[7], element[8], element[9], element[3]]);
             }
 
         }
@@ -162,11 +162,12 @@ function muestraIncumplimiento() {
 
 function incumDireccion(direccion) {
 
-    let datosYConfirmacion = ["Confirmacion"],
-        datosYIncumplimientos = ["Incumplimientos"],
-        datosYPorcConfirmacion = ["PorcConfirmacion"],
-        datosYPorcIncumplimientos = ["PorcIncumplimientos"],
-        datosYPorcTotal = ["PorcTotal"],
+    let datosYIncumplimientos = ["Incumplimientos"],
+        datosYSoportes = ["Soportes"],
+        datosYInstalaciones = ["Instalaciones"],
+        datosYCambiosDomicilio = ["CambiosDomicilio"],
+        datosYAdicionales = ["Adicionales"],
+        datosYPorcAgendaTotal = ["PorcTotal"],
         datosEjeX = [];
 
     if ($("#diaria").prop("checked")) {
@@ -181,12 +182,13 @@ function incumDireccion(direccion) {
 
             if (element[0] == direccion) {
 
-                datosYConfirmacion.push(element[1]);
-                datosYIncumplimientos.push(element[2]);
-                datosYPorcConfirmacion.push(element[3]);
-                datosYPorcIncumplimientos.push(element[4]);
-                datosYPorcTotal.push(element[5]);
-                datosEjeX.push(element[6]);
+                datosYIncumplimientos.push(element[1]);
+                datosYSoportes.push(element[2]);
+                datosYInstalaciones.push(element[3]);
+                datosYCambiosDomicilio.push(element[4]);
+                datosYAdicionales.push(element[5]);
+                datosYPorcAgendaTotal.push(element[6]);
+                datosEjeX.push(element[7]);
 
             }
 
@@ -202,12 +204,13 @@ function incumDireccion(direccion) {
 
             if (element[0] == direccion) {
 
-                datosYConfirmacion.push(element[1]);
-                datosYIncumplimientos.push(element[2]);
-                datosYPorcConfirmacion.push(element[3]);
-                datosYPorcIncumplimientos.push(element[4]);
-                datosYPorcTotal.push(element[5]);
-                datosEjeX.push(element[6]);
+                datosYIncumplimientos.push(element[1]);
+                datosYSoportes.push(element[2]);
+                datosYInstalaciones.push(element[3]);
+                datosYCambiosDomicilio.push(element[4]);
+                datosYAdicionales.push(element[5]);
+                datosYPorcAgendaTotal.push(element[6]);
+                datosEjeX.push(element[7]);
 
             }
 
@@ -215,64 +218,66 @@ function incumDireccion(direccion) {
 
     }
 
-    graficaIncumplimiento("#grafica3Incum", datosYConfirmacion, datosYIncumplimientos, datosYPorcTotal, datosEjeX);
+    graficaIncumplimiento("#grafica3Incum", datosYIncumplimientos, datosYSoportes, datosYInstalaciones, datosYCambiosDomicilio, 
+    datosYAdicionales, datosYPorcAgendaTotal, datosEjeX);
 
-    if (!($("#inputIncumplimientos").prop("checked"))) {
+    // if (!($("#inputIncumplimientos").prop("checked"))) {
 
-        chart.load({
-            columns: [
-                datosYPorcConfirmacion
-            ],
-            types: {
-                PorcConfirmacion: 'line'
-            },
-            axes: {
-                PorcConfirmacion: "y2"
-            },
-            colors: {
-                PorcConfirmacion: "#3D3B3B"
-            },
-            names: {
-                PorcConfirmacion: "% Confir. visita total sobre total agendado"
-            },
-            unload: ["Incumplimientos", "PorcTotal"]
-        });
+    //     chart.load({
+    //         columns: [
+    //             datosYPorcConfirmacion
+    //         ],
+    //         types: {
+    //             PorcConfirmacion: 'line'
+    //         },
+    //         axes: {
+    //             PorcConfirmacion: "y2"
+    //         },
+    //         colors: {
+    //             PorcConfirmacion: "#3D3B3B"
+    //         },
+    //         names: {
+    //             PorcConfirmacion: "% Confir. visita total sobre total agendado"
+    //         },
+    //         unload: ["Incumplimientos", "PorcTotal"]
+    //     });
 
-    }
+    // }
 
-    if (!($("#inputConfirmacion").prop("checked"))) {
+    // if (!($("#inputConfirmacion").prop("checked"))) {
         
-        chart.load({
-            columns: [
-                datosYPorcIncumplimientos
-            ],
-            types: {
-                PorcIncumplimientos: 'line'
-            },
-            axes: {
-                PorcIncumplimientos: "y2"
-            },
-            colors: {
-                PorcIncumplimientos: "#3D3B3B"
-            },
-            names: {
-                PorcIncumplimientos: "% Incumplimientos sobre total agendado"
-            },
-            unload: ["Confirmacion", "PorcTotal"]
-        });
+    //     chart.load({
+    //         columns: [
+    //             datosYPorcIncumplimientos
+    //         ],
+    //         types: {
+    //             PorcIncumplimientos: 'line'
+    //         },
+    //         axes: {
+    //             PorcIncumplimientos: "y2"
+    //         },
+    //         colors: {
+    //             PorcIncumplimientos: "#3D3B3B"
+    //         },
+    //         names: {
+    //             PorcIncumplimientos: "% Incumplimientos sobre total agendado"
+    //         },
+    //         unload: ["Confirmacion", "PorcTotal"]
+    //     });
 
-    }
+    // }
 
 }
 
 
 function incumPlaza(plaza) {
 
-    let datosYConfirmacion = ["Confirmacion"],
-        datosYIncumplimientos = ["Incumplimientos"],
-        datosYPorcConfirmacion = ["PorcConfirmacion"],
-        datosYPorcIncumplimientos = ["PorcIncumplimientos"],
-        datosYPorcTotal = ["PorcTotal"],
+    let datosYIncumplimientos = ["Incumplimientos"],
+        datosYSoportes = ["Soportes"],
+        datosYInstalaciones = ["Instalaciones"],
+        datosYCambiosDomicilio = ["CambiosDomicilio"],
+        datosYAdicionales = ["Adicionales"],
+        datosYPorcAgendaTotal = ["PorcTotal"],
         datosEjeX = [];
 
     if ($("#diaria").prop("checked")) {
@@ -283,12 +288,13 @@ function incumPlaza(plaza) {
 
             if (element[0] == plaza) {
 
-                datosYConfirmacion.push(element[1]);
-                datosYIncumplimientos.push(element[2]);
-                datosYPorcConfirmacion.push(element[3]);
-                datosYPorcIncumplimientos.push(element[4]);
-                datosYPorcTotal.push(element[5]);
-                datosEjeX.push(element[6]);
+                datosYIncumplimientos.push(element[1]);
+                datosYSoportes.push(element[2]);
+                datosYInstalaciones.push(element[3]);
+                datosYCambiosDomicilio.push(element[4]);
+                datosYAdicionales.push(element[5]);
+                datosYPorcAgendaTotal.push(element[6]);
+                datosEjeX.push(element[7]);
 
             }
 
@@ -304,12 +310,13 @@ function incumPlaza(plaza) {
 
             if (element[0] == plaza) {
 
-                datosYConfirmacion.push(element[1]);
-                datosYIncumplimientos.push(element[2]);
-                datosYPorcConfirmacion.push(element[3]);
-                datosYPorcIncumplimientos.push(element[4]);
-                datosYPorcTotal.push(element[5]);
-                datosEjeX.push(element[6]);
+                datosYIncumplimientos.push(element[1]);
+                datosYSoportes.push(element[2]);
+                datosYInstalaciones.push(element[3]);
+                datosYCambiosDomicilio.push(element[4]);
+                datosYAdicionales.push(element[5]);
+                datosYPorcAgendaTotal.push(element[6]);
+                datosEjeX.push(element[7]);
 
             }
 
@@ -319,64 +326,66 @@ function incumPlaza(plaza) {
 
     }
 
-    graficaIncumplimiento("#grafica3Incum", datosYConfirmacion, datosYIncumplimientos, datosYPorcTotal, datosEjeX);
+    graficaIncumplimiento("#grafica3Incum", datosYIncumplimientos, datosYSoportes, datosYInstalaciones, datosYCambiosDomicilio,
+        datosYAdicionales, datosYPorcAgendaTotal, datosEjeX);
 
-    if (!($("#inputIncumplimientos").prop("checked"))) {
+    // if (!($("#inputIncumplimientos").prop("checked"))) {
 
-        chart.load({
-            columns: [
-                datosYPorcConfirmacion
-            ],
-            types: {
-                PorcConfirmacion: 'line'
-            },
-            axes: {
-                PorcConfirmacion: "y2"
-            },
-            colors: {
-                PorcConfirmacion: "#3D3B3B"
-            },
-            names: {
-                PorcConfirmacion: "% Confir. visita total sobre total agendado"
-            },
-            unload: ["Incumplimientos", "PorcTotal"]
-        });
+    //     chart.load({
+    //         columns: [
+    //             datosYPorcConfirmacion
+    //         ],
+    //         types: {
+    //             PorcConfirmacion: 'line'
+    //         },
+    //         axes: {
+    //             PorcConfirmacion: "y2"
+    //         },
+    //         colors: {
+    //             PorcConfirmacion: "#3D3B3B"
+    //         },
+    //         names: {
+    //             PorcConfirmacion: "% Confir. visita total sobre total agendado"
+    //         },
+    //         unload: ["Incumplimientos", "PorcTotal"]
+    //     });
 
-    }
+    // }
 
-    if (!($("#inputConfirmacion").prop("checked"))) {
+    // if (!($("#inputConfirmacion").prop("checked"))) {
 
-        chart.load({
-            columns: [
-                datosYPorcIncumplimientos
-            ],
-            types: {
-                PorcIncumplimientos: 'line'
-            },
-            axes: {
-                PorcIncumplimientos: "y2"
-            },
-            colors: {
-                PorcIncumplimientos: "#3D3B3B"
-            },
-            names: {
-                PorcIncumplimientos: "% Incumplimientos sobre total agendado"
-            },
-            unload: ["Confirmacion", "PorcTotal"]
-        });
+    //     chart.load({
+    //         columns: [
+    //             datosYPorcIncumplimientos
+    //         ],
+    //         types: {
+    //             PorcIncumplimientos: 'line'
+    //         },
+    //         axes: {
+    //             PorcIncumplimientos: "y2"
+    //         },
+    //         colors: {
+    //             PorcIncumplimientos: "#3D3B3B"
+    //         },
+    //         names: {
+    //             PorcIncumplimientos: "% Incumplimientos sobre total agendado"
+    //         },
+    //         unload: ["Confirmacion", "PorcTotal"]
+    //     });
 
-    }
+    // }
 
 }
 
 
 function incumDistrito(distrito) {
 
-    let datosYConfirmacion = ["Confirmacion"],
-        datosYIncumplimientos = ["Incumplimientos"],
-        datosYPorcConfirmacion = ["PorcConfirmacion"],
-        datosYPorcIncumplimientos = ["PorcIncumplimientos"],
-        datosYPorcTotal = ["PorcTotal"],
+    let datosYIncumplimientos = ["Incumplimientos"],
+        datosYSoportes = ["Soportes"],
+        datosYInstalaciones = ["Instalaciones"],
+        datosYCambiosDomicilio = ["CambiosDomicilio"],
+        datosYAdicionales = ["Adicionales"],
+        datosYPorcAgendaTotal = ["PorcTotal"],
         datosEjeX = [];
 
     if ($("#diaria").prop("checked")) {
@@ -387,12 +396,13 @@ function incumDistrito(distrito) {
 
             if (element[0] == distrito) {
 
-                datosYConfirmacion.push(element[1]);
-                datosYIncumplimientos.push(element[2]);
-                datosYPorcConfirmacion.push(element[3]);
-                datosYPorcIncumplimientos.push(element[4]);
-                datosYPorcTotal.push(element[5]);
-                datosEjeX.push(element[6]);
+                datosYIncumplimientos.push(element[1]);
+                datosYSoportes.push(element[2]);
+                datosYInstalaciones.push(element[3]);
+                datosYCambiosDomicilio.push(element[4]);
+                datosYAdicionales.push(element[5]);
+                datosYPorcAgendaTotal.push(element[6]);
+                datosEjeX.push(element[7]);
 
             }
 
@@ -408,12 +418,13 @@ function incumDistrito(distrito) {
 
             if (element[0] == distrito) {
 
-                datosYConfirmacion.push(element[1]);
-                datosYIncumplimientos.push(element[2]);
-                datosYPorcConfirmacion.push(element[3]);
-                datosYPorcIncumplimientos.push(element[4]);
-                datosYPorcTotal.push(element[5]);
-                datosEjeX.push(element[6]);
+                datosYIncumplimientos.push(element[1]);
+                datosYSoportes.push(element[2]);
+                datosYInstalaciones.push(element[3]);
+                datosYCambiosDomicilio.push(element[4]);
+                datosYAdicionales.push(element[5]);
+                datosYPorcAgendaTotal.push(element[6]);
+                datosEjeX.push(element[7]);
 
             }
 
@@ -423,65 +434,69 @@ function incumDistrito(distrito) {
         
     }
 
-    graficaIncumplimiento("#grafica3Incum", datosYConfirmacion, datosYIncumplimientos, datosYPorcTotal, datosEjeX);
+    graficaIncumplimiento("#grafica3Incum", datosYConfirmacion, datosYSoportes, datosYInstalaciones, datosYCambiosDomicilio,
+        datosYAdicionales, datosYPorcAgendaTotal, datosEjeX);
 
-    if (!($("#inputIncumplimientos").prop("checked"))) {
+    // if (!($("#inputIncumplimientos").prop("checked"))) {
 
-        chart.load({
-            columns: [
-                datosYPorcConfirmacion
-            ],
-            types: {
-                PorcConfirmacion: 'line'
-            },
-            axes: {
-                PorcConfirmacion: "y2"
-            },
-            colors: {
-                PorcConfirmacion: "#3D3B3B"
-            },
-            names: {
-                PorcConfirmacion: "% Confir. visita total sobre total agendado"
-            },
-            unload: ["Incumplimientos", "PorcTotal"]
-        });
+    //     chart.load({
+    //         columns: [
+    //             datosYPorcConfirmacion
+    //         ],
+    //         types: {
+    //             PorcConfirmacion: 'line'
+    //         },
+    //         axes: {
+    //             PorcConfirmacion: "y2"
+    //         },
+    //         colors: {
+    //             PorcConfirmacion: "#3D3B3B"
+    //         },
+    //         names: {
+    //             PorcConfirmacion: "% Confir. visita total sobre total agendado"
+    //         },
+    //         unload: ["Incumplimientos", "PorcTotal"]
+    //     });
 
-    }
+    // }
 
-    if (!($("#inputConfirmacion").prop("checked"))) {
+    // if (!($("#inputConfirmacion").prop("checked"))) {
 
-        chart.load({
-            columns: [
-                datosYPorcIncumplimientos
-            ],
-            types: {
-                PorcIncumplimientos: 'line'
-            },
-            axes: {
-                PorcIncumplimientos: "y2"
-            },
-            colors: {
-                PorcIncumplimientos: "#3D3B3B"
-            },
-            names: {
-                PorcIncumplimientos: "% Incumplimientos sobre total agendado"
-            },
-            unload: ["Confirmacion", "PorcTotal"]
-        });
+    //     chart.load({
+    //         columns: [
+    //             datosYPorcIncumplimientos
+    //         ],
+    //         types: {
+    //             PorcIncumplimientos: 'line'
+    //         },
+    //         axes: {
+    //             PorcIncumplimientos: "y2"
+    //         },
+    //         colors: {
+    //             PorcIncumplimientos: "#3D3B3B"
+    //         },
+    //         names: {
+    //             PorcIncumplimientos: "% Incumplimientos sobre total agendado"
+    //         },
+    //         unload: ["Confirmacion", "PorcTotal"]
+    //     });
 
-    }
+    // }
 
 }
 
 
-function graficaIncumplimiento(idGrafica, datosYConfirmacion, datosIncumplimientos, datosPorcTotal, ejeX) {
+function graficaIncumplimiento(idGrafica, datosIncumplimientos, datosSoportes, datosInstalaciones, datosCDD, datosAddon, datosPorcTotal, ejeX) {
 
     chart = c3.generate({
         bindto: idGrafica,
         data: {
             columns: [
-                // datosYConfirmacion,
                 datosIncumplimientos,
+                datosSoportes,
+                datosInstalaciones,
+                datosCDD,
+                datosAddon,
                 datosPorcTotal
             ],
             type: "bar",
@@ -489,23 +504,31 @@ function graficaIncumplimiento(idGrafica, datosYConfirmacion, datosIncumplimient
                 PorcTotal: 'line',
             },
             axes: {
-                // Confirmacion: "y",
                 Incumplimientos: "y",
-                PorcTotal: "y2",
+                Soportes: "y",
+                Instalaciones: "y",
+                CambiosDomicilio: "y",
+                Adicionales: "y",
+                PorcTotal: "y2"
             },
             groups: [
-                // ["Confirmacion", "Incumplimientos"]
-                ["Incumplimientos"]
+                ["Incumplimientos", "Soportes", "Instalaciones", "CambiosDomicilio", "Adicionales"]
             ],
             order: null,
             colors: {
-                // Confirmacion: "#1E78B6",
                 Incumplimientos: "#FF7E10",
+                Soportes: "#5171A5",
+                Instalaciones: "#00B050",
+                CambiosDomicilio: "#B8B42D",
+                Adicionales: "#B5BDCF",
                 PorcTotal: "#3D3B3B"
             },
             names: {
-                // Confirmacion: "Llamadas administrativas",
                 Incumplimientos: "Incumplimientos",
+                Soportes: "Soportes",
+                Instalaciones: "Instalación",
+                CambiosDomicilio: "Cambio de domicilio",
+                Adicionales: "Adicionales",
                 PorcTotal: "% Incum. total sobre total agendado"
             }
         },
@@ -548,9 +571,6 @@ function graficaIncumplimiento(idGrafica, datosYConfirmacion, datosIncumplimient
                         auxFecha = new Date(fechaHora),
                         diaSemana = auxFecha.getDay(),
                         fechaFinal = "";
-                    
-                    // console.log(auxFecha);
-                    // console.log(diasSemana[diaSemana]);
 
                     if ($("#diaria").prop("checked")) {
                         fechaFinal = ejeX[d] + " - " + diasSemana[diaSemana];
@@ -603,7 +623,7 @@ function graficaIncumplimiento(idGrafica, datosYConfirmacion, datosIncumplimient
 
                 for (i = 0; i < d.length; i++) {
 
-                    if (!(d[i] && (d[i].value || d[i].value === 0))) {
+                    if (!(d[i].value || d[i].value > 0)) {
                         continue;
                     }
 
