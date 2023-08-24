@@ -172,8 +172,6 @@ function incumDireccion(direccion) {
 
     if ($("#diaria").prop("checked")) {
 
-        // datosEjeX = diasTempIncum;
-
         console.log(datosEjeX);
 
         for (let i = 0; i < diarioDireccionTempIncum.length; i++) {
@@ -195,8 +193,6 @@ function incumDireccion(direccion) {
         }
 
     } else {
-
-        // datosEjeX = semanasTempIncum;
 
         for (let i = 0; i < semanalDireccionTempIncum.length; i++) {
 
@@ -220,52 +216,6 @@ function incumDireccion(direccion) {
 
     graficaIncumplimiento("#grafica3Incum", datosYIncumplimientos, datosYSoportes, datosYInstalaciones, datosYCambiosDomicilio, 
     datosYAdicionales, datosYPorcAgendaTotal, datosEjeX);
-
-    // if (!($("#inputIncumplimientos").prop("checked"))) {
-
-    //     chart.load({
-    //         columns: [
-    //             datosYPorcConfirmacion
-    //         ],
-    //         types: {
-    //             PorcConfirmacion: 'line'
-    //         },
-    //         axes: {
-    //             PorcConfirmacion: "y2"
-    //         },
-    //         colors: {
-    //             PorcConfirmacion: "#3D3B3B"
-    //         },
-    //         names: {
-    //             PorcConfirmacion: "% Confir. visita total sobre total agendado"
-    //         },
-    //         unload: ["Incumplimientos", "PorcTotal"]
-    //     });
-
-    // }
-
-    // if (!($("#inputConfirmacion").prop("checked"))) {
-        
-    //     chart.load({
-    //         columns: [
-    //             datosYPorcIncumplimientos
-    //         ],
-    //         types: {
-    //             PorcIncumplimientos: 'line'
-    //         },
-    //         axes: {
-    //             PorcIncumplimientos: "y2"
-    //         },
-    //         colors: {
-    //             PorcIncumplimientos: "#3D3B3B"
-    //         },
-    //         names: {
-    //             PorcIncumplimientos: "% Incumplimientos sobre total agendado"
-    //         },
-    //         unload: ["Confirmacion", "PorcTotal"]
-    //     });
-
-    // }
 
 }
 
@@ -300,8 +250,6 @@ function incumPlaza(plaza) {
 
         }
 
-        // datosEjeX = diasTempIncum;
-
     } else {
 
         for (let i = 0; i < semanalPlazaTempIncum.length; i++) {
@@ -322,58 +270,10 @@ function incumPlaza(plaza) {
 
         }
 
-        // datosEjeX = semanasTempIncum;
-
     }
 
     graficaIncumplimiento("#grafica3Incum", datosYIncumplimientos, datosYSoportes, datosYInstalaciones, datosYCambiosDomicilio,
         datosYAdicionales, datosYPorcAgendaTotal, datosEjeX);
-
-    // if (!($("#inputIncumplimientos").prop("checked"))) {
-
-    //     chart.load({
-    //         columns: [
-    //             datosYPorcConfirmacion
-    //         ],
-    //         types: {
-    //             PorcConfirmacion: 'line'
-    //         },
-    //         axes: {
-    //             PorcConfirmacion: "y2"
-    //         },
-    //         colors: {
-    //             PorcConfirmacion: "#3D3B3B"
-    //         },
-    //         names: {
-    //             PorcConfirmacion: "% Confir. visita total sobre total agendado"
-    //         },
-    //         unload: ["Incumplimientos", "PorcTotal"]
-    //     });
-
-    // }
-
-    // if (!($("#inputConfirmacion").prop("checked"))) {
-
-    //     chart.load({
-    //         columns: [
-    //             datosYPorcIncumplimientos
-    //         ],
-    //         types: {
-    //             PorcIncumplimientos: 'line'
-    //         },
-    //         axes: {
-    //             PorcIncumplimientos: "y2"
-    //         },
-    //         colors: {
-    //             PorcIncumplimientos: "#3D3B3B"
-    //         },
-    //         names: {
-    //             PorcIncumplimientos: "% Incumplimientos sobre total agendado"
-    //         },
-    //         unload: ["Confirmacion", "PorcTotal"]
-    //     });
-
-    // }
 
 }
 
@@ -407,8 +307,6 @@ function incumDistrito(distrito) {
             }
 
         }
-
-        // datosEjeX = diasTempIncum;
         
     } else {
 
@@ -429,59 +327,11 @@ function incumDistrito(distrito) {
             }
 
         }
-
-        // datosEjeX = semanasTempIncum;
         
     }
 
-    graficaIncumplimiento("#grafica3Incum", datosYConfirmacion, datosYSoportes, datosYInstalaciones, datosYCambiosDomicilio,
+    graficaIncumplimiento("#grafica3Incum", datosYIncumplimientos, datosYSoportes, datosYInstalaciones, datosYCambiosDomicilio,
         datosYAdicionales, datosYPorcAgendaTotal, datosEjeX);
-
-    // if (!($("#inputIncumplimientos").prop("checked"))) {
-
-    //     chart.load({
-    //         columns: [
-    //             datosYPorcConfirmacion
-    //         ],
-    //         types: {
-    //             PorcConfirmacion: 'line'
-    //         },
-    //         axes: {
-    //             PorcConfirmacion: "y2"
-    //         },
-    //         colors: {
-    //             PorcConfirmacion: "#3D3B3B"
-    //         },
-    //         names: {
-    //             PorcConfirmacion: "% Confir. visita total sobre total agendado"
-    //         },
-    //         unload: ["Incumplimientos", "PorcTotal"]
-    //     });
-
-    // }
-
-    // if (!($("#inputConfirmacion").prop("checked"))) {
-
-    //     chart.load({
-    //         columns: [
-    //             datosYPorcIncumplimientos
-    //         ],
-    //         types: {
-    //             PorcIncumplimientos: 'line'
-    //         },
-    //         axes: {
-    //             PorcIncumplimientos: "y2"
-    //         },
-    //         colors: {
-    //             PorcIncumplimientos: "#3D3B3B"
-    //         },
-    //         names: {
-    //             PorcIncumplimientos: "% Incumplimientos sobre total agendado"
-    //         },
-    //         unload: ["Confirmacion", "PorcTotal"]
-    //     });
-
-    // }
 
 }
 
