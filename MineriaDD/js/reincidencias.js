@@ -631,7 +631,7 @@ function pintaTabla() {
                         let numOS = element[1],
                             tipoOS = parseInt(element[2]),
                             tipoOS2 = element[2],
-                            diasOS = parseFloat(element[5]).toFixed(1);
+                            diasOS = parseFloat(element[7]).toFixed(1);
 
                         // if (tipoOS == 55) {
                         //     descTipoOS = "Soporte";
@@ -667,7 +667,7 @@ function pintaTabla() {
                         let numOS = element[1],
                             tipoOS = parseInt(element[2]),
                             tipoOS2 = element[2],
-                            diasOS = parseFloat(element[5]).toFixed(1);
+                            diasOS = parseFloat(element[7]).toFixed(1);
 
                         // if (tipoOS == 55) {
                         //     descTipoOS = "Soporte";
