@@ -353,7 +353,7 @@ function lecturaTGAnterior(documento, k) {
             }
 
             // Llenado del número de semanas
-            semanas[k + 1] = ("0" + tablaGeneralAnt[0][13]).slice(-2);
+            semanas[k + 1] = ("0" + tablaGeneralAnt[0][14]).slice(-2);
 
             datosAnteriores[k] = [];
             datosAnteriores[k] = tablaGeneralAnt;
@@ -397,7 +397,7 @@ function segmentacion() {
     distritos.sort();
     tablaGeneralAct.sort();
 
-    semanas[0] = ("0" + tablaGeneralAct[0][13]).slice(-2);
+    semanas[0] = ("0" + tablaGeneralAct[0][14]).slice(-2);
 
     /**
      * Llenado por Distrito
@@ -410,8 +410,8 @@ function segmentacion() {
         for (let i = 0; i < tablaGeneralAct.length; i++) {
             
             if (tablaGeneralAct[i][0] == distritos[k]) {
-                tecnicosTemp.push(tablaGeneralAct[i][9]);
-                totalTecDist = tablaGeneralAct[i][12];
+                tecnicosTemp.push(tablaGeneralAct[i][10]);
+                totalTecDist = tablaGeneralAct[i][13];
             }
             
         }
@@ -556,13 +556,13 @@ function pintaTabla() {
 
                     const element = tablaGeneralAct[j];
 
-                    if (element[9] == numTecnico) {
+                    if (element[10] == numTecnico) {
 
-                        let idLink5 = numTecnico + "_" + element[11].toUpperCase() + "_10",
-                            idLink4 = numTecnico + "_" + element[11].toUpperCase() + "_0",
-                            idLink3 = numTecnico + "_" + element[11].toUpperCase() + "_1",
-                            idLink2 = numTecnico + "_" + element[11].toUpperCase() + "_2",
-                            idLink1 = numTecnico + "_" + element[11].toUpperCase() + "_3";
+                        let idLink5 = numTecnico + "_" + element[12].toUpperCase() + "_10",
+                            idLink4 = numTecnico + "_" + element[12].toUpperCase() + "_0",
+                            idLink3 = numTecnico + "_" + element[12].toUpperCase() + "_1",
+                            idLink2 = numTecnico + "_" + element[12].toUpperCase() + "_2",
+                            idLink1 = numTecnico + "_" + element[12].toUpperCase() + "_3";
 
                         let linkValor5 = "<a href='#' id='" + idLink5 + "' class='segundos link-dark' data-bs-dismiss='modal' "
                                         + "data-bs-toggle='modal' data-bs-target='#listaOS'>" + numIncidencias + "</a>",
@@ -581,7 +581,7 @@ function pintaTabla() {
                         linkValor1 = (histIncidenciasTecnico[3] == 0) ? 0 : linkValor1;
 
                         listaTecnicos += "<tr><td align='center'>" + numTecnico + "</td>"
-                                        + "<td>" + element[11].toUpperCase() + "</td>"
+                                        + "<td>" + element[12].toUpperCase() + "</td>"
                                         + "<td align='center'>" + linkValor5 + "</td>"
                                         + "<td align='center'>" + linkValor4 + "</td>"
                                         + "<td align='center'>" + linkValor3 + "</td>"
@@ -625,13 +625,13 @@ function pintaTabla() {
 
                     const element = tablaGeneralAct[j];
 
-                    if (element[9] == tecnico) {
+                    if (element[10] == tecnico) {
 
                         let descTipoOS = "";
-                        let numOS = element[1],
-                            tipoOS = parseInt(element[2]),
-                            tipoOS2 = element[2],
-                            diasOS = parseFloat(element[7]).toFixed(1);
+                        let numOS = element[2],
+                            tipoOS = parseInt(element[3]),
+                            tipoOS2 = element[3],
+                            diasOS = parseFloat(element[8]).toFixed(1);
 
                         // if (tipoOS == 55) {
                         //     descTipoOS = "Soporte";
@@ -661,13 +661,13 @@ function pintaTabla() {
 
                     const element = datosAnteriores[buscar][j];
 
-                    if (element[9] == tecnico) {
+                    if (element[10] == tecnico) {
 
                         let descTipoOS = "";
-                        let numOS = element[1],
-                            tipoOS = parseInt(element[2]),
-                            tipoOS2 = element[2],
-                            diasOS = parseFloat(element[7]).toFixed(1);
+                        let numOS = element[2],
+                            tipoOS = parseInt(element[3]),
+                            tipoOS2 = element[3],
+                            diasOS = parseFloat(element[8]).toFixed(1);
 
                         // if (tipoOS == 55) {
                         //     descTipoOS = "Soporte";
@@ -763,7 +763,7 @@ function numIncidenciasAnt(numTecnico) {
 
             const element = datosSemana[j];
 
-            if (element[9] == numTecnico) {
+            if (element[10] == numTecnico) {
                 conteo++;
             }
             
