@@ -361,11 +361,25 @@ function datosGraficaTiempos() {
 
     for (let i = 0; i < distritosTiempos.length; i++) {
 
+        let aux = 0,
+            t = 0;
+
         if (distritosTiempos[i] == distritoSeleccionado) {
 
             fechaTiemposSelec.push(fechaTiempos[i]);
             tiemposSelecE.push(tiempos[i]);
-            tiemposSelecG.push(parseFloat(tiempos[i].replace(":", ".")));
+
+            aux = parseFloat(tiempos[i].replace(":", "."));
+
+            console.log(aux);
+
+            if (aux >= 1) {
+                t = (Math.trunc(aux) * 0.6) + (aux - Math.trunc(aux));
+            } else {
+                t = aux;
+            }
+
+            tiemposSelecG.push(t);
 
         }
 
