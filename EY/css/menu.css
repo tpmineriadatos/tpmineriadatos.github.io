@@ -1,0 +1,147 @@
+.menuPrincipal {
+    background-color: rgb(63, 124, 191);
+    display: flex;
+    height: 70px;
+}
+
+.nombreBacklog {
+    color: whitesmoke;
+    margin-left: 15px;
+    margin-right: 20px;
+    margin-top: 7px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 30px;
+    height: 100%;
+}
+
+.nombreMenu {
+    text-align: center;
+    color: whitesmoke;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 70px;
+    width: 123px;
+    display: inline-grid;
+    cursor: pointer;
+}
+
+/* .nombreMenu:hover {
+    background-color: rgb(25, 86, 255)
+} */
+
+.textoMenu {
+    margin-top: 20px;
+}
+
+.tamanhoGrafica {
+    height: 500px;
+    /* width: 1500px; */
+}
+
+.tamanhoGrafica2 {
+    height: 450px;
+    /* width: 750px; */
+}
+
+.tamanhoGrafica3 {
+    max-width: 700px;
+}
+
+.form-control-select {
+    width: 100%;
+    height: calc(1.60rem + 2px);
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    width: 300px;
+    margin-right: 20px;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+    .form-control-select {
+        transition: none;
+    }
+}
+
+.form-control-select::-ms-expand {
+    background-color: transparent;
+    border: 0;
+}
+
+.form-control-select:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #041d49;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(4, 29, 73, 0.25);
+}
+
+.listaRein {
+    border: 2px solid rgb(31, 77, 155);
+}
+
+/*
+    ancho de la línea en la gráfica de ese ID
+*/
+#ProdOrdsTerminadas .c3-line-Productividad {
+    stroke-width: 2px;
+}
+
+#TiempoTraslado .c3-line-Tiempos {
+    stroke-width: 2.5px;
+}
+
+
+/* Formato para las lineas agregadas como marcadores */
+.c3-xgrid-line.conectamas line {
+    stroke: rgb(252, 134, 55);
+    stroke-width: 1px;
+}
+
+.c3-xgrid-line.conectamas text {
+    fill: rgb(252, 134, 55);
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.c3-ygrid-line.ultimoTiempo line {
+    stroke: #70AD47;
+    stroke-width: 3px;
+    stroke-dasharray: 3px;
+}
+
+.c3-ygrid-line.ultimoTiempo text {
+    fill: #70AD47;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+/* // ----------------------------------------------------------- */
+
+
+.tituloGris {
+    color: #555759;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.etiqueta {
+    font-size: 15px;
+}
+
+/* #todosCombos {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 10;
+} */
+
+.name {
+    font-weight: bold;
+    font-size: 11px;
+}
