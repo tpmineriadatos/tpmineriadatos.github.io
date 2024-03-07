@@ -53,7 +53,7 @@ function obtieneFechasAlta() {
             });
 
             obtieneDatos("fuentes/Productividad.csv", 1);
-            obtieneDatos("fuentes/Tiempos.csv", 2);
+            // obtieneDatos("fuentes/Tiempos.csv", 2);
 
         }
     });
@@ -324,6 +324,8 @@ function graficaProductividad(idGrafica, datosProdGraf, datosCuadrillasGraf, dat
         chart.resize();
     }, 2000);
 
+    obtieneDatos("fuentes/Tiempos.csv", 2);
+
 }
 
 
@@ -453,9 +455,9 @@ function graficaTiempos(idGrafica, datosTiemposGraf, ejeX, datosEtiquetasTiempos
                 // min: 0,
                 // padding: { bottom: 0 },
                 show: true,
-                // tick: {
-                //     format: d3.format(",.0%")
-                // }
+                tick: {
+                    format: d3.format(".2f")
+                }
             }
         },
         point: {
