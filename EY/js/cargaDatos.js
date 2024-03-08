@@ -113,7 +113,8 @@ function datosProductividad() {
             if (registro[1] == "PORTALES") {
                 $("#opcDistrito").append("<option value=" + registro[1] + " selected>" + registro[1] + "</option>");
             } else {
-                $("#opcDistrito").append("<option value=" + registro[1] + ">" + registro[1] + "</option>");
+                // $("#opcDistrito").append("<option value=" + registro[1] + ">" + registro[1] + "</option>");
+                $("#opcDistrito").append($("<option>", { value: registro[1], text: registro[1] }));
             }
 
         }
