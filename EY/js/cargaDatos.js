@@ -13,22 +13,195 @@ var distritosProd = [],
 
 var distritosTiempos = [],
     fechaTiempos = [],
-    tiempos = [];
+    tiempos = [],
+    tiempoTotal24 = [],
+    traslados = [];
 
 var fechaAlta = "",
     distritoSeleccionado = "";
 
+var fechaProdSelec = [],
+    productividadSelec = [],
+    cuadrillasSelecG = [],
+    cuadrillasSelecE = [],
+    ordenesSelec = [];
+
+var fechaTiemposSelec = [],
+    tiemposSelecG = [],
+    tiemposSelecE = [],
+    tiempoTotal24Selec = [],
+    trasladosSelec = [];
+
+var fIni1 = "",
+    fFin1 = "",
+    fIni2 = "",
+    fFin2 = "",
+    fIni3 = "",
+    fFin3 = "";
+
 
 $(document).ready(function () {
 
+    document.getElementById("indicadores").style.backgroundColor = "rgb(31, 77, 155)";
+    document.getElementById("promedios").style.backgroundColor = "rgb(63, 124, 191)";
+
+    $("#divPromedios").hide();
+
     obtieneFechasAlta();
-    
-    $("#opcDistrito").on("change", function (event) {
+
+    // Seleccionar gráficas indicadores
+    $("#indicadores").click(function () {
+
+        document.getElementById("indicadores").style.backgroundColor = "rgb(31, 77, 155)";
+        document.getElementById("promedios").style.backgroundColor = "rgb(63, 124, 191)";
+
+        // $("#todosCombos").show();
+        $("#divSeguimiento").show();
+        $("#divPromedios").hide();
+
         datosGraficaProductividad();
         datosGraficaTiempos();
+
     });
 
+    // Seleccionar tablas de promedios
+    $("#promedios").click(function () {
+
+        document.getElementById("indicadores").style.backgroundColor = "rgb(63, 124, 191)";
+        document.getElementById("promedios").style.backgroundColor = "rgb(31, 77, 155)";
+
+        // $("#todosCombos").hide();
+        $("#divSeguimiento").hide();
+        $("#divPromedios").show();
+
+        calculosPeriodos();
+
+    });
+
+    // Combo de distrito
+    $("#opcDistrito").on("change", function (event) {
+
+            datosGraficaProductividad();
+            datosGraficaTiempos();
+            calculosPeriodos();
+
+    });
+
+
+    // Combos de las fechas de los periodos
+    $("#fechaInicial1").on("change", function (event) {
+
+        let inicio = $("#fechaInicial1")[0].value,
+            fin = $("#fechaFinal1")[0].value;
+
+        if (inicio > fin) {
+            alert("Fecha incorrecta, debe ser menor igual que la fecha final del periodo");
+            $('#fechaInicial1').val(fIni1);
+        }
+
+    });
+
+    $("#fechaFinal1").on("change", function (event) {
+
+        let inicio = $("#fechaInicial1")[0].value,
+            fin = $("#fechaFinal1")[0].value;
+
+        if (inicio > fin) {
+            alert("Fecha incorrecta, debe ser mayor igual que la fecha inicial del periodo");
+            $('#fechaFinal1').val(fFin1);
+        }
+
+    });
+
+    $("#fechaInicial2").on("change", function (event) {
+
+        let inicio = $("#fechaInicial2")[0].value,
+            fin = $("#fechaFinal2")[0].value;
+
+        if (inicio > fin) {
+            alert("Fecha incorrecta, debe ser menor igual que la fecha final del periodo");
+            $('#fechaInicial2').val(fIni2);
+        }
+
+    });
+
+    $("#fechaFinal2").on("change", function (event) {
+
+        let inicio = $("#fechaInicial2")[0].value,
+            fin = $("#fechaFinal2")[0].value;
+
+        if (inicio > fin) {
+            alert("Fecha incorrecta, debe ser mayor igual que la fecha inicial del periodo");
+            $('#fechaFinal2').val(fFin2);
+        }
+
+    });
+
+    $("#fechaInicial3").on("change", function (event) {
+
+        let inicio = $("#fechaInicial3")[0].value,
+            fin = $("#fechaFinal3")[0].value;
+
+        if (inicio > fin) {
+            alert("Fecha incorrecta, debe ser menor igual que la fecha final del periodo");
+            $('#fechaInicial3').val(fIni3);
+        }
+
+    });
+
+    $("#fechaFinal3").on("change", function (event) {
+
+        let inicio = $("#fechaInicial3")[0].value,
+            fin = $("#fechaFinal3")[0].value;
+
+        if (inicio > fin) {
+            alert("Fecha incorrecta, debe ser mayor igual que la fecha inicial del periodo");
+            $('#fechaFinal3').val(fFin3);
+        }
+
+    });
+
+
+    // Botón de calcular los indicadores en los periodos seleccionados
+    $("#btnCalcular").click(function () {
+        calculosPeriodos();
+    });
+
+
 });
+
+
+function decimalATiempo(decimal)  {
+    // Suponiendo que el decimal representa la fracción de un día de 24 horas
+    // Primero, calculamos el total de segundos
+    var totalSegundos = decimal * 86400; // 24 horas * 60 minutos * 60 segundos = 86400 segundos
+
+    // Calculamos las horas, minutos y segundos
+    var horas = Math.floor(totalSegundos / 3600); // Obtiene el número entero de horas
+
+    totalSegundos %= 3600; // Actualiza el total de segundos con el remanente después de calcular las horas
+
+    var minutos = Math.floor(totalSegundos / 60); // Obtiene el número entero de minutos
+    // var segundos = Math.round(totalSegundos % 60); // Obtiene los segundos restantes
+
+    // Formatea las horas, minutos y segundos para asegurarse de que tengan dos dígitos
+    horas = (horas < 10) ? "0" + horas : horas;
+    minutos = (minutos < 10) ? "0" + minutos : minutos;
+    // segundos = (segundos < 10) ? "0" + segundos : segundos;
+
+    // Retorna el tiempo formateado
+    // return horas + ":" + minutos + ":" + segundos;
+    return horas + ":" + minutos;
+}
+
+function formatoFechaInputADatos(fechaInput) {
+
+    var partesInput = fechaInput.split("-"),
+        fechaFormateadaInput = partesInput[2] + "/" + partesInput[1] + "/" + partesInput[0];
+
+    return fechaFormateadaInput;
+
+}
 
 
 function obtieneFechasAlta() {
@@ -44,7 +217,7 @@ function obtieneFechasAlta() {
             datosFechaAlta = datosFechaAlta.filter((e, i) => i < (datosFechaAlta.length - 1));
 
             datosFechaAlta.forEach(element => {
-                
+
                 const e = element.split(",");
 
                 distritosAlta.push(e[0]);
@@ -74,12 +247,12 @@ function obtieneDatos(documento, tipo) {
             renglonesDatos = renglonesDatos.filter((e, i) => i < (renglonesDatos.length - 1));
 
             if (tipo == 1) {
-                console.log(1);
+                // console.log(1);
                 // console.log(renglonesDatos);
                 datosProductividad();
             } else {
-                console.log(2);
-                console.log(renglonesDatos);
+                // console.log(2);
+                // console.log(renglonesDatos);
                 datosTiempos();
             }
 
@@ -107,7 +280,7 @@ function datosProductividad() {
 
         // Llenado del arreglo de los distritos y el combo
         if (!distritosUnicos.includes(registro[1])) {
-            
+
             distritosUnicos.push(registro[1]);
 
             if (registro[1] == "PORTALES") {
@@ -134,21 +307,20 @@ function datosProductividad() {
 
 
 function datosGraficaProductividad() {
-    
-    var fechaProdSelec = [],
-        productividadSelec = ["Productividad"],
-        cuadrillasSelecG = ["CuadrillasFirmadas"],
-        cuadrillasSelecE = ["CuadrillasEtiqueta"],
-        ordenesSelec = ["OrdenesTerminadas"];
 
+    fechaProdSelec = [];
+    productividadSelec = ["Productividad"];
+    cuadrillasSelecG = ["CuadrillasFirmadas"];
+    cuadrillasSelecE = ["CuadrillasEtiqueta"];
+    ordenesSelec = ["OrdenesTerminadas"];
     fechaAlta = "";
-    
+
     distritoSeleccionado = $("#opcDistrito option:selected").val();
 
     for (let i = 0; i < distritosProd.length; i++) {
-        
+
         if (distritosProd[i] == distritoSeleccionado) {
-            
+
             fechaProdSelec.push(fechaProd[i]);
             productividadSelec.push(productividad[i]);
             cuadrillasSelecE.push(cuadrillas[i]);
@@ -156,23 +328,16 @@ function datosGraficaProductividad() {
             ordenesSelec.push(ordenes[i]);
 
         }
-        
+
     }
 
     for (let i = 0; i < distritosAlta.length; i++) {
-        
+
         if (distritosAlta[i] == distritoSeleccionado) {
             fechaAlta = fechasDistritosAlta[i];
         }
-        
-    }
 
-    // console.log(fechaProdSelec);
-    // console.log(productividadSelec);
-    // console.log(cuadrillasSelecG);
-    // console.log(cuadrillasSelecE);
-    // console.log(ordenesSelec);
-    // console.log(fechaAlta);
+    }
 
     graficaProductividad("#ProdOrdsTerminadas", productividadSelec, cuadrillasSelecG, ordenesSelec, fechaProdSelec, cuadrillasSelecE, fechaAlta);
 
@@ -335,6 +500,8 @@ function datosTiempos() {
     fechaTiempos.length = 0;
     distritosTiempos.length = 0;
     tiempos.length = 0;
+    tiempoTotal24.length = 0;
+    traslados.length = 0;
 
     renglonesDatos.forEach(element => {
 
@@ -344,21 +511,25 @@ function datosTiempos() {
         fechaTiempos.push(registro[0]);
         distritosTiempos.push(registro[1]);
         tiempos.push(registro[2]);
+        tiempoTotal24.push(parseFloat(registro[3]));
+        traslados.push(parseInt(registro[4]));
 
     });
 
     datosGraficaTiempos();
-    
+
 }
 
 
 function datosGraficaTiempos() {
 
-    var fechaTiemposSelec = [],
-        tiemposSelecG = ["Tiempos"],
-        tiemposSelecE = ["TiemposEtiquetas"];
-
     var ultimoTiempo = 0;
+
+    fechaTiemposSelec = [];
+    tiemposSelecG = ["Tiempos"];
+    tiemposSelecE = ["TiemposEtiquetas"],
+    tiempoTotal24Selec = ["Total24"],
+    trasladosSelec = ["Traslados"];
 
     const distritoSeleccionado = $("#opcDistrito option:selected").val();
 
@@ -371,10 +542,12 @@ function datosGraficaTiempos() {
 
             fechaTiemposSelec.push(fechaTiempos[i]);
             tiemposSelecE.push(tiempos[i]);
+            tiempoTotal24Selec.push(tiempoTotal24[i]);
+            trasladosSelec.push(traslados[i]);
 
             aux = parseFloat(tiempos[i].replace(":", "."));
 
-            console.log(aux);
+            // console.log(aux);
 
             if (aux >= 1) {
                 t = (Math.trunc(aux) * 0.6) + (aux - Math.trunc(aux));
@@ -390,19 +563,11 @@ function datosGraficaTiempos() {
 
     ultimoTiempo = tiemposSelecG[tiemposSelecG.length - 1];
 
-    // for (let i = 0; i < distritosAlta.length; i++) {
-
-    //     if (distritosAlta[i] == distritoSeleccionado) {
-    //         fechaAlta = fechasDistritosAlta[i];
-    //     }
-
-    // }
-
-    console.log(fechaTiemposSelec);
-    console.log(tiemposSelecE);
-    console.log(tiemposSelecG);
-    console.log(fechaAlta);
-    console.log(tiemposSelecG[tiemposSelecG.length - 1]);
+    // console.log(fechaTiemposSelec);
+    // console.log(tiemposSelecE);
+    // console.log(tiemposSelecG);
+    // console.log(fechaAlta);
+    // console.log(tiemposSelecG[tiemposSelecG.length - 1]);
 
     graficaTiempos("#TiempoTraslado", tiemposSelecG, fechaTiemposSelec, tiemposSelecE, fechaAlta, ultimoTiempo);
 
@@ -537,5 +702,121 @@ function graficaTiempos(idGrafica, datosTiemposGraf, ejeX, datosEtiquetasTiempos
     setTimeout(function () {
         chart.resize();
     }, 2000);
+
+    fechaMaxInput();
+
+}
+
+
+function fechaMaxInput() {
+
+    var fechaMaxima = fechaTiemposSelec[fechaTiemposSelec.length - 1];
+
+    var partes = fechaMaxima.split("/"),
+        fechaFormateada = partes[2] + "-" + partes[1] + "-" + partes[0];
+
+    $('#fechaInicial1').attr('max', fechaFormateada);
+    $('#fechaFinal1').attr('max', fechaFormateada);
+
+    $('#fechaInicial2').attr('max', fechaFormateada);
+    $('#fechaFinal2').attr('max', fechaFormateada);
+
+    $('#fechaInicial3').attr('max', fechaFormateada);
+    $('#fechaFinal3').attr('max', fechaFormateada);
+
+    $('#fechaFinal3').val(fechaFormateada);
+
+}
+
+
+function calculosPeriodos() {
+
+    var fechaInicial1Formateada = formatoFechaInputADatos($("#fechaInicial1")[0].value),
+        fechaFinal1Formateada = formatoFechaInputADatos($("#fechaFinal1")[0].value),
+        fechaInicial2Formateada = formatoFechaInputADatos($("#fechaInicial2")[0].value),
+        fechaFinal2Formateada = formatoFechaInputADatos($("#fechaFinal2")[0].value),
+        fechaInicial3Formateada = formatoFechaInputADatos($("#fechaInicial3")[0].value),
+        fechaFinal3Formateada = formatoFechaInputADatos($("#fechaFinal3")[0].value);
+
+    var indiceInicial1 = indiceFecha(fechaInicial1Formateada),
+        indiceFinal1 = indiceFecha(fechaFinal1Formateada),
+        indiceInicial2 = indiceFecha(fechaInicial2Formateada),
+        indiceFinal2 = indiceFecha(fechaFinal2Formateada),
+        indiceInicial3 = indiceFecha(fechaInicial3Formateada),
+        indiceFinal3 = indiceFecha(fechaFinal3Formateada);
+
+    $("#productividad1")[0].placeholder = calculoProducPeriodo(indiceInicial1, indiceFinal1);
+    $("#productividad2")[0].placeholder = calculoProducPeriodo(indiceInicial2, indiceFinal2);
+    $("#productividad3")[0].placeholder = calculoProducPeriodo(indiceInicial3, indiceFinal3);
+
+    $("#tiempo1")[0].placeholder = calculoTiempoTrasladoPeriodo(indiceInicial1, indiceFinal1);
+    $("#tiempo2")[0].placeholder = calculoTiempoTrasladoPeriodo(indiceInicial2, indiceFinal2);
+    $("#tiempo3")[0].placeholder = calculoTiempoTrasladoPeriodo(indiceInicial3, indiceFinal3);
+
+    fIni1 = $("#fechaInicial1")[0].value;
+    fFin1 = $("#fechaFinal1")[0].value;
+
+    fIni2 = $("#fechaInicial2")[0].value;
+    fFin2 = $("#fechaFinal2")[0].value;
+
+    fIni3 = $("#fechaInicial3")[0].value;
+    fFin3 = $("#fechaFinal3")[0].value;
+
+}
+
+
+function indiceFecha(pFecha) {
+
+    var j = 0;
+
+    if (pFecha == "24/12/2023" || pFecha == "25/12/2023") {
+        pFecha == "23/12/2023";
+    } else if (pFecha == "31/12/2023" || pFecha == "01/01/2023") {
+        pFecha == "30/12/2023";
+    }
+
+    for (let i = 0; i < fechaProdSelec.length; i++) {
+
+        if (fechaProdSelec[i] == pFecha) {
+            j = i;
+            break;
+        }
+
+    }
+
+    return j;
+
+}
+
+
+function calculoProducPeriodo(a, b) {
+
+    var cuadrillasPeriodo = 0,
+        ordenesPeriodo = 0;
+
+    for (let i = a; i <= b; i++) {
+        cuadrillasPeriodo += cuadrillasSelecE[i + 1];
+        ordenesPeriodo += ordenesSelec[i + 1];
+    }
+
+    return Math.round(ordenesPeriodo / cuadrillasPeriodo * 100) / 100;
+
+}
+
+
+function calculoTiempoTrasladoPeriodo(a, b) {
+
+    var tTotal24Periodo = 0,
+        trasladosPeriodo = 0;
+        // tiempoTrasladoPeriodo = 0;
+
+    for (let i = a; i <= b; i++) {
+        tTotal24Periodo += tiempoTotal24Selec[i + 1];
+        trasladosPeriodo += trasladosSelec[i + 1];
+    }
+
+    // tiempoTrasladoPeriodo = tTotal24Periodo / trasladosPeriodo;
+
+    return decimalATiempo(tTotal24Periodo / trasladosPeriodo);
 
 }

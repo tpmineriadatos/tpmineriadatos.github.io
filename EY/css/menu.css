@@ -145,3 +145,8 @@
     font-weight: bold;
     font-size: 11px;
 }
+
+.bg-buscar {
+    background-color: rgb(31, 77, 155);
+    color: #FFFFFF;
+}
