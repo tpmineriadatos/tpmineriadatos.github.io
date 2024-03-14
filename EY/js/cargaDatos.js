@@ -11,11 +11,20 @@ var distritosProd = [],
     cuadrillas = [],
     ordenes = [];
 
+var fechaProdNacional = [],
+    productividadNacional = [],
+    cuadrillasNacional = [],
+    ordenesNacional = [];
+
 var distritosTiempos = [],
     fechaTiempos = [],
     tiempos = [],
     tiempoTotal24 = [],
     traslados = [];
+
+var distritosIncumplimientos = [],
+    fechaIncumplimientos = [],
+    incumplimientos = [];
 
 var fechaAlta = "",
     distritoSeleccionado = "";
@@ -31,6 +40,9 @@ var fechaTiemposSelec = [],
     tiemposSelecE = [],
     tiempoTotal24Selec = [],
     trasladosSelec = [];
+
+var fechaIncumplimientosSelec = [],
+    incumplimientosSelec = [];
 
 var fIni1 = "",
     fFin1 = "",
@@ -171,39 +183,6 @@ $(document).ready(function () {
 });
 
 
-function decimalATiempo(decimal)  {
-    // Suponiendo que el decimal representa la fracción de un día de 24 horas
-    // Primero, calculamos el total de segundos
-    var totalSegundos = decimal * 86400; // 24 horas * 60 minutos * 60 segundos = 86400 segundos
-
-    // Calculamos las horas, minutos y segundos
-    var horas = Math.floor(totalSegundos / 3600); // Obtiene el número entero de horas
-
-    totalSegundos %= 3600; // Actualiza el total de segundos con el remanente después de calcular las horas
-
-    var minutos = Math.floor(totalSegundos / 60); // Obtiene el número entero de minutos
-    // var segundos = Math.round(totalSegundos % 60); // Obtiene los segundos restantes
-
-    // Formatea las horas, minutos y segundos para asegurarse de que tengan dos dígitos
-    horas = (horas < 10) ? "0" + horas : horas;
-    minutos = (minutos < 10) ? "0" + minutos : minutos;
-    // segundos = (segundos < 10) ? "0" + segundos : segundos;
-
-    // Retorna el tiempo formateado
-    // return horas + ":" + minutos + ":" + segundos;
-    return horas + ":" + minutos;
-}
-
-function formatoFechaInputADatos(fechaInput) {
-
-    var partesInput = fechaInput.split("-"),
-        fechaFormateadaInput = partesInput[2] + "/" + partesInput[1] + "/" + partesInput[0];
-
-    return fechaFormateadaInput;
-
-}
-
-
 function obtieneFechasAlta() {
 
     $.ajax({
@@ -247,13 +226,11 @@ function obtieneDatos(documento, tipo) {
             renglonesDatos = renglonesDatos.filter((e, i) => i < (renglonesDatos.length - 1));
 
             if (tipo == 1) {
-                // console.log(1);
-                // console.log(renglonesDatos);
                 datosProductividad();
-            } else {
-                // console.log(2);
-                // console.log(renglonesDatos);
+            } else if (tipo == 2)  {
                 datosTiempos();
+            } else {
+                datosIncumplimientos();
             }
 
         }
@@ -264,8 +241,6 @@ function obtieneDatos(documento, tipo) {
 
 function datosProductividad() {
 
-    // let cantidadCeros = 0;
-
     distritosUnicos.length = 0;
 
     fechaProd.length = 0;
@@ -273,6 +248,11 @@ function datosProductividad() {
     productividad.length = 0;
     cuadrillas.length = 0;
     ordenes.length = 0;
+
+    fechaProdNacional.length = 0;
+    productividadNacional = ["ProdNacional"];
+    cuadrillasNacional.length = 0;
+    ordenesNacional.length = 0;
 
     renglonesDatos.forEach(element => {
 
@@ -293,11 +273,22 @@ function datosProductividad() {
         }
 
         // Llenado de los arreglos de datos
-        fechaProd.push(registro[0]);
-        distritosProd.push(registro[1]);
-        productividad.push(parseFloat(registro[2]));
-        cuadrillas.push(parseInt(registro[3]));
-        ordenes.push(parseInt(registro[4]));
+        if (registro[1] != "NACIONAL") {
+
+            fechaProd.push(registro[0]);
+            distritosProd.push(registro[1]);
+            productividad.push(parseFloat(registro[2]));
+            cuadrillas.push(parseInt(registro[3]));
+            ordenes.push(parseInt(registro[4]));
+
+        } else {
+
+            fechaProdNacional.push(registro[0]);
+            productividadNacional.push(parseFloat(registro[2]));
+            cuadrillasNacional.push(parseInt(registro[3]));
+            ordenesNacional.push(parseInt(registro[4]));
+
+        }
 
     });
 
@@ -339,12 +330,12 @@ function datosGraficaProductividad() {
 
     }
 
-    graficaProductividad("#ProdOrdsTerminadas", productividadSelec, cuadrillasSelecG, ordenesSelec, fechaProdSelec, cuadrillasSelecE, fechaAlta);
+    graficaProductividad("#ProdOrdsTerminadas", productividadSelec, cuadrillasSelecG, ordenesSelec, fechaProdSelec, cuadrillasSelecE, fechaAlta, productividadNacional);
 
 }
 
 
-function graficaProductividad(idGrafica, datosProdGraf, datosCuadrillasGraf, datosOrdenesGraf, ejeX, datosEtiquetasCuadrillas, fechaAltaEY) {
+function graficaProductividad(idGrafica, datosProdGraf, datosCuadrillasGraf, datosOrdenesGraf, ejeX, datosEtiquetasCuadrillas, fechaAltaEY, datosProdNacional) {
 
     chart = c3.generate({
         bindto: idGrafica,
@@ -352,7 +343,8 @@ function graficaProductividad(idGrafica, datosProdGraf, datosCuadrillasGraf, dat
             columns: [
                 datosProdGraf,
                 datosCuadrillasGraf,
-                datosOrdenesGraf
+                datosOrdenesGraf,
+                datosProdNacional
             ],
             type: "spline",
             types: {
@@ -368,6 +360,7 @@ function graficaProductividad(idGrafica, datosProdGraf, datosCuadrillasGraf, dat
             // },
             axes: {
                 Productividad: "y",
+                ProdNacional: "y",
                 CuadrillasFirmadas: "y2",
                 OrdenesTerminadas: "y2",
             },
@@ -378,12 +371,14 @@ function graficaProductividad(idGrafica, datosProdGraf, datosCuadrillasGraf, dat
             colors: {
                 Productividad: "#3D3B3B",
                 CuadrillasFirmadas: "#BFBFBF",
-                OrdenesTerminadas: "#41B36D"
+                OrdenesTerminadas: "#41B36D",
+                ProdNacional: "#2F5597"
             },
             names: {
                 Productividad: "Productividad",
                 CuadrillasFirmadas: "Cuadrillas Firmadas",
-                OrdenesTerminadas: "Órdenes Terminadas"
+                OrdenesTerminadas: "Órdenes Terminadas",
+                ProdNacional: "Productividad Nacional"
             }
         },
         bar: {
@@ -703,6 +698,247 @@ function graficaTiempos(idGrafica, datosTiemposGraf, ejeX, datosEtiquetasTiempos
         chart.resize();
     }, 2000);
 
+    obtieneDatos("fuentes/Incumplimientos.csv", 3);
+
+}
+
+
+function datosIncumplimientos() {
+
+    fechaIncumplimientos.length = 0;
+    distritosIncumplimientos.length = 0;
+    incumplimientos.length = 0;
+
+    renglonesDatos.forEach(element => {
+
+        const registro = element.split(",");
+
+        // Llenado de los arreglos de datos
+        fechaIncumplimientos.push(registro[0]);
+        distritosIncumplimientos.push(registro[1]);
+        incumplimientos.push(registro[2]);
+
+    });
+
+    datosGraficaIncumplimientos();
+
+}
+
+
+function datosGraficaIncumplimientos() {
+
+    fechaIncumplimientosSelec = [];
+    incumplimientosSelec = ["Incumplimientos"];
+
+    distritoSeleccionado = $("#opcDistrito option:selected").val();
+
+    for (let i = 0; i < distritosIncumplimientos.length; i++) {
+
+        if (distritosIncumplimientos[i] == distritoSeleccionado) {
+
+            fechaIncumplimientosSelec.push(fechaIncumplimientos[i]);
+            incumplimientosSelec.push(incumplimientos[i]);
+
+        }
+
+    }
+
+    graficaIncumplimientos("#incumplimientos", incumplimientosSelec, fechaIncumplimientosSelec, fechaAlta);
+
+}
+
+
+function graficaIncumplimientos(idGrafica, datosIncumplimientos, ejeX, fechaAltaEY) {
+
+    chart = c3.generate({
+        bindto: idGrafica,
+        data: {
+            columns: [
+                datosIncumplimientos
+                // datosSoportes,
+                // datosInstalaciones,
+                // datosCDD,
+                // datosAddon,
+                // datosPorcTotal
+            ],
+            type: "bar",
+            // types: {
+            //     PorcTotal: 'line',
+            // },
+            // axes: {
+            //     Incumplimientos: "y",
+            //     Soportes: "y",
+            //     Instalaciones: "y",
+            //     CambiosDomicilio: "y",
+            //     Adicionales: "y",
+            //     PorcTotal: "y2"
+            // },
+            // groups: [
+            //     ["Incumplimientos", "Soportes", "Instalaciones", "CambiosDomicilio", "Adicionales"]
+            // ],
+            // order: null,
+            colors: {
+                Incumplimientos: "#00B0F0"
+                // Soportes: "#5171A5",
+                // Instalaciones: "#00B050",
+                // CambiosDomicilio: "#B8B42D",
+                // Adicionales: "#B5BDCF",
+                // PorcTotal: "#3D3B3B"
+            },
+            names: {
+                Incumplimientos: "Incumplimientos"
+                // Soportes: "Soportes",
+                // Instalaciones: "Instalación",
+                // CambiosDomicilio: "Cambio de domicilio",
+                // Adicionales: "Adicionales",
+                // PorcTotal: "% Incum. total sobre total agendado"
+            }
+        },
+        bar: {
+            with: {
+                ratio: 0.5
+            }
+        },
+        axis: {
+            x: {
+                type: 'category',
+                categories: ejeX,
+                tick: {
+                    rotate: -90,
+                    multiline: false,
+                    culling: {
+                        max: 30
+                    }
+                },
+                height: 80
+            },
+            // y2: {
+            //     show: true,
+            //     tick: {
+            //         format: d3.format(",.0%")
+            //     }
+            // }
+        },
+        zoom: {
+            enabled: true
+        },
+        grid: {
+            x: {
+                lines: [
+                    {
+                        value: fechaAltaEY,
+                        class: "conectamas",
+                        text: "Despliegue Algoritmo EY",
+                        position: "end"
+                    }
+                ]
+            }
+            // y: {
+            //     lines: [
+            //         {
+            //             value: ultimoTiempo,
+            //             class: "ultimoTiempo"
+            //             // text: "Despliegue Algoritmo EY",
+            //             // position: "end"
+            //         }
+            //     ]
+            // }
+        }
+        // tooltip: {
+        //     format: {
+
+        //         title: function (d) {
+
+        //             aux100 = ejeX[d];
+
+        //             let fechaHora = ejeX[d] + " 00:00:00",
+        //                 auxFecha = new Date(fechaHora),
+        //                 diaSemana = auxFecha.getDay(),
+        //                 fechaFinal = "";
+
+        //             if ($("#diaria").prop("checked")) {
+        //                 fechaFinal = ejeX[d] + " - " + diasSemana[diaSemana];
+        //             } else {
+        //                 fechaFinal = ejeX[d];
+        //             }
+
+        //             return (fechaFinal);
+
+        //         }
+
+        //     },
+        //     contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
+
+        //         d.sort(function (a, b) {
+        //             return b.value - a.value;
+        //         });
+
+        //         if (d.length > 2) {
+
+        //             function key_for_sum(arr) {
+
+        //                 let valor = (arr.id == "PorcTotal") ? 0 : arr.value;
+        //                 return valor; //value is the key
+
+        //             }
+
+        //             function sum(prev, next) {
+        //                 return prev + next;
+        //             }
+
+        //             var totals_object = {};
+        //             totals_object.x = d[0]['x'];
+        //             totals_object.value = d.map(key_for_sum).reduce(sum);// sum func
+        //             totals_object.name = 'Total';//total will be shown in tooltip
+        //             totals_object.index = d[0]['index'];
+        //             totals_object.id = 'total';//c3 will use this
+        //             d.push(totals_object);
+
+        //         }
+
+        //         var $$ = this,
+        //             config = $$.config,
+        //             titleFormat = config.tooltip_format_title || defaultTitleFormat,
+        //             nameFormat = config.tooltip_format_name || function (name) {
+        //                 return name;
+        //             },
+        //             valueFormat = config.tooltip_format_value || defaultValueFormat,
+        //             text, i, title, value, name, bgcolor;
+
+        //         for (i = 0; i < d.length; i++) {
+
+        //             if (!(d[i].value || d[i].value > 0)) {
+        //                 continue;
+        //             }
+
+        //             if (!text) {
+        //                 title = titleFormat ? titleFormat(d[i].x) : d[i].x;
+        //                 text = "<table class='" + $$.CLASS.tooltip + "'>" + (title || title === 0 ? "<tr><th colspan='2'>" + title + "</th></tr>" : "");
+        //             }
+
+        //             name = nameFormat(d[i].name);
+        //             value = valueFormat(d[i].value, d[i].ratio, d[i].id, d[i].index);
+        //             bgcolor = $$.levelColor ? $$.levelColor(d[i].value) : color(d[i].id);
+        //             bgcolor = (name == "Total") ? "#FFFFFF" : bgcolor;
+        //             text += "<tr class='" + $$.CLASS.tooltipName + "-" + d[i].id + "'>";
+        //             text += "<td class='name'><span style='background-color:" + bgcolor + "'></span>" + name + "</td>";
+        //             text += "<td class='value'>" + value + "</td>";
+        //             text += "</tr>";
+
+        //         }
+
+        //         return text + "</table>";
+
+        //     }
+
+        // }
+
+    });
+
+    setTimeout(function () {
+        chart.resize();
+    }, 2000);
+
     fechaMaxInput();
 
 }
@@ -818,5 +1054,39 @@ function calculoTiempoTrasladoPeriodo(a, b) {
     // tiempoTrasladoPeriodo = tTotal24Periodo / trasladosPeriodo;
 
     return decimalATiempo(tTotal24Periodo / trasladosPeriodo);
+
+}
+
+
+function decimalATiempo(decimal) {
+    // Suponiendo que el decimal representa la fracción de un día de 24 horas
+    // Primero, calculamos el total de segundos
+    var totalSegundos = decimal * 86400; // 24 horas * 60 minutos * 60 segundos = 86400 segundos
+
+    // Calculamos las horas, minutos y segundos
+    var horas = Math.floor(totalSegundos / 3600); // Obtiene el número entero de horas
+
+    totalSegundos %= 3600; // Actualiza el total de segundos con el remanente después de calcular las horas
+
+    var minutos = Math.floor(totalSegundos / 60); // Obtiene el número entero de minutos
+    // var segundos = Math.round(totalSegundos % 60); // Obtiene los segundos restantes
+
+    // Formatea las horas, minutos y segundos para asegurarse de que tengan dos dígitos
+    horas = (horas < 10) ? "0" + horas : horas;
+    minutos = (minutos < 10) ? "0" + minutos : minutos;
+    // segundos = (segundos < 10) ? "0" + segundos : segundos;
+
+    // Retorna el tiempo formateado
+    // return horas + ":" + minutos + ":" + segundos;
+    return horas + ":" + minutos;
+}
+
+
+function formatoFechaInputADatos(fechaInput) {
+
+    var partesInput = fechaInput.split("-"),
+        fechaFormateadaInput = partesInput[2] + "/" + partesInput[1] + "/" + partesInput[0];
+
+    return fechaFormateadaInput;
 
 }

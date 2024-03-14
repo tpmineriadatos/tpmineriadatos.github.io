@@ -88,7 +88,12 @@
     ancho de la línea en la gráfica de ese ID
 */
 #ProdOrdsTerminadas .c3-line-Productividad {
-    stroke-width: 2px;
+    stroke-width: 2.5px;
+}
+
+#ProdOrdsTerminadas .c3-line-ProdNacional {
+    stroke-width: 4px;
+    stroke-dasharray: 3px;
 }
 
 #TiempoTraslado .c3-line-Tiempos {
