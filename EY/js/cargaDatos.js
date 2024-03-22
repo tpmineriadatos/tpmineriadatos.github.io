@@ -259,15 +259,19 @@ function datosProductividad() {
         const registro = element.split(",");
 
         // Llenado del arreglo de los distritos y el combo
-        if (!distritosUnicos.includes(registro[1])) {
+        if (registro[1] != "NACIONAL") {
 
-            distritosUnicos.push(registro[1]);
+            if (!distritosUnicos.includes(registro[1])) {
 
-            if (registro[1] == "PORTALES") {
-                $("#opcDistrito").append("<option value=" + registro[1] + " selected>" + registro[1] + "</option>");
-            } else {
-                // $("#opcDistrito").append("<option value=" + registro[1] + ">" + registro[1] + "</option>");
-                $("#opcDistrito").append($("<option>", { value: registro[1], text: registro[1] }));
+                distritosUnicos.push(registro[1]);
+
+                if (registro[1] == "PORTALES") {
+                    $("#opcDistrito").append("<option value=" + registro[1] + " selected>" + registro[1] + "</option>");
+                } else {
+                    // $("#opcDistrito").append("<option value=" + registro[1] + ">" + registro[1] + "</option>");
+                    $("#opcDistrito").append($("<option>", { value: registro[1], text: registro[1] }));
+                }
+
             }
 
         }
