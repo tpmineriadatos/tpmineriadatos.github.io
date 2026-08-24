@@ -9,6 +9,7 @@ var selecBacklog = 0,
 
 var Fecha_Descarga = [],
     Fecha_Descarga_BL = [],
+    CDE = [],
     CDD = [],
     ADDON = [],
     Soportes = [],
@@ -16,6 +17,7 @@ var Fecha_Descarga = [],
     Recolecciones = [];
 
 var Fecha_Descarga2 = [],
+    CDE2 = [],
     CDD2 = [],
     ADDON2 = [],
     Soportes2 = [],
@@ -1831,6 +1833,7 @@ function dibujaGraficaJSON(idGrafica, valorX) {
             x: valorX,
             json: {
                 Fecha_Descarga: Fecha_Descarga_BL,
+                CDE: CDE,
                 CDD: CDD,
                 ADDON: ADDON,
                 Soportes: Soportes,
@@ -1839,6 +1842,7 @@ function dibujaGraficaJSON(idGrafica, valorX) {
             },
             types: "line",
             colors: {
+                CDE: "#f509ca",
                 CDD: "#F59809",
                 ADDON: "#06336B",
                 Soportes: "#C70039",
@@ -2419,6 +2423,7 @@ function datosDIreccionSeleccionada(direccionSeleccionada, documento) {
 
     // Limpian los arreglos lineales
     // Fecha_Descarga.length = 0;
+    CDE.length = 0;
     CDD.length = 0;
     ADDON.length = 0;
     Soportes.length = 0;
@@ -2448,11 +2453,12 @@ function datosDIreccionSeleccionada(direccionSeleccionada, documento) {
                 if (element[0] == direccionSeleccionada) {
     
                     Fecha_Descarga.push(element[1]);
-                    CDD.push(parseFloat(element[2]));
-                    ADDON.push(parseFloat(element[3]));
-                    Soportes.push(parseFloat(element[4]));
-                    Instalaciones.push(parseFloat(element[5]));
-                    Recolecciones.push(parseFloat(element[6]));
+                    CDE.push(parseFloat(element[2]));
+                    CDD.push(parseFloat(element[3]));
+                    ADDON.push(parseFloat(element[4]));
+                    Soportes.push(parseFloat(element[5]));
+                    Instalaciones.push(parseFloat(element[6]));
+                    Recolecciones.push(parseFloat(element[7]));
     
                 }
     
@@ -2573,12 +2579,14 @@ function datosDIreccionSeleccionada(direccionSeleccionada, documento) {
         } else if (direccionSeleccionada == "DISTRITOS") {
 
             Fecha_Descarga2.length = 0;
+            CDE2.length = 0;
             CDD2.length = 0;
             ADDON2.length = 0;
             Soportes2.length = 0;
             Instalaciones2.length = 0;
             Recolecciones2.length = 0;
 
+            CDE2.push("CDE");
             CDD2.push("CDD");
             ADDON2.push("ADDON");
             Soportes2.push("Soportes");
@@ -2590,11 +2598,12 @@ function datosDIreccionSeleccionada(direccionSeleccionada, documento) {
                 const element = renglones[i].split(",");
 
                 Fecha_Descarga2.push(element[0]);
-                CDD2.push(parseFloat(element[3]));
+                CDE2.push(parseFloat(element[3]));
+                CDD2.push(parseFloat(element[4]));
                 ADDON2.push(parseFloat(element[2]));
-                Soportes2.push(parseFloat(element[4]));
+                Soportes2.push(parseFloat(element[5]));
                 Instalaciones2.push(parseFloat(element[1]));
-                Recolecciones2.push(parseFloat(element[5]));
+                Recolecciones2.push(parseFloat(element[6]));
 
             }
 
@@ -2639,12 +2648,14 @@ function datosDIreccionSeleccionada(direccionSeleccionada, documento) {
         } else if (direccionSeleccionada == "TOPD") {
 
             Fecha_Descarga2.length = 0;
+            CDE2.length = 0;
             CDD2.length = 0;
             ADDON2.length = 0;
             Soportes2.length = 0;
             Instalaciones2.length = 0;
             Recolecciones2.length = 0;
 
+            CDE2.push("CDE");
             CDD2.push("CDD");
             ADDON2.push("ADDON");
             Soportes2.push("Soportes");
@@ -2658,11 +2669,12 @@ function datosDIreccionSeleccionada(direccionSeleccionada, documento) {
                 if (element[0] == valor) {
 
                     Fecha_Descarga2.push(element[1]);
-                    CDD2.push(parseFloat(element[4]));
+                    CDE2.push(parseFloat(element[4]));
+                    CDD2.push(parseFloat(element[5]));
                     ADDON2.push(parseFloat(element[3]));
-                    Soportes2.push(parseFloat(element[5]));
+                    Soportes2.push(parseFloat(element[6]));
                     Instalaciones2.push(parseFloat(element[2]));
-                    Recolecciones2.push(parseFloat(element[6]));
+                    Recolecciones2.push(parseFloat(element[7]));
 
                 }
 
@@ -2726,11 +2738,12 @@ function datosDIreccionSeleccionada(direccionSeleccionada, documento) {
                 if (element[0] == direccionSeleccionada) {
 
                     Fecha_Descarga_BL.push(element[1]);
-                    CDD.push(parseFloat(element[2]));
-                    ADDON.push(parseFloat(element[3]));
-                    Soportes.push(parseFloat(element[4]));
-                    Instalaciones.push(parseFloat(element[5]));
-                    Recolecciones.push(parseFloat(element[6]));
+                    CDE.push(parseFloat(element[2]));
+                    CDD.push(parseFloat(element[3]));
+                    ADDON.push(parseFloat(element[4]));
+                    Soportes.push(parseFloat(element[5]));
+                    Instalaciones.push(parseFloat(element[6]));
+                    Recolecciones.push(parseFloat(element[7]));
 
                 }
 
